@@ -11,8 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@ms/logger": [ "lib/logger" ],
-      "@ms/lib/*": [ "lib/*" ]
+      "@mc/logger": [ "lib/logger" ],
+      "@mc/lib/*": [ "lib/*" ]
     }
   },
   "include": [

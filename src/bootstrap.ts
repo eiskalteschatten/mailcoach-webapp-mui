@@ -1,7 +1,7 @@
 import symlinkDir from 'symlink-dir';
 import path from 'path';
 
-import logger from '@ms/logger';
+import logger from '@mc/logger';
 
 import tsconfig from '../tsconfig.json';
 

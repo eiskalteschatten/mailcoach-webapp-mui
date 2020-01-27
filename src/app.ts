@@ -3,8 +3,8 @@ import compression from 'compression';
 import { connectLogger } from 'log4js';
 import bodyParser from 'body-parser';
 
-import logger from '@ms/logger';
-import { HttpError } from '@ms/lib/Error';
+import logger from '@mc/logger';
+import { HttpError } from '@mc/lib/Error';
 
 class App {
   app: express.Application;

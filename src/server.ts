@@ -2,7 +2,7 @@ import http from 'http';
 import { AddressInfo } from 'net';
 import { config as dotEnvConfig } from 'dotenv';
 
-import logger from '@ms/logger';
+import logger from '@mc/logger';
 
 import mainApp from './app';
 
