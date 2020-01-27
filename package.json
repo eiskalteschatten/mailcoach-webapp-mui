@@ -15,7 +15,7 @@
     "test:single": "NODE_ENV=test NODE_CONFIG_DIR=./config jest --watch --verbose",
     "test:ci": "npm run lint && NODE_ENV=test NODE_CONFIG_DIR=./config jest .",
     "sendCoverage": "cat ./test-coverage/lcov.info | CODACY_PROJECT_TOKEN=$(grep CODACY_PROJECT_TOKEN .env | cut -d '=' -f2) codacy-coverage",
-    "lint": "eslint './**/*.{ts,json,js}'"
+    "lint": "eslint './**/*.{ts,js}'"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
