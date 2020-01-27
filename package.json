@@ -1,6 +1,10 @@
 {
   "name": "mailserver",
   "version": "0.1.0",
+  "main": "./dist/src/server.js",
+  "engines": {
+    "node": ">=13.6.0"
+  },
   "scripts": {
     "build": "tsc",
     "postbuild": "copyfiles \"./src/**/*.njk\" ./dist",
