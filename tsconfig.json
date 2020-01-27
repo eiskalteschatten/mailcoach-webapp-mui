@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "pretty": true,
+    "sourceMap": false,
+    "target": "es6",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@ms/logger": [ "lib/logger" ],
+      "@ms/lib/*": [ "lib/*" ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "config/**/*.js"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

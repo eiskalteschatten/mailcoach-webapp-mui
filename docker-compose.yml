@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+
+    app:
+        build: .
+        ports:
+            - "3025:3025"
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
