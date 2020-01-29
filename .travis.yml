@@ -7,9 +7,9 @@ env:
     - NODE_ENV=TEST
 
 install:
-    - npm ci
+    - npm run install:all
 
 script:
-    - npm run lint
+    - npm test
 
 cache: npm
