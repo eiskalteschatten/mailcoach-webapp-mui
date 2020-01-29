@@ -10,9 +10,9 @@
     "lint": "npm run -C ./server lint && npm run -C ./client lint",
     "build": "npm run -C ./server build && npm run -C ./client build",
     "postbuild": "copyfiles ./client/build ./server/dist/server/public",
-    "dev": "concurrently \"npm run -C ./server dev\" \"npm run -C ./client start\"",
+    "dev": "concurrently \"npm run -C ./server dev\" \"npm run -C ./client ng serve\"",
     "start": "npm run -C ./server start",
-    "install:all": "cd server",
+    "install:all": "npm install && npm -C ./server install && npm -C ./client install",
     "launchdb": "docker-compose -f ./docker-compose.dbonly.yml up -d",
     "launchdb:attached": "docker-compose -f ./docker-compose.dbonly.yml up",
     "devdb": "docker exec -it rss_postgres psql rss -U rss"
