@@ -1,15 +1,26 @@
 language: node_js
 node_js:
-    - "12"
-    - "13"
+  - "12"
+  - "13"
 
 env:
-    - NODE_ENV=TEST
+  - NODE_ENV=TEST
+
+addons:
+  apt:
+    sources:
+       - google-chrome
+    packages:
+      - google-chrome-stable
 
 install:
-    - npm run install:all
+  - npm run install:all
 
 script:
-    - npm test
+  - npm test
 
-cache: npm
+  cache:
+    directories:
+      - ./node_modules
+      - ./client/node_modules
+      - ./server/node_modules
