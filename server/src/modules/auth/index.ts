@@ -4,7 +4,7 @@ import path from 'path';
 import Module from '@mc/interfaces/Module';
 import AbstractModule from '@mc/modules/AbstractModule';
 
-// import writeController from './controller/write';
+import authController from './controllers/auth';
 
 export class AuthModule extends AbstractModule implements Module {
   protected modulePath: string = path.resolve(__dirname);
@@ -16,7 +16,7 @@ export class AuthModule extends AbstractModule implements Module {
   get router(): Router {
     const router = Router();
 
-    // router.use(writeController.router);
+    router.use(authController.router);
 
     return router;
   }
