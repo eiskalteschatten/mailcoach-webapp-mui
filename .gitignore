@@ -106,6 +106,7 @@ public
 # Dev
 *.code-workspace
 .data
+test-coverage
 
 # Misc
 .DS_Store
