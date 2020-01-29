@@ -12,7 +12,8 @@
     "baseUrl": "./src",
     "paths": {
       "@mc/logger": [ "lib/logger" ],
-      "@mc/lib/*": [ "lib/*" ]
+      "@mc/lib/*": [ "lib/*" ],
+      "@mc/interfaces/*": [ "interfaces/*" ]
     }
   },
   "include": [
