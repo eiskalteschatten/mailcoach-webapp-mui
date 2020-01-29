@@ -2,9 +2,11 @@ import express, { Request, Response } from 'express';
 import compression from 'compression';
 import { connectLogger } from 'log4js';
 import bodyParser from 'body-parser';
+import passport from 'passport';
 
 import logger from '@mc/logger';
 import { HttpError } from '@mc/lib/Error';
+import setupPassport from '@mc/lib/setupPassport';
 
 class App {
   app: express.Application;
@@ -15,6 +17,7 @@ class App {
 
   async setupApp(): Promise<express.Application> {
     this.configureExpress();
+    await this.configurePassport();
     await this.configureGenericErrorHandling();
 
     logger.info('App started with:');
@@ -30,6 +33,11 @@ class App {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.disable('x-powered-by');
+  }
+
+  private async configurePassport(): Promise<void> {
+    this.app.use(passport.initialize());
+    await setupPassport();
   }
 
   private async configureGenericErrorHandling(): Promise<void> {
