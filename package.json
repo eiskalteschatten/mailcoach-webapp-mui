@@ -9,7 +9,7 @@
     "test": "npm run lint",
     "lint": "npm run -C ./server lint && npm run -C ./client lint",
     "build": "npm run -C ./server build && npm run -C ./client build",
-    "postbuild": "copyfiles ./client/build ./server/dist/server/public",
+    "postbuild": "copyfiles ./client/dist ./server/dist/server/public",
     "dev": "concurrently \"npm run -C ./server dev\" \"npm run -C ./client ng serve\"",
     "start": "npm run -C ./server start",
     "install:all": "npm install && npm -C ./server install && npm -C ./client install",
