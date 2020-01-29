@@ -3,15 +3,14 @@ import passport from 'passport';
 import config from 'config';
 // import jwt from 'jsonwebtoken';
 
+import AbstractController from '@mc/modules/AbstractController';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import { HttpError } from '@mc/lib/Error';
 import logger from '@mc/logger';
 
-class AuthController {
-  router: Router;
-
+class AuthController extends AbstractController {
   constructor() {
-    this.router = Router();
+    super();
     this.initilizeRoutes();
   }
 
