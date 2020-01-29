@@ -4,6 +4,7 @@ import { connectLogger } from 'log4js';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 
+import { setupSequelize } from '@mc/db';
 import logger from '@mc/logger';
 import { HttpError } from '@mc/lib/Error';
 import setupPassport from '@mc/lib/setupPassport';
@@ -17,6 +18,7 @@ class App {
 
   async setupApp(): Promise<express.Application> {
     this.configureExpress();
+    await setupSequelize();
     await this.configurePassport();
     await this.configureGenericErrorHandling();
 

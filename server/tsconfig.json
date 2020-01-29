@@ -14,7 +14,9 @@
       "@mc/logger": [ "lib/logger" ],
       "@mc/lib/*": [ "lib/*" ],
       "@mc/interfaces/*": [ "interfaces/*" ],
-      "@mc/modules/*": [ "modules/*" ]
+      "@mc/modules/*": [ "modules/*" ],
+      "@mc/db": [ "db/index" ],
+      "@mc/db/*": [ "db/*" ]
     }
   },
   "include": [

@@ -10,6 +10,13 @@ module.exports = {
     refreshToken: {
       ttl: 604800 // seconds
     }
+  },
+  dbConfig: {
+    dialectOptions: {
+      ssl: false,
+      decimalNumbers: true
+    },
+    logging: console.log
   }
 };
 
