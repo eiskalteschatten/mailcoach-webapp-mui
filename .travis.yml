@@ -13,7 +13,7 @@ install:
   - npm run install:all
 
 script:
-  - npm run test:ci
+  - npm test
 
 cache:
   directories:
