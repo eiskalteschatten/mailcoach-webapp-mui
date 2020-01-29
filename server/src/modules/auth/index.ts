@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import path from 'path';
 
-import AbstractModule from '../AbstractModule';
 import Module from '@mc/interfaces/Module';
+import AbstractModule from '@mc/modules/AbstractModule';
 
 // import writeController from './controller/write';
 

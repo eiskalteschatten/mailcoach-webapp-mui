@@ -13,7 +13,8 @@
     "paths": {
       "@mc/logger": [ "lib/logger" ],
       "@mc/lib/*": [ "lib/*" ],
-      "@mc/interfaces/*": [ "interfaces/*" ]
+      "@mc/interfaces/*": [ "interfaces/*" ],
+      "@mc/modules/*": [ "modules/*" ]
     }
   },
   "include": [
