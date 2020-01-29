@@ -1,6 +1,6 @@
 {
   "name": "mailcoach",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "./server/dist/server/src/server.js",
   "engines": {
     "node": ">=13.6.0"
