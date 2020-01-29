@@ -15,7 +15,7 @@
     "install:all": "npm install && npm -C ./server install && npm -C ./client install",
     "launchdb": "docker-compose -f ./docker-compose.dbonly.yml up -d",
     "launchdb:attached": "docker-compose -f ./docker-compose.dbonly.yml up",
-    "devdb": "docker exec -it rss_postgres psql rss -U rss"
+    "devdb": "docker exec -it mailcoach_postgres psql mailcoach -U mailcoach"
   },
   "devDependencies": {
     "concurrently": "^5.0.0",

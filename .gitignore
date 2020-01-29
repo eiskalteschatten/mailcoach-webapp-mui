@@ -105,6 +105,7 @@ public
 
 # Dev
 *.code-workspace
+.data
 
 # Misc
 .DS_Store
