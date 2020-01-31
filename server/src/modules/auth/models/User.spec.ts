@@ -1,5 +1,6 @@
 import User from './User';
-import data from '../fixtures/users';
+import fixture from '../fixtures/users';
+const { data } = fixture;
 
 describe('User Model', () => {
   test('Exists', () => {
@@ -21,10 +22,8 @@ describe('User Model', () => {
   });
 
   test('Model is updateable', async () => {
-    const newUser = await User.create(data);
-
     const newFirstName = 'Franz';
-    const testUser = await User.findByPk(newUser.id);
+    const testUser = await User.findByPk(1);
 
     expect(testUser).toBeDefined();
 

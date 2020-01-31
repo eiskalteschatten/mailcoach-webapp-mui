@@ -31,7 +31,9 @@ export async function setupSequelize(): Promise<Sequelize> {
     await sequelize.authenticate();
     logger.info('Connection to the database has been established successfully.');
 
-    await migrateDb.migrate();
+    if (process.env.NODE_ENV !== 'test') {
+      await migrateDb.migrate();
+    }
 
     logger.info('Database migration scripts successfully executed.');
   }

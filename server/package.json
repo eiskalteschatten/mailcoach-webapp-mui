@@ -48,6 +48,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-promise": "^4.2.1",
     "jest": "^25.1.0",
+    "sequelize-fixtures": "^1.1.1",
     "sqlite3": "^4.1.1",
     "supertest": "^4.0.2",
     "ts-jest": "^25.0.0",
