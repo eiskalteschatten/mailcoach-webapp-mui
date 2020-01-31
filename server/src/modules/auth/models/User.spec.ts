@@ -1,8 +1,15 @@
+import sequelizeFixtures from 'sequelize-fixtures';
+
 import User from './User';
 import fixture from '../fixtures/users';
+
 const { data } = fixture;
 
 describe('User Model', () => {
+  beforeAll((): Promise<void> =>
+    sequelizeFixtures.loadFixtures([fixture], { User })
+  );
+
   test('Exists', () => {
     expect(User).toBeDefined();
   });

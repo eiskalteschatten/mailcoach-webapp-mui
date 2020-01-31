@@ -9,12 +9,6 @@ const fixtures = [
   authFixtures
 ];
 
-beforeEach(async (done: Function): Promise<void> => {  // eslint-disable-line no-undef
-  try {
-    await sequelizeFixtures.loadFixtures(fixtures, models);
-    done();
-  }
-  catch(error) {
-    done(error);
-  }
-});
+beforeAll((): Promise<void> =>  // eslint-disable-line no-undef
+  sequelizeFixtures.loadFixtures(fixtures, models)
+);
