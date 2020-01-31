@@ -6,7 +6,8 @@
     "node": ">=13.6.0"
   },
   "scripts": {
-    "test": "npm run lint && npm run -C ./server test:ci && npm run -C ./client test:ci",
+    "test": "npm run lint && npm run -C ./server test:ci",
+    "test:withClient": "npm test && npm run -C ./client test:ci",
     "lint": "npm run -C ./server lint && npm run -C ./client lint",
     "build": "npm run -C ./server build && npm run -C ./client build",
     "postbuild": "copyfiles ./client/dist ./server/dist/server/public",
