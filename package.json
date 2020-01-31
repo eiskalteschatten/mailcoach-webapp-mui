@@ -18,6 +18,7 @@
     "devdb": "docker exec -it mailcoach_postgres psql mailcoach -U mailcoach"
   },
   "devDependencies": {
+    "@types/jest": "^25.1.1",
     "concurrently": "^5.0.0",
     "copyfiles": "^2.2.0",
     "husky": "^3.1.0"
