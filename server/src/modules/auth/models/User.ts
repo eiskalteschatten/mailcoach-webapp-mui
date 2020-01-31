@@ -12,6 +12,7 @@ export class User extends Model {
   status: string;
   avatar: string;
   readonly createdAt!: Date;
+  readonly updatedAt!: Date;
 }
 
 User.init({
