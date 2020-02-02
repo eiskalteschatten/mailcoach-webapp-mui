@@ -24,7 +24,7 @@ UserSession.init({
   },
   refreshToken: {
     type: DataTypes.STRING,
-    field: 'refreshToken'
+    field: 'refresh_token'
   },
   instanceId: {
     type: DataTypes.UUID,
