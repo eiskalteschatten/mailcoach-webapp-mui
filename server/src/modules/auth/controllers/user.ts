@@ -25,7 +25,7 @@ class UserController extends AbstractController {
   /**
    * @api {get} /api/auth/users/self Get A User's Own Information
    * @apiName GetUserOwnAccount
-   * @apiGroup Auth
+   * @apiGroup Users
    * @apiVersion 1.0.0
    *
    * @apiHeaderExample {json} Header-Example:
@@ -63,7 +63,7 @@ class UserController extends AbstractController {
   /**
    * @api {put} /api/auth/users/self Update a User's Own Account
    * @apiName UpdateUserOwnAccount
-   * @apiGroup Auth
+   * @apiGroup Users
    * @apiVersion 1.0.0
    *
    * @apiParam {string} [firstName] The user's first name
@@ -76,7 +76,8 @@ class UserController extends AbstractController {
    *    "firstName": "Billy",
    *    "lastName": "Bob",
    *    "email": "mynew@field.com",
-   *    "avatar": "https://..."
+   *    "avatar": "https://...",
+   *    "status": "active"
    *  }
    *
    * @apiHeaderExample {json} Header-Example:
@@ -135,7 +136,7 @@ class UserController extends AbstractController {
   /**
    * @api {patch} /api/auth/users/self/password Update a User's Own Password
    * @apiName UpdateUserOwnPassword
-   * @apiGroup Auth
+   * @apiGroup Users
    * @apiVersion 1.0.0
    *
    * @apiParam {string} newPassword The user's new password
