@@ -24,7 +24,7 @@ class UserAdminController extends AbstractController {
   }
 
   /**
-   * @api {get} /api/users Get All Users
+   * @api {get} /api/auth/users Get All Users
    * @apiName GetAllUsers
    * @apiGroup Users
    * @apiVersion 1.0.0
@@ -66,7 +66,7 @@ class UserAdminController extends AbstractController {
   }
 
   /**
-   * @api {post} /api/users Create a User
+   * @api {post} /api/auth/users Create a User
    * @apiName CreateUser
    * @apiGroup Users
    * @apiVersion 1.0.0
@@ -148,7 +148,7 @@ class UserAdminController extends AbstractController {
   }
 
   /**
-   * @api {put} /api/users/:userId Update a User
+   * @api {put} /api/auth/users/:userId Update a User
    * @apiName UpdateUser
    * @apiGroup Users
    * @apiVersion 1.0.0
@@ -230,7 +230,7 @@ class UserAdminController extends AbstractController {
   }
 
   /**
-   * @api {patch} /api/users/:userId/password Update a User's Password
+   * @api {patch} /api/auth/users/:userId/password Update a User's Password
    * @apiName UpdateUserPassword
    * @apiGroup Users
    * @apiVersion 1.0.0
@@ -286,7 +286,7 @@ class UserAdminController extends AbstractController {
   }
 
   /**
-   * @api {delete} /api/users/:userId Delete a User
+   * @api {delete} /api/auth/users/:userId Delete a User
    * @apiName DeleteUser
    * @apiGroup Users
    * @apiVersion 1.0.0
