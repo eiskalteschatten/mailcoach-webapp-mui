@@ -108,6 +108,6 @@ describe('Auth Controller', () => {
         }
       });
 
-      expect(userSession).toBe(null);
+      expect(userSession).toBeNull();
   });
 });
