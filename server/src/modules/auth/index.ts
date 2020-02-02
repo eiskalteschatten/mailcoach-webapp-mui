@@ -8,15 +8,12 @@ import authController from './controllers/auth';
 
 export class AuthModule extends AbstractModule implements Module {
   protected modulePath: string = path.resolve(__dirname);
-
-  get entryRoute(): string {
-    return 'auth';
-  }
+  entryRoute = '/auth';
 
   get router(): Router {
     const router = Router();
 
-    router.use(authController.router);
+    router.use(this.entryRoute, authController.router);
 
     return router;
   }

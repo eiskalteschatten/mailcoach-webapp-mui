@@ -8,6 +8,7 @@ import { setupSequelize } from '@mc/db';
 import logger from '@mc/logger';
 import { HttpError } from '@mc/lib/Error';
 import setupPassport from '@mc/lib/setupPassport';
+import modules from '@mc/modules';
 
 class App {
   app: express.Application;
@@ -20,6 +21,7 @@ class App {
     this.configureExpress();
     await setupSequelize();
     await this.configurePassport();
+    this.configureModules();
     await this.configureGenericErrorHandling();
 
     logger.info('App started with:');
@@ -40,6 +42,12 @@ class App {
   private async configurePassport(): Promise<void> {
     this.app.use(passport.initialize());
     await setupPassport();
+  }
+
+  private configureModules(): void {
+    for (const module of modules) {
+      this.app.use('/api', module.router);
+    }
   }
 
   private async configureGenericErrorHandling(): Promise<void> {
