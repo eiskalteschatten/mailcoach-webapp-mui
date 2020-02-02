@@ -54,7 +54,7 @@ export default class UserService {
         throw new HttpError('Could not create user because a user with this username already exists!', 409);
       }
 
-      if (!username || !firstName || !lastName || !email) {
+      if (!username || !firstName || !lastName) {
         throw new HttpError('Could not create user because a field was missing!', 400);
       }
 

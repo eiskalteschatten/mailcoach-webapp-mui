@@ -3,6 +3,17 @@
 require('dotenv').config();
 
 module.exports = {
+  users: {
+    initialUser: {
+      username: 'coachDriver',
+      firstName: 'Coach',
+      lastName: 'Driver',
+      password: 'coachDriver',
+      email: '',
+      avatar: ''
+    },
+    defaultAvatar: ''
+  },
   jwt: {
     accessToken: {
       ttl: 3600 // seconds
@@ -17,9 +28,6 @@ module.exports = {
       decimalNumbers: true
     },
     logging: console.log
-  },
-  users: {
-    defaultAvatar: ''
   }
 };
 

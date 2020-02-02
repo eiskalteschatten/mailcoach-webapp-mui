@@ -8,6 +8,7 @@ import { setupSequelize } from '@mc/db';
 import logger from '@mc/logger';
 import { HttpError } from '@mc/lib/Error';
 import setupPassport from '@mc/lib/setupPassport';
+import setupInitialUser from '@mc/lib/setupInitialUser';
 import modules from '@mc/modules';
 
 class App {
@@ -20,7 +21,7 @@ class App {
   async setupApp(): Promise<express.Application> {
     this.configureExpress();
     await setupSequelize();
-    await this.configurePassport();
+    await this.configureAuth();
     this.configureModules();
     await this.configureGenericErrorHandling();
 
@@ -39,9 +40,10 @@ class App {
     this.app.disable('x-powered-by');
   }
 
-  private async configurePassport(): Promise<void> {
+  private async configureAuth(): Promise<void> {
     this.app.use(passport.initialize());
     await setupPassport();
+    await setupInitialUser();
   }
 
   private configureModules(): void {
