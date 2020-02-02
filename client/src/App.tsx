@@ -6,6 +6,7 @@ import { CssBaseline }  from '@material-ui/core';
 
 import GeneralWrapper from './GeneralWrapper';
 import GeneralError from './components/GeneralError';
+import { IntlProviderWrapper } from './intl/IntlContext';
 
 import theme from './theme';
 import store from './store'
@@ -19,13 +20,15 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Provider store={store}>
-        <GeneralWrapper />
-        <GeneralError />
-      </Provider>
-    </ThemeProvider>
+    <IntlProviderWrapper>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <GeneralWrapper />
+          <GeneralError />
+        </Provider>
+      </ThemeProvider>
+    </IntlProviderWrapper>
   );
 }
 
