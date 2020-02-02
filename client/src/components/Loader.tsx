@@ -47,8 +47,8 @@ const Loader: React.FC = () => {
 
   return (<Snackbar
     anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'center'
+      vertical: 'bottom',
+      horizontal: 'left'
     }}
     open={open}
     onClose={handleClose}
