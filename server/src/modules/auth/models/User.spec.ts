@@ -1,7 +1,8 @@
 import sequelizeFixtures from 'sequelize-fixtures';
 
-import User from './User';
 import fixture from '../fixtures/users';
+
+import User from './User';
 
 const { data } = fixture;
 
@@ -17,32 +18,32 @@ describe('User Model', () => {
   test('Model is writable and readable', async () => {
     const newUser = await User.create(data);
 
-    const testUser = await User.findByPk(newUser.id, { raw: true });
+    const testModel = await User.findByPk(newUser.id, { raw: true });
 
-    expect(testUser).toBeDefined();
-    expect(testUser.username).toEqual(data.username);
-    expect(testUser.password).toEqual(data.password);
-    expect(testUser.firstName).toEqual(data.firstName);
-    expect(testUser.lastName).toEqual(data.lastName);
-    expect(testUser.status).toEqual(data.status);
-    expect(testUser.avatar).toEqual(data.avatar);
+    expect(testModel).toBeDefined();
+    expect(testModel.username).toEqual(data.username);
+    expect(testModel.password).toEqual(data.password);
+    expect(testModel.firstName).toEqual(data.firstName);
+    expect(testModel.lastName).toEqual(data.lastName);
+    expect(testModel.status).toEqual(data.status);
+    expect(testModel.avatar).toEqual(data.avatar);
   });
 
   test('Model is updateable', async () => {
     const newFirstName = 'Franz';
-    const testUser = await User.findByPk(1);
+    const testModel = await User.findByPk(1);
 
-    expect(testUser).toBeDefined();
+    expect(testModel).toBeDefined();
 
-    testUser.update({
+    testModel.update({
       firstName: newFirstName
     });
 
-    expect(testUser.username).toEqual(data.username);
-    expect(testUser.password).toEqual(data.password);
-    expect(testUser.firstName).toEqual(newFirstName);
-    expect(testUser.lastName).toEqual(data.lastName);
-    expect(testUser.status).toEqual(data.status);
-    expect(testUser.avatar).toEqual(data.avatar);
+    expect(testModel.username).toEqual(data.username);
+    expect(testModel.password).toEqual(data.password);
+    expect(testModel.firstName).toEqual(newFirstName);
+    expect(testModel.lastName).toEqual(data.lastName);
+    expect(testModel.status).toEqual(data.status);
+    expect(testModel.avatar).toEqual(data.avatar);
   });
 });

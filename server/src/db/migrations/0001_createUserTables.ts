@@ -11,7 +11,7 @@ export default {
       // created later
     }
 
-    return query.createTable('users', {
+    await query.createTable('users', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -53,9 +53,41 @@ export default {
         type: DataTypes.DATE
       }
     });
+
+    await query.createTable('user_sessions', {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        unique: true,
+        primaryKey: true
+      },
+      kUser: {
+        type: DataTypes.INTEGER,
+        field: 'fk_user'
+      },
+      refreshToken: {
+        type: DataTypes.STRING,
+        field: 'refreshToken'
+      },
+      instanceId: {
+        type: DataTypes.UUID,
+        field: 'instance_id'
+      },
+      createdAt: {
+        type: DataTypes.DATE
+      },
+      updatedAt: {
+        type: DataTypes.DATE
+      }
+    });
+
+    return Promise.resolve();
   },
 
   down: async (query: QueryInterface): Promise<void> => {
-    return query.dropTable('users');
+    await query.dropTable('users');
+    await query.dropTable('user_sessions');
+
+    return Promise.resolve();
   }
 };
