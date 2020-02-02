@@ -7,7 +7,7 @@ import testApp from '@mc/lib/tests/testExpressApp';
 import authController from './auth';
 
 import User from '../models/User';
-import UserSesion from '../models/UserSession';
+import UserSession from '../models/UserSession';
 
 import fixture from '../fixtures/users';
 import UserService from '../services/UserService';
@@ -101,7 +101,7 @@ describe('Auth Controller', () => {
 
       const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN_SECRET) as any;
 
-      const userSession = await UserSesion.findOne({
+      const userSession = await UserSession.findOne({
         where: {
           fkUser: decoded.id,
           instanceId: decoded.instanceId

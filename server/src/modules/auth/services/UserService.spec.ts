@@ -5,6 +5,7 @@ import { ModelCreateUpdate, PasswordChange } from '../interfaces/User';
 import { deserializeModelCreateUpdate } from '../serializer/user';
 import fixture from '../fixtures/users';
 import User from '../models/User';
+import UserSession from '../models/UserSession';
 
 const { data } = fixture;
 
@@ -111,9 +112,18 @@ describe('User Service', () => {
   });
 
   test('User logout works', async () => {
+    const userId = 1;
     const localUserService = new UserService();
-    await localUserService.setUser(1);
-    userService.localLogout();
+    await localUserService.setUser(userId);
+    await userService.localLogout();
+
+    const userSessions = await UserSession.findAll({
+      where: {
+        fkUser: userId
+      }
+    });
+
+    expect(userSessions.length).toEqual(0);
     expect(userService.getUser()).toBeNull();
   });
 
