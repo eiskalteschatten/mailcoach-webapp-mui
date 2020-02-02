@@ -1,7 +1,7 @@
 import { MockStore } from 'redux-mock-store';
 import nock from 'nock';
 
-import { SerializedModel, ModelCreateUpdate, LoginModel } from '../../../../interfaces/Users';
+import { SerializedModel, ModelCreateUpdate } from '../../../../interfaces/Users';
 
 import {
   userSetInfo,

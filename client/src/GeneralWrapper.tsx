@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { State } from './store';
 import Loader from './components/Loader';
 import Booting from './components/Booting';
-import Main from './components/Main';
+import Router from './Router';
 
 const GeneralWrapper: React.FC = () => {
   const isBooting = useSelector((state: State) => state.app.isBooting);
@@ -15,7 +15,7 @@ const GeneralWrapper: React.FC = () => {
 
   return (<>
     <Loader />
-    <Main />
+    <Router />
   </>);
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  AppBar as AppBarMu,
+  AppBar as MuiAppBar,
   Toolbar,
   IconButton,
   Typography,
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const AppBar: React.FC = () => {
   const classes = useStyles();
 
-  return (<AppBarMu
+  return (<MuiAppBar
     position='fixed'
     color='default'
     className={classes.root}
@@ -70,7 +70,7 @@ const AppBar: React.FC = () => {
         <AccountCircle />
       </IconButton>
     </Toolbar>
-  </AppBarMu>);
+  </MuiAppBar>);
 }
 
 export default AppBar;

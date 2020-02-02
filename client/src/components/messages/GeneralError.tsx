@@ -11,7 +11,7 @@ import {
 
 import { Error as ErrorIcon, Close as CloseIcon } from '@material-ui/icons';
 
-import { State } from '../store';
+import { State } from '../../store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
