@@ -41,7 +41,6 @@ export default class UserService {
         username,
         firstName,
         lastName,
-        email,
         avatar
       } = registerData;
 
