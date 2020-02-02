@@ -111,3 +111,4 @@ test-coverage
 # Misc
 .DS_Store
 testdb.sqlite
+_docs
