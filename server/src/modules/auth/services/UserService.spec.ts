@@ -129,27 +129,13 @@ describe('User Service', () => {
 
       await userService.updateUser(1, deserialized);
       const user = userService.getUser();
+
       expect(user).toBeDefined();
       expect(user.username).toEqual(registerData.username);
       expect(user.firstName).toEqual(registerData.firstName);
       expect(user.lastName).toEqual(registerData.lastName);
       expect(user.email).toEqual(data.email);
 
-      done();
-    }
-    catch(error) {
-      done(error);
-    }
-  });
-
-  test('User password can be changed', async (done) => {
-    try {
-      const updateData: PasswordChange = {
-        newPassword: 'jfkEJF48!!fjkd',
-        currentPassword: data.password
-      };
-
-      await userService.updatePassword(1, updateData);
       done();
     }
     catch(error) {
@@ -171,6 +157,21 @@ describe('User Service', () => {
     }
   });
 
+  test('User password can be changed', async (done) => {
+    try {
+      const updateData: PasswordChange = {
+        newPassword: 'jfkEJF48!!fjkd',
+        currentPassword: '3748vnmcxjFJWIE%'
+      };
+
+      await userService.updatePassword(1, updateData);
+      done();
+    }
+    catch(error) {
+      done(error);
+    }
+  });
+
   test('User password cannot be changed because old password is wrong', async (done) => {
     try {
       const updateData: PasswordChange = {
@@ -179,10 +180,10 @@ describe('User Service', () => {
       };
 
       await userService.updatePassword(1, updateData);
-      done();
+      done('An error should have been thrown.');
     }
     catch(error) {
-      done(error);
+      done();
     }
   });
 

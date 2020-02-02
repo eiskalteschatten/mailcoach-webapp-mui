@@ -11,7 +11,7 @@ import { User } from '../models/User';
 import UserSession from '../models/UserSession';
 
 export default class UserService {
-  private readonly saltRounds = 15;
+  private readonly saltRounds = 12;
   private readonly jwtSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
   private user: User;
 
@@ -60,6 +60,7 @@ export default class UserService {
       const newAvatar = avatar || config.get<string>('users.defaultAvatar');
 
       const hash: string = await bcrypt.hash(password, this.saltRounds);
+
       const userModel: User = await User.create({
         ...registerData,
         avatar: newAvatar,
@@ -69,8 +70,6 @@ export default class UserService {
       });
 
       await this.getUserById(userModel.id);
-
-      await this.refreshUser();
       return this.user;
     }
     catch(error) {
