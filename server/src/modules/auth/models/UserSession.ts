@@ -32,7 +32,9 @@ UserSession.init({
   }
 }, {
   sequelize,
-  modelName: 'user_session'
+  modelName: 'user_session',
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
 });
 
 UserSession.belongsTo(User, {

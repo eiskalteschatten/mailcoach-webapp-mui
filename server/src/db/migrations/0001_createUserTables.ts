@@ -51,10 +51,12 @@ export default {
         field: 'avatar'
       },
       createdAt: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        field: 'created_at'
       },
       updatedAt: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        field: 'updated_at'
       }
     });
 
@@ -78,10 +80,12 @@ export default {
         field: 'instance_id'
       },
       createdAt: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        field: 'created_at'
       },
       updatedAt: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        field: 'updated_at'
       }
     });
 

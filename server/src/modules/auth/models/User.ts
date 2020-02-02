@@ -51,7 +51,9 @@ User.init({
   }
 }, {
   sequelize,
-  modelName: 'user'
+  modelName: 'user',
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
 });
 
 if (process.env.NODE_ENV === 'test') {
