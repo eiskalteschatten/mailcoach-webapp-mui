@@ -24,7 +24,7 @@ class AuthController extends AbstractController {
   }
 
   /**
-   * @api {post} /auth/login Login
+   * @api {post} /api/auth/login Login
    * @apiName Login
    * @apiGroup Auth
    * @apiVersion 1.0.0
@@ -105,7 +105,7 @@ class AuthController extends AbstractController {
   }
 
   /**
-   * @api {post} /auth/logout Logout
+   * @api {post} /api/auth/logout Logout
    * @apiName Logout
    * @apiGroup Auth
    * @apiVersion 1.0.0
@@ -136,7 +136,7 @@ class AuthController extends AbstractController {
   }
 
   /**
-   * @api {post} /auth/token Get New Access Token
+   * @api {post} /api/auth/token Get New Access Token
    * @apiName RefreshAccessToken
    * @apiGroup Auth
    * @apiVersion 1.0.0
