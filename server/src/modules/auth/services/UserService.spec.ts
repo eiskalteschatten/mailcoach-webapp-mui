@@ -187,8 +187,13 @@ describe('User Service', () => {
     }
   });
 
-  test('User token can be generated', async () => {
-    const token = userService.generateJwt();
+  test('User access token can be generated', async () => {
+    const token = userService.generateAccessToken();
+    expect(token).toBeDefined();
+  });
+
+  test('User refresh token can be generated', async () => {
+    const token = userService.generateRefreshToken();
     expect(token).toBeDefined();
   });
 

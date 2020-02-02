@@ -12,7 +12,8 @@ import UserSession from '../models/UserSession';
 
 export default class UserService {
   private readonly saltRounds = 12;
-  private readonly jwtSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
+  private readonly accessTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
+  private readonly refreshTokenSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
   private user: User;
 
   getUser(): User {
@@ -77,9 +78,9 @@ export default class UserService {
     }
   }
 
-  async generateJwt(id?: number): Promise<string> {
-    if (!this.jwtSecret) {
-      throw new HttpError('There was a problem generating a JWT for the user!', 500);
+  async generateAccessToken(id?: number): Promise<string> {
+    if (!this.accessTokenSecret) {
+      throw new HttpError('There was a problem generating an access token for the user!', 500);
     }
 
     if (id) {
@@ -92,10 +93,38 @@ export default class UserService {
     return jwt.sign({
       ...serializedUser
     },
-    this.jwtSecret,
+    this.accessTokenSecret,
     {
       expiresIn: `${ttl}s`
     });
+  }
+
+  async generateRefreshToken(id?: number): Promise<string> {
+    if (!this.refreshTokenSecret) {
+      throw new HttpError('There was a problem generating a refresh token for the user!', 500);
+    }
+
+    if (id) {
+      await this.getUserById(id);
+    }
+
+    const ttl = config.get<number>('jwt.refreshToken.ttl');
+
+    const refreshToken = jwt.sign({
+      id: this.user.id
+    },
+    this.refreshTokenSecret,
+    {
+      expiresIn: `${ttl}s`
+    });
+
+    await UserSession.create({
+      fkUser: this.user.id,
+      refreshToken,
+      instanceId: uuidv1()
+    });
+
+    return refreshToken;
   }
 
   async jwtLogin(id: number): Promise<boolean> {
