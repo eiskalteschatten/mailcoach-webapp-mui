@@ -99,7 +99,7 @@ describe('Auth Controller', () => {
 
       expect(response.status).toEqual(204);
 
-      const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN_SECRET) as any;
+      const decoded = jwt.decode(refreshToken) as any;
 
       const userSession = await UserSession.findOne({
         where: {
