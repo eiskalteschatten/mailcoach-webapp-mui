@@ -2,6 +2,7 @@ import { AnyAction, applyMiddleware, combineReducers, compose, createStore } fro
 import thunk, { ThunkDispatch } from 'redux-thunk';
 
 import app, { AppState } from './reducers/appReducer';
+import user, { UserState } from './reducers/userReducer';
 
 const devExtension = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
@@ -9,6 +10,7 @@ const composeEnhancers = devExtension && process.env.NODE_ENV !== 'production' ?
 
 const reducer = combineReducers({
   app,
+  user
 });
 
 const store = createStore(
@@ -20,6 +22,7 @@ const store = createStore(
 
 export interface State {
   app: AppState;
+  user: UserState;
 }
 
 // Shortcuts
