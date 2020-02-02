@@ -16,10 +16,10 @@ module.exports = {
   },
   jwt: {
     accessToken: {
-      ttl: 3600 // seconds
+      ttl: 3600 // seconds; 1 hour
     },
     refreshToken: {
-      ttl: 604800 // seconds
+      ttl: 604800 // seconds; 1 week
     }
   },
   dbConfig: {
