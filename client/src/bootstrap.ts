@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { dispatch } from './store';
 import { appStopBooting } from './store/actions/appActions';
+import renewAccessToken from './lib/renewAccessToken';
 
 export default async (): Promise<void> => {
   axios.interceptors.request.use((config: any): any => {
@@ -18,4 +19,5 @@ export default async (): Promise<void> => {
   });
 
   await dispatch(appStopBooting());
+  renewAccessToken();
 };
