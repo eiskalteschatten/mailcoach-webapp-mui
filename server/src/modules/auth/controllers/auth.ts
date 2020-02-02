@@ -5,7 +5,6 @@ import AbstractController from '@mc/modules/AbstractController';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import { HttpError } from '@mc/lib/Error';
 import logger from '@mc/logger';
-import authPassport from '@mc/lib/middleware/authPassport';
 
 import User from '../models/User';
 import UserService from '../services/UserService';
@@ -20,7 +19,7 @@ class AuthController extends AbstractController {
 
   private initilizeRoutes(): void {
     this.router.post('/login', this.login);
-    this.router.post('/logout', authPassport, this.logout);
+    this.router.post('/logout', this.authRefreshTokenPassport, this.logout);
     this.router.post('/token', this.authRefreshTokenPassport, this.refreshAccessToken);
   }
 
@@ -150,7 +149,7 @@ class AuthController extends AbstractController {
    * @apiSuccessExample {json} Success-Response:
    *  HTTP/1.1 200 OK
    *  {
-   *    "accessToken": ""
+   *    "accessToken": "..."
    *  }
    *
    * @apiErrorExample {string} Error-Response:
