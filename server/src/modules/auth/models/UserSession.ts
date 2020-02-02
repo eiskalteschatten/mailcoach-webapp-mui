@@ -6,13 +6,9 @@ import User from './User';
 
 export class UserSession extends Model {
   id!: number;
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  lastLogin: Date;
-  status: string;
-  avatar: string;
+  fkUser: number;
+  refreshToken: string;
+  instanceId: string;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
 }
