@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       margin: 25
     },
+    loginButtonWrapper: {
+      textAlign: 'right'
+    },
     loginButton: {
       margin: '15px 0'
     }
@@ -58,15 +61,17 @@ const LoginForm: React.FC = () => {
       <Form className={classes.root}>
         <Username />
         <Password />
-        <Button
-          variant='contained'
-          color='primary'
-          className={classes.loginButton}
-          type='submit'
-          disabled={formikProps.isSubmitting}
-        >
-          <FormattedMessage id='logIn' />
-        </Button>
+        <div className={classes.loginButtonWrapper}>
+          <Button
+            variant='contained'
+            color='primary'
+            className={classes.loginButton}
+            type='submit'
+            disabled={formikProps.isSubmitting}
+          >
+            <FormattedMessage id='logIn' />
+          </Button>
+        </div>
       </Form>
   )}/>);
 }
