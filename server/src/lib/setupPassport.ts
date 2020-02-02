@@ -26,7 +26,7 @@ const jwtAccessTokenConfig = {
   passReqToCallback: true
 };
 
-export default async function (): Promise<void> {
+export default async function(): Promise<void> {
   passport.use('local-login', new LocalStrategy(localConfig, async (req: Request, username: string, password: string, done: Function): Promise<void> => {
     try {
       const userService = new UserService();
@@ -47,10 +47,12 @@ export default async function (): Promise<void> {
   passport.use('jwt-refresh-token', new JwtStrategy(jwtRefreshTokenConfig, async (req: Request, jwtPayload: any, done: Function): Promise<void> => {
     try {
       const userId = jwtPayload.id;
+      const instanceId = jwtPayload.instanceId;
 
       const userSession = await UserSession.findOne({
         where: {
-          fkUser: userId
+          fkUser: userId,
+          instanceId
         },
         include: [{
           model: User,
@@ -62,7 +64,7 @@ export default async function (): Promise<void> {
         done(null, false);
       }
 
-      done(null, userSession.user);
+      done(null, userSession);
     }
     catch(error) {
       logger.error(error);

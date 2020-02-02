@@ -79,7 +79,6 @@ export default class UserService {
   }
 
   async localLogin(username: string, password: string): Promise<boolean> {
-    this.localLogout();
     await this.getUserByUsername(username);
     const hasValidPassword: boolean = await this.validatePassword(password);
 
@@ -94,7 +93,16 @@ export default class UserService {
     return !!this.user;
   }
 
-  localLogout(): void {
+  async localLogout(instanceId?: string): Promise<void> {
+    const where = {
+      fkUser: this.user.id
+    };
+
+    if (instanceId) {
+      where['instanceId'] = instanceId;
+    }
+
+    await UserSession.destroy({ where });
     this.user = null;
   }
 
@@ -129,9 +137,11 @@ export default class UserService {
     }
 
     const ttl = config.get<number>('jwt.refreshToken.ttl');
+    const instanceId = uuidv1();
 
     const refreshToken = jwt.sign({
-      id: this.user.id
+      id: this.user.id,
+      instanceId
     },
     this.refreshTokenSecret,
     {
@@ -141,7 +151,7 @@ export default class UserService {
     await UserSession.create({
       fkUser: this.user.id,
       refreshToken,
-      instanceId: uuidv1()
+      instanceId
     });
 
     return refreshToken;

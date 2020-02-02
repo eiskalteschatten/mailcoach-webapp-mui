@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 
+import setupPassport from '../setupPassport';
+
 class App {
   app: express.Application;
 
@@ -22,6 +24,7 @@ class App {
 
   private async configurePassport(): Promise<void> {
     this.app.use(passport.initialize());
+    await setupPassport();
   }
 }
 

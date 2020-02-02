@@ -1,12 +1,15 @@
-import { Router, Request, Response, NextFunction, RequestHandler } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import passport from 'passport';
-import config from 'config';
-// import jwt from 'jsonwebtoken';
 
 import AbstractController from '@mc/modules/AbstractController';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import { HttpError } from '@mc/lib/Error';
 import logger from '@mc/logger';
+
+import User from '../models/User';
+import UserService from '../services/UserService';
+import { serialize } from '../serializer/user';
+import { UserSessionWithUser } from '../interfaces/UserSession';
 
 class AuthController extends AbstractController {
   constructor() {
@@ -16,6 +19,7 @@ class AuthController extends AbstractController {
 
   private initilizeRoutes(): void {
     this.router.post('/login', this.login);
+    this.router.post('/logout', this.authPassport, this.logout);
     this.router.post('/token', this.authPassport, this.refreshAccessToken);
   }
 
@@ -59,28 +63,72 @@ class AuthController extends AbstractController {
    *  }
    */
 
-  private async login(req: Request, res: Response): Promise<void> {
+  private async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      // const ttl = config.get<string>('jwt.refreshToken.ttl');
+      passport.authenticate('local-login', { session: false }, (error: Error, user: User): void => {
+        if (error) {
+          return returnError(error, req, res);
+        }
 
-      // const refreshToken = jwt.sign({
-      //   id: user.id
-      // },
-      // config.get<string>('jwt.secret'),
-      // {
-      //   expiresIn: `${ttl}s`
-      // });
+        req.login(user, { session: false }, async (loginError: Error): Promise<void> => {
+          if (loginError) {
+            return returnError(loginError as HttpError, req, res);
+          }
 
+          if (!user) {
+            const httpError = new HttpError('The user could not be found!');
+            return returnError(httpError, req, res);
+          }
 
-      // TODO: save refresh token in the DB with the userId as a key
+          const userService = new UserService();
+          const accessToken = await userService.generateAccessToken(user.id);
+          const refreshToken = await userService.generateRefreshToken(user.id);
 
-      // res.json({
-      //   user,
-      //   accessToken,
-      //   refreshToken
-      // });
+          res.json({
+            user: serialize(user),
+            accessToken,
+            refreshToken
+          });
+        });
+      })(req, res, next);
+    }
+    catch(error) {
+      if (error.status != 401) {
+        if (error.status >= 500) {
+          logger.error(error.message);
+        }
 
-      res.send();
+        const httpError = new HttpError('The user could not be logged in for an unknown reason!', error.status);
+        returnError(httpError, req, res);
+      }
+    }
+  }
+
+  /**
+   * @api {post} /auth/logout Logout
+   * @apiName Logout
+   * @apiGroup Auth
+   * @apiVersion 1.0.0
+   *
+   * @apiHeaderExample {json} Header-Example:
+   *  {
+   *    "Authorization": "Bearer refreshToken"
+   *  }
+   *
+   * @apiSuccessExample {json} Success-Response:
+   *  HTTP/1.1 204 No Content
+   */
+
+  private async logout(req: Request, res: Response): Promise<void> {
+    try {
+      const userSession = req.user as UserSessionWithUser;
+
+      const userService = new UserService();
+      await userService.setUser(userSession.user.id);
+      await userService.localLogout(userSession.instanceId);
+
+      req.logout();
+      res.status(204).send('');
     }
     catch(error) {
       returnError(error as HttpError, req, res);
@@ -113,26 +161,18 @@ class AuthController extends AbstractController {
 
   private async refreshAccessToken(req: Request, res: Response): Promise<void> {
     try {
-      // const ttl = config.get<string>('jwt.refreshToken.ttl');
+      const userSession = req.user as UserSessionWithUser;
+      const user = userSession.user;
 
-      // const refreshToken = jwt.sign({
-      //   id: user.id
-      // },
-      // config.get<string>('jwt.secret'),
-      // {
-      //   expiresIn: `${ttl}s`
-      // });
+      const userService = new UserService();
+      await userService.setUser(user.id);
+      const accessToken = await userService.generateAccessToken(user.id);
 
-
-      // TODO: save refresh token in the DB with the userId as a key
-
-      // res.json({
-      //   user,
-      //   accessToken,
-      //   refreshToken
-      // });
-
-      res.send();
+      res.json({
+        user,
+        accessToken,
+        refreshToken: userSession.refreshToken
+      });
     }
     catch(error) {
       returnError(error as HttpError, req, res);
@@ -140,7 +180,7 @@ class AuthController extends AbstractController {
   }
 
   private authPassport(req: Request, res: Response, next: NextFunction): RequestHandler {
-    return passport.authenticate('jwt-refresh-token', { session: false }, (error: Error, userId: number, httpError?: HttpError): void => {
+    return passport.authenticate('jwt-refresh-token', { session: false }, (error: Error, userSession: UserSessionWithUser, httpError?: HttpError): void => {
       try {
         if (error) {
           throw error;
@@ -150,12 +190,12 @@ class AuthController extends AbstractController {
           throw httpError;
         }
 
-        if (!userId) {
+        if (!userSession) {
           throw new HttpError('Unauthorized', 401);
         }
 
-        req.login(userId, { session: false }, async (loginError: Error): Promise<void> => {
-          if (loginError || !userId) {
+        req.login(userSession, { session: false }, async (loginError: Error): Promise<void> => {
+          if (loginError || !userSession) {
             if (loginError) {
               return returnError(loginError as HttpError, req, res);
             }

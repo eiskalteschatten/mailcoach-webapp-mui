@@ -34,9 +34,15 @@ UserSession.init({
 });
 
 UserSession.belongsTo(User, {
-  as: 'userSession',
+  as: 'user',
   foreignKey: 'fkUser',
   targetKey: 'id'
+});
+
+User.hasMany(UserSession, {
+  as: 'userSession',
+  foreignKey: 'fkUser',
+  sourceKey: 'id'
 });
 
 if (process.env.NODE_ENV === 'test') {
