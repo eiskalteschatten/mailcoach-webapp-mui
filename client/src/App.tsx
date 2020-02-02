@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
+
+import { ThemeProvider } from '@material-ui/styles';
+import { CssBaseline }  from '@material-ui/core';
+
+import GeneralWrapper from './GeneralWrapper';
+import GeneralError from './components/GeneralError';
+
+import theme from './theme';
+import store from './store'
+import bootstrap from './bootstrap';
+
 import './App.css';
 
-const App = () => {
+const App: React.FC = () => {
+  useEffect(() => {
+    bootstrap();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Provider store={store}>
+        <GeneralWrapper />
+        <GeneralError />
+      </Provider>
+    </ThemeProvider>
   );
 }
 
