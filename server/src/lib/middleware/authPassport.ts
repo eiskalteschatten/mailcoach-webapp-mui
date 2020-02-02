@@ -3,10 +3,10 @@ import passport from 'passport';
 
 import { returnError } from '@mc/lib/apiErrorHandling';
 import { HttpError } from '@mc/lib/Error';
-import { UserSessionWithUser } from '@mc/modules/auth/interfaces/UserSession';
+import User from '@mc/modules/auth/models/User';
 
 export default function(req: Request, res: Response, next: NextFunction): RequestHandler {
-  return passport.authenticate('jwt-refresh-token', { session: false }, (error: Error, userSession: UserSessionWithUser, httpError?: HttpError): void => {
+  return passport.authenticate('jwt', { session: false }, (error: Error, user: User, httpError?: HttpError): void => {
     try {
       if (error) {
         throw error;
@@ -16,12 +16,12 @@ export default function(req: Request, res: Response, next: NextFunction): Reques
         throw httpError;
       }
 
-      if (!userSession) {
+      if (!user) {
         throw new HttpError('Unauthorized', 401);
       }
 
-      req.login(userSession, { session: false }, async (loginError: Error): Promise<void> => {
-        if (loginError || !userSession) {
+      req.login(user, { session: false }, async (loginError: Error): Promise<void> => {
+        if (loginError || !user) {
           if (loginError) {
             return returnError(loginError as HttpError, req, res);
           }
