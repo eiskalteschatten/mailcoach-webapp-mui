@@ -5,8 +5,11 @@ import { appStopBooting } from './store/actions/appActions';
 
 export default async (): Promise<void> => {
   axios.interceptors.request.use((config: any): any => {
-    const token = btoa(process.env.REACT_APP_BASIC_AUTH_USERNAME + ":" + process.env.REACT_APP_BASIC_AUTH_PASSWORD);
-    config.headers.Authorization = `Basic ${token}`;
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
 
     return config;
   }, (error: any): void => {

@@ -100,11 +100,14 @@ export const renewAccessToken: ActionCreator<
 
   try {
     const refreshToken = localStorage.getItem('refreshToken');
-    const res: any = await axios.post('/api/auth/token', {
+
+    const localAxios = axios.create({
       headers: {
         Authorization: `Bearer ${refreshToken}`
       }
     });
+
+    const res: any = await localAxios.post('/api/auth/token');
 
     if (res.status === 200 && res.data && res.data.user) {
       dispatch(userSetInfo(res.data.user));
@@ -131,11 +134,14 @@ export const logoutUser: ActionCreator<
 
   try {
     const refreshToken = localStorage.getItem('refreshToken');
-    const res: any = await axios.post('/api/auth/logout', {
+
+    const localAxios = axios.create({
       headers: {
         Authorization: `Bearer ${refreshToken}`
       }
     });
+
+    const res: any = await localAxios.post('/api/auth/logout');
 
     if (res.status === 204) {
       dispatch(userLogout());
