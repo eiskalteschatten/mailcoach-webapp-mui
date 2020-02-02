@@ -17,6 +17,9 @@ module.exports = {
       decimalNumbers: true
     },
     logging: console.log
+  },
+  users: {
+    defaultAvatar: ''
   }
 };
 
