@@ -23,8 +23,8 @@ class UserController extends AbstractController {
   }
 
   /**
-   * @api {get} /api/auth/user Get A User's Information
-   * @apiName GetUser
+   * @api {get} /api/auth/users/self Get A User's Own Information
+   * @apiName GetUserOwnAccount
    * @apiGroup Auth
    * @apiVersion 1.0.0
    *
@@ -61,8 +61,8 @@ class UserController extends AbstractController {
   }
 
   /**
-   * @api {put} /api/auth/users Update a User's Account
-   * @apiName UpdateUserAccount
+   * @api {put} /api/auth/users/self Update a User's Own Account
+   * @apiName UpdateUserOwnAccount
    * @apiGroup Auth
    * @apiVersion 1.0.0
    *
@@ -133,8 +133,8 @@ class UserController extends AbstractController {
   }
 
   /**
-   * @api {patch} /api/auth/users/self/password Update a User's Password
-   * @apiName UpdateUserPassword
+   * @api {patch} /api/auth/users/self/password Update a User's Own Password
+   * @apiName UpdateUserOwnPassword
    * @apiGroup Auth
    * @apiVersion 1.0.0
    *
