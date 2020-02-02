@@ -13,6 +13,8 @@ import {
 import { grey } from '@material-ui/core/colors';
 
 import MenuIcon from '@material-ui/icons/Menu';
+import AppsIcon from '@material-ui/icons/Apps';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme: Theme) => {
   const appBarBorderBottomColor = theme.palette.type === 'light'
@@ -26,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) => {
     },
     title: {
       marginLeft: 10
+    },
+    grow: {
+      flexGrow: 1
     }
   })
 });
@@ -45,9 +50,25 @@ const AppBar: React.FC = () => {
       >
         <MenuIcon />
       </IconButton>
+
       <Typography variant='h6' noWrap className={classes.title}>
         MailCoach
       </Typography>
+
+      <div className={classes.grow} />
+
+      <IconButton
+        onClick={() => {}}
+      >
+        <AppsIcon />
+      </IconButton>
+
+      <IconButton
+        onClick={() => {}}
+        edge='end'
+      >
+        <AccountCircle />
+      </IconButton>
     </Toolbar>
   </AppBarMu>);
 }
