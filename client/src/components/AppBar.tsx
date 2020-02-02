@@ -10,18 +10,33 @@ import {
   createStyles
 } from '@material-ui/core';
 
+import { grey } from '@material-ui/core/colors';
+
 import MenuIcon from '@material-ui/icons/Menu';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+  const appBarBorderBottomColor = theme.palette.type === 'light'
+    ? grey[300]
+    : '#000000';
+
+  return createStyles({
+    root: {
+      boxShadow: 'none',
+      borderBottom: `1px solid ${appBarBorderBottomColor}`
+    },
+    title: {
+      marginLeft: 10
+    }
   })
-);
+});
 
 const AppBar: React.FC = () => {
-  // const classes = useStyles();
+  const classes = useStyles();
 
   return (<AppBarMu
     position='fixed'
+    color='default'
+    className={classes.root}
   >
     <Toolbar>
       <IconButton
@@ -30,7 +45,7 @@ const AppBar: React.FC = () => {
       >
         <MenuIcon />
       </IconButton>
-      <Typography variant='h6' noWrap>
+      <Typography variant='h6' noWrap className={classes.title}>
         MailCoach
       </Typography>
     </Toolbar>
