@@ -6,6 +6,6 @@ describe('AuthModule', () => {
   });
 
   test('entryRoute to be correct', () => {
-    expect(authModule.entryRoute).toBe('auth');
+    expect(authModule.entryRoute).toBe('/auth');
   });
 });
