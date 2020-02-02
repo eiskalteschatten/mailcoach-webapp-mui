@@ -25,6 +25,7 @@ describe('User Model', () => {
     expect(testModel.password).toEqual(data.password);
     expect(testModel.firstName).toEqual(data.firstName);
     expect(testModel.lastName).toEqual(data.lastName);
+    expect(testModel.email).toEqual(data.email);
     expect(testModel.status).toEqual(data.status);
     expect(testModel.avatar).toEqual(data.avatar);
   });
@@ -43,6 +44,7 @@ describe('User Model', () => {
     expect(testModel.password).toEqual(data.password);
     expect(testModel.firstName).toEqual(newFirstName);
     expect(testModel.lastName).toEqual(data.lastName);
+    expect(testModel.email).toEqual(data.email);
     expect(testModel.status).toEqual(data.status);
     expect(testModel.avatar).toEqual(data.avatar);
   });

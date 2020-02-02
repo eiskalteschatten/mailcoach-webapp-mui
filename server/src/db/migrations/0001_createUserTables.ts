@@ -34,6 +34,10 @@ export default {
         type: DataTypes.STRING,
         field: 'last_name'
       },
+      email: {
+        type: DataTypes.STRING,
+        field: 'email'
+      },
       lastLogin: {
         type: DataTypes.DATE,
         field: 'last_login'

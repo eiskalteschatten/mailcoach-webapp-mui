@@ -8,6 +8,7 @@ export class User extends Model {
   password: string;
   firstName: string;
   lastName: string;
+  email: string;
   lastLogin: Date;
   status: string;
   avatar: string;
@@ -31,6 +32,10 @@ User.init({
   lastName: {
     type: DataTypes.STRING,
     field: 'last_name'
+  },
+  email: {
+    type: DataTypes.STRING,
+    field: 'email'
   },
   lastLogin: {
     type: DataTypes.DATE,
