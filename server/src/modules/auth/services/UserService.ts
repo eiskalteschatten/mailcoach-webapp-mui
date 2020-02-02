@@ -78,6 +78,26 @@ export default class UserService {
     }
   }
 
+  async localLogin(username: string, password: string): Promise<boolean> {
+    this.localLogout();
+    await this.getUserByUsername(username);
+    const hasValidPassword: boolean = await this.validatePassword(password);
+
+    if (!hasValidPassword) {
+      throw new HttpError('Invalid credentials', 401);
+    }
+
+    await this.updateUser(this.user.id, {
+      lastLogin: new Date()
+    });
+
+    return !!this.user;
+  }
+
+  localLogout(): void {
+    this.user = null;
+  }
+
   async generateAccessToken(id?: number): Promise<string> {
     if (!this.accessTokenSecret) {
       throw new HttpError('There was a problem generating an access token for the user!', 500);

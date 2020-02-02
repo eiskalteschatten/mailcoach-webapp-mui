@@ -13,6 +13,7 @@ export interface ModelCreateUpdate {
   password?: string;
   firstName?: string;
   lastName?: string;
+  lastLogin?: Date;
   email?: string;
   status?: string;
   avatar?: string;

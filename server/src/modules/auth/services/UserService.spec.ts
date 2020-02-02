@@ -110,6 +110,13 @@ describe('User Service', () => {
     }
   });
 
+  test('User logout works', async () => {
+    const localUserService = new UserService();
+    await localUserService.setUser(1);
+    userService.localLogout();
+    expect(userService.getUser()).toBeNull();
+  });
+
   test('User can login via JWT', async () => {
     const canLogin: boolean = await userService.jwtLogin(1);
     expect(canLogin).toBeDefined();

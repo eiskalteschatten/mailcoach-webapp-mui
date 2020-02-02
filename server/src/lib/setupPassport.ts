@@ -1,11 +1,18 @@
 import { Request } from 'express';
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { Strategy as LocalStrategy } from 'passport-local';
 
 import logger from '@mc/lib/logger';
 import User from '@mc/modules/auth/models/User';
 import UserSession from '@mc/modules/auth/models/UserSession';
 import UserService from '@mc/modules/auth/services/UserService';
+
+const localConfig = {
+  usernameField: 'username',
+  passwordField: 'password',
+  passReqToCallback: true
+};
 
 const jwtRefreshTokenConfig = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -20,6 +27,23 @@ const jwtAccessTokenConfig = {
 };
 
 export default async function (): Promise<void> {
+  passport.use('local-login', new LocalStrategy(localConfig, async (req: Request, username: string, password: string, done: Function): Promise<void> => {
+    try {
+      const userService = new UserService();
+      const canLogin = await userService.localLogin(username, password);
+
+      if (!canLogin) {
+        return done(null, false);
+      }
+
+      return done(null, userService.getUser());
+    }
+    catch(error) {
+      logger.error(error);
+      done(error);
+    }
+  }));
+
   passport.use('jwt-refresh-token', new JwtStrategy(jwtRefreshTokenConfig, async (req: Request, jwtPayload: any, done: Function): Promise<void> => {
     try {
       const userId = jwtPayload.id;
