@@ -169,7 +169,7 @@ class AuthController extends AbstractController {
       const accessToken = await userService.generateAccessToken(user.id);
 
       res.json({
-        user,
+        user: serialize(user),
         accessToken,
         refreshToken: userSession.refreshToken
       });
