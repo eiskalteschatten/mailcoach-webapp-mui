@@ -11,7 +11,6 @@ export const serialize = (user: User): SerializedModel => ({
   firstName: user.firstName,
   lastName: user.lastName,
   email: user.email,
-  status: user.status,
   avatar: user.avatar
 });
 
