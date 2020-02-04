@@ -19,7 +19,12 @@ export default async (): Promise<void> => {
     return;
   });
 
+  const refreshToken = localStorage.getItem('refreshToken');
+
+  if (refreshToken) {
+    await dispatch(renewAccessToken());
+    await renewAccessTokenInterval();
+  }
+
   await dispatch(appStopBooting());
-  await dispatch(renewAccessToken());
-  await renewAccessTokenInterval();
 };

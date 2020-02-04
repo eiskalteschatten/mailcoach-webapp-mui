@@ -24,9 +24,6 @@ const Router: React.FC<Props> = (props) => {
   } = props;
 
   const user = useSelector((state: State) => state.user);
-  const { switchLocale, defaultLocale } = useContext(IntlContext);
-
-  switchLocale(defaultLocale);
 
   if (!user.jwtValidated && !pathname.includes('/login')) {
     return <Redirect to={'/login'} />;
