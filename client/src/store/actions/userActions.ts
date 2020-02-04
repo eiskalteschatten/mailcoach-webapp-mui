@@ -144,6 +144,8 @@ export const logoutUser: ActionCreator<
     const res: any = await localAxios.post('/api/auth/logout');
 
     if (res.status === 204) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       dispatch(userLogout());
     }
   }

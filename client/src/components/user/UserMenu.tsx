@@ -14,7 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import { grey } from '@material-ui/core/colors';
 
-import { State } from '../../store';
+import { State, dispatch } from '../../store';
+import { logoutUser } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -91,7 +92,7 @@ const UserMenu: React.FC = () => {
         </div>
 
         <div className={classes.logout}>
-          <Button variant='outlined'>
+          <Button variant='outlined' onClick={() => dispatch(logoutUser())}>
             { messages.logOut }
           </Button>
         </div>
