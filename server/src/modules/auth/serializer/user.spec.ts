@@ -26,6 +26,7 @@ describe('UserSerializer', () => {
     };
 
     delete expectedData.password;
+    delete expectedData.status;
     delete expectedData.lastLogin;
 
     const serializedData = serialize(testUser);
@@ -42,6 +43,7 @@ describe('UserSerializer', () => {
       password: 'passwordManiac',
       firstName: 'Billy',
       lastName: 'Bower',
+      status: 'active',
       avatar: 'test avatar'
     };
 
