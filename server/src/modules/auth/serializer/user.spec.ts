@@ -42,7 +42,6 @@ describe('UserSerializer', () => {
       password: 'passwordManiac',
       firstName: 'Billy',
       lastName: 'Bower',
-      status: 'active',
       avatar: 'test avatar'
     };
 
