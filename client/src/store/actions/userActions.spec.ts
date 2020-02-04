@@ -22,7 +22,6 @@ describe('User Actions', () => {
     password: 'testpassword',
     username: 'username',
     email: 'email',
-    status: 'active',
     avatar: ''
   };
 
@@ -32,7 +31,6 @@ describe('User Actions', () => {
     lastName: 'lastname',
     username: 'username',
     email: 'email',
-    status: 'active',
     avatar: ''
   };
 

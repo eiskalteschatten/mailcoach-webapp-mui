@@ -15,7 +15,6 @@ describe('User Reducer', () => {
       lastName: 'lastname',
       username: 'username',
       email: 'email',
-      status: 'active',
       avatar: ''
     };
 

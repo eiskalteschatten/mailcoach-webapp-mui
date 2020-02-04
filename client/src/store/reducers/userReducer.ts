@@ -16,7 +16,6 @@ export const initialState: UserState = {
     lastName: '',
     username: '',
     email: '',
-    status: '',
     avatar: ''
   },
   jwtValidated: false
