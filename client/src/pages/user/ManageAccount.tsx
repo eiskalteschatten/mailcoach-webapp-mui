@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import {
   makeStyles,
@@ -8,37 +8,41 @@ import {
   Container,
   Grid,
   Paper,
-  Button
+  Typography
 } from '@material-ui/core';
 
-import { State, dispatch } from '../../store';
+import UserAccountForm from '../../components/user/UserAccountForm';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(3)
   }
 }));
 
 const ManageAccount: React.FC = () => {
   const classes = useStyles();
-  const user = useSelector((state: State) => state.user.user);
 
   return (<Container>
     <Grid
       container
       spacing={2}
       justify='center'
-      alignItems='center'
     >
       <Grid item xs={12} md={6}>
         <Paper className={classes.paper}>
-          test
+          <Typography variant='h5'>
+            <FormattedMessage id='account.accountInformation' />
+          </Typography>
+
+          <UserAccountForm />
         </Paper>
       </Grid>
 
       <Grid item xs={12} md={6}>
         <Paper className={classes.paper}>
-          test
+          <Typography variant='h5'>
+            <FormattedMessage id='account.updatePassword' />
+          </Typography>
         </Paper>
       </Grid>
     </Grid>

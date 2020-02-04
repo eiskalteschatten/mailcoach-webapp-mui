@@ -18,6 +18,8 @@ export default {
   'passwordsMustMatch': 'Passwords must match',
 
   'account.manageAccount': 'Manage Account',
+  'account.accountInformation': 'Account Information',
+  'account.updatePassword': 'Update Password',
 
   'errors.loginError': 'Login failed. Please check your username and password.',
   'errors.registrationError': 'Registration failed. An error occurred while trying to register your account. Please try again later.',
