@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { IntlContext } from './intl/IntlContext';
 import { State } from './store';
 
 import RouteWithLayout from './components/layout/wrappers/RouteWithLayout';
