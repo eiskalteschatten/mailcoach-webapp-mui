@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       width: '100%'
     },
-    menubarWrapper: {
+    appbarWrapper: {
       flex: 0
     },
     main: {
       flex: 1,
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      padding: theme.spacing(3)
     }
   })
 );
@@ -35,7 +36,9 @@ const MainLayout: React.FC<Props> = ({ children }) => {
   const classes = useStyles();
 
   return (<div className={classes.wrapper}>
-    <AppBar />
+    <div className={classes.appbarWrapper}>
+      <AppBar />
+    </div>
     <main className={classes.main}>
       {children}
     </main>

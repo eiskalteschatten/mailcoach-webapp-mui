@@ -44,7 +44,7 @@ const AppBar: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   return (<MuiAppBar
-    position='fixed'
+    position='static'
     color='default'
     className={classes.root}
   >
