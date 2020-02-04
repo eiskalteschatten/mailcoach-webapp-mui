@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 import UserAccountForm from '../../components/user/UserAccountForm';
+import ChangePasswordForm from '../../components/user/ChangePasswordForm';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
@@ -43,6 +44,8 @@ const ManageAccount: React.FC = () => {
           <Typography variant='h5'>
             <FormattedMessage id='account.updatePassword' />
           </Typography>
+
+          <ChangePasswordForm />
         </Paper>
       </Grid>
     </Grid>

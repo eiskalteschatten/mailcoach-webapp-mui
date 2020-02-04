@@ -6,6 +6,8 @@ export default {
   'emailAddress': 'Emailadresse',
   'username': 'Benutzername',
   'password': 'Passwort',
+  'currentPassword': 'Aktuelles Passwort',
+  'newPassword': 'Neues Passwort',
   'passwordRepeat': 'Passwort wiederholen',
   'logIn': 'Anmelden',
   'logOut': 'Abmelden',
@@ -14,7 +16,7 @@ export default {
 
   'required': 'Erforderlich',
   'invalidEmailAddress': 'Ungültige Emailadresse',
-  'passwordContainEightChars': 'Passwort muss aus mindestens 8 Zeichen bestehen',
+  'wrongPasswordFormat': 'Passwort muss aus mindestens 8 Zeichen, 1 Klein- and 1 Großbuchstabe, 1 Zahl, und 1 Sonderzeichen bestehen',
   'passwordsMustMatch': 'Passwörter müssen übereinstimmen',
 
   'account.manageAccount': 'Konto verwalten',

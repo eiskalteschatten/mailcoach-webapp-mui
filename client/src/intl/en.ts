@@ -6,6 +6,8 @@ export default {
   'emailAddress': 'Email Address',
   'username': 'Username',
   'password': 'Password',
+  'currentPassword': 'Current Password',
+  'newPassword': 'New Password',
   'passwordRepeat': 'Repeat Password',
   'logIn': 'Log In',
   'logOut': 'Log Out',
@@ -14,7 +16,7 @@ export default {
 
   'required': 'Required',
   'invalidEmailAddress': 'Invalid Email Address',
-  'passwordContainEightChars': 'Password must contain at least 8 characters',
+  'wrongPasswordFormat': 'Password must contain at least 8 characters, 1 lowercase and 1 uppercase letter, 1 number, and 1 symbol',
   'passwordsMustMatch': 'Passwords must match',
 
   'account.manageAccount': 'Manage Account',
