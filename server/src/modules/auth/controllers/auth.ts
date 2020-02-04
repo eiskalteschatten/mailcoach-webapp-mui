@@ -45,7 +45,8 @@ class AuthController extends AbstractController {
    *      "id": 1,
    *      "username": "",
    *      "firstName": "",
-   *      "lastName": ""
+   *      "lastName": "",
+   *      "avatar": ""
    *    },
    *    "accessToken": "",
    *    "refreshToken": ""
