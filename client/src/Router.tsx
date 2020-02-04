@@ -11,6 +11,7 @@ import MainLayout from './components/layout/MainLayout';
 import LoginLayout from './components/layout/LoginLayout';
 
 import Dashboard from './pages/Dashboard';
+import ManageAccount from './pages/user/ManageAccount';
 import PageNotFound from './pages/errors/PageNotFound';
 
 interface Props extends RouteComponentProps<{ locale: string; }> {}
@@ -39,6 +40,7 @@ const Router: React.FC<Props> = (props) => {
     <Route path={'/login'} component={LoginLayout} />
 
     <RouteWithLayout exact path={'/'} layout={MainLayout} component={Dashboard} />
+    <RouteWithLayout path={'/account'} layout={MainLayout} component={ManageAccount} />
 
     <Route component={PageNotFound} />
   </Switch>);

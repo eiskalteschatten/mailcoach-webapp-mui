@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
   makeStyles,
@@ -42,7 +43,9 @@ const useStyles = makeStyles((theme: Theme) => {
   });
 });
 
-const UserMenu: React.FC = () => {
+interface Props extends RouteComponentProps {};
+
+const UserMenu: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { firstName, lastName, username } = useSelector((state: State) => state.user.user);
@@ -54,6 +57,11 @@ const UserMenu: React.FC = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleManageAccountClick = () => {
+    handleClose();
+    props.history.push('/account');
   };
 
   return (<>
@@ -86,7 +94,7 @@ const UserMenu: React.FC = () => {
             { username }
           </div>
 
-          <Button variant='outlined'>
+          <Button variant='outlined' onClick={handleManageAccountClick}>
             { messages['account.manageAccount'] }
           </Button>
         </div>
@@ -101,4 +109,4 @@ const UserMenu: React.FC = () => {
   </>);
 }
 
-export default UserMenu;
+export default withRouter(UserMenu)
