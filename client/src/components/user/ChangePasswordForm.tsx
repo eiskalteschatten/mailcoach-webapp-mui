@@ -7,8 +7,7 @@ import {
   createStyles,
   makeStyles,
   Theme,
-  Button,
-  TextField
+  Button
 } from '@material-ui/core';
 
 import { PasswordChange } from '../../../../interfaces/Users';
