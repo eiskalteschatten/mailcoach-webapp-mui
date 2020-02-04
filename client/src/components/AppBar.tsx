@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import {
   AppBar as MuiAppBar,
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme: Theme) => {
       borderBottom: `1px solid ${appBarBorderBottomColor}`
     },
     title: {
-      marginLeft: 10
+      marginLeft: 10,
+      cursor: 'pointer'
     },
     grow: {
       flexGrow: 1
@@ -36,7 +38,9 @@ const useStyles = makeStyles((theme: Theme) => {
   });
 });
 
-const AppBar: React.FC = () => {
+interface Props extends RouteComponentProps {};
+
+const AppBar: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   return (<MuiAppBar
@@ -52,7 +56,12 @@ const AppBar: React.FC = () => {
         <MenuIcon />
       </IconButton>
 
-      <Typography variant='h6' noWrap className={classes.title}>
+      <Typography
+        variant='h6'
+        noWrap
+        className={classes.title}
+        onClick={() => props.history.push('/')}
+      >
         MailCoach
       </Typography>
 
@@ -69,4 +78,4 @@ const AppBar: React.FC = () => {
   </MuiAppBar>);
 }
 
-export default AppBar;
+export default withRouter(AppBar);

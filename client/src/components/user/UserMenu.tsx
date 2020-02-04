@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import {
   makeStyles,
@@ -109,4 +109,4 @@ const UserMenu: React.FC<Props> = (props: Props) => {
   </>);
 }
 
-export default withRouter(UserMenu)
+export default withRouter(UserMenu);
