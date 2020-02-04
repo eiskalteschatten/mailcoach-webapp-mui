@@ -14,7 +14,8 @@ import { grey } from '@material-ui/core/colors';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import AppsIcon from '@material-ui/icons/Apps';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import UserMenu from './user/UserMenu';
 
 const useStyles = makeStyles((theme: Theme) => {
   const appBarBorderBottomColor = theme.palette.type === 'light'
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => {
     grow: {
       flexGrow: 1
     }
-  })
+  });
 });
 
 const AppBar: React.FC = () => {
@@ -63,12 +64,7 @@ const AppBar: React.FC = () => {
         <AppsIcon />
       </IconButton>
 
-      <IconButton
-        onClick={() => {}}
-        edge='end'
-      >
-        <AccountCircle />
-      </IconButton>
+      <UserMenu />
     </Toolbar>
   </MuiAppBar>);
 }
