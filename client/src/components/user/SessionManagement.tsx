@@ -8,14 +8,10 @@ import {
 import { dispatch } from '../../store';
 import { getAllUserSessions, logOutAllOtherUserSessions } from '../../store/actions/userActions';
 
-const useAllUserSessions = () => {
+const SessionManagement: React.FC = () => {
   useEffect(() => {
     dispatch(getAllUserSessions());
   }, [])
-}
-
-const SessionManagement: React.FC = () => {
-  // useAllUserSessions();
 
   return (<>
     <Button
