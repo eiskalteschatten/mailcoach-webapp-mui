@@ -25,6 +25,8 @@ export default {
 
   'errors.loginError': 'Anmeldung fehlgeschlagen. Bitte prüfen Sie Ihren Benutzernamen und Ihr Passwort.',
   'errors.registrationError': 'Registrierung fehlgeschlagen. Ein Fehler ist bei der Registrierung Ihres Kontos aufgetreten. Bitte versuchen Sie es später noch einmal.',
-  'errors.usernameAlreadyExists': 'Ein Benutzer mit dem angegebenen Benutzernamen existiert bereits. Bitte wählen Sie einen anderen aus..',
-  'errors.requiredFieldsMissing': 'Bitte füllen Sie alle erforderlichen Felder aus.'
+  'errors.usernameAlreadyExists': 'Ein Benutzer mit dem angegebenen Benutzernamen existiert bereits. Bitte wählen Sie einen anderen aus.',
+  'errors.requiredFieldsMissing': 'Bitte füllen Sie alle erforderlichen Felder aus.',
+  'errors.oldPasswordIncorrect': 'Ihr Passwort konnte nicht geändert werden, da das von Ihnen eingegebene aktuelle Passwort ist falsch.',
+  'errors.anErrorOccurred': 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.'
 };

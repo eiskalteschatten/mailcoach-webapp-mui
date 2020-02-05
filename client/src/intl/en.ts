@@ -26,5 +26,7 @@ export default {
   'errors.loginError': 'Login failed. Please check your username and password.',
   'errors.registrationError': 'Registration failed. An error occurred while trying to register your account. Please try again later.',
   'errors.usernameAlreadyExists': 'A user with this username already exists. Please choose a different one.',
-  'errors.requiredFieldsMissing': 'Please fill out all required fields.'
+  'errors.requiredFieldsMissing': 'Please fill out all required fields.',
+  'errors.oldPasswordIncorrect': 'Your password could not be changed because the current password you entered is incorrect.',
+  'errors.anErrorOccurred': 'An error occurred. Please try again later.'
 };

@@ -176,11 +176,8 @@ export const updateUserSelf: ActionCreator<
     if (error.response.status === 409) {
       dispatch(appSetFormError('errors.usernameAlreadyExists'));
     }
-    else if (error.response.status === 400) {
-      dispatch(appSetFormError('errors.requiredFieldsMissing'));
-    }
     else {
-      dispatch(appSetFormError('errors.registrationError'));
+      dispatch(appSetFormError('errors.anErrorOccurred'));
       console.error(error);
     }
   }
@@ -203,14 +200,11 @@ export const updateOwnPassword: ActionCreator<
     await axios.patch('/api/auth/users/self/password', passwordInfo);
   }
   catch (error) {
-    if (error.response.status === 409) {
-      dispatch(appSetFormError('errors.usernameAlreadyExists'));
-    }
-    else if (error.response.status === 400) {
-      dispatch(appSetFormError('errors.requiredFieldsMissing'));
+    if (error.response.status === 406) {
+      dispatch(appSetFormError('errors.oldPasswordIncorrect'));
     }
     else {
-      dispatch(appSetFormError('errors.registrationError'));
+      dispatch(appSetFormError('errors.anErrorOccurred'));
       console.error(error);
     }
   }
