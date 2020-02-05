@@ -257,3 +257,31 @@ export const getAllUserSessions: ActionCreator<
 
   return dispatch(appStopLoading());
 };
+
+export const logOutAllOtherUserSessions: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    const state = getState();
+    await axios.post('/api/auth/users/sessions/logout', {
+      instanceId: state.user && state.user.instanceId
+    });
+
+    const res: any = await axios.get('/api/auth/users/sessions');
+    dispatch(userSetSessions(res.data.sessions));
+  }
+  catch (error) {
+    dispatch(appSetError('errors.anErrorOccurred'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};

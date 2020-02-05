@@ -13,7 +13,8 @@ import {
   renewAccessToken,
   updateUserSelf,
   updateOwnPassword,
-  getAllUserSessions
+  getAllUserSessions,
+  logOutAllOtherUserSessions
 } from './userActions';
 
 import mockStore from '../../lib/tests/mockStore';
@@ -308,6 +309,32 @@ describe('User Actions', () => {
 
     const localStore: MockStore = mockStore();
     await localStore.dispatch(getAllUserSessions(addUser) as any);
+    const actions = localStore.getActions();
+    expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
+    expect(actions[1]).toEqual({
+      type: 'APP_SET_ERROR',
+      error: ''
+    });
+    expect(actions[2]).toEqual({
+      type: 'USER_SET_SESSIONS',
+      sessions: []
+    });
+    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+  });
+
+  test('Logging out of all other user sessions works', async () => {
+    nock('http://localhost')
+      .post('/api/auth/users/sessions/logout')
+      .reply(204);
+
+    nock('http://localhost')
+      .get('/api/auth/users/sessions')
+      .reply(200, {
+        sessions: []
+      });
+
+    const localStore: MockStore = mockStore();
+    await localStore.dispatch(logOutAllOtherUserSessions(addUser) as any);
     const actions = localStore.getActions();
     expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
     expect(actions[1]).toEqual({
