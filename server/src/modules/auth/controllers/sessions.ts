@@ -84,12 +84,22 @@ class SessionsController extends AbstractController {
    *
    * @apiSuccessExample {json} Success-Response:
    *  HTTP/1.1 204 No Content
+   *
+   * @apiErrorExample {json} Error-Response:
+   *  HTTP/1.1 406 Bad Request
+   *  {
+   *    "message": "No instance ID was found!"
+   *  }
    */
 
   private async logout(req: Request, res: Response): Promise<void> {
     try {
       const userId = (req.user as User).id;
       const instanceId = req.body.instanceId;
+
+      if (!instanceId) {
+        throw new HttpError('No instance ID was found!', 400);
+      }
 
       await UserSession.destroy({
         where: {
