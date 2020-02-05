@@ -49,7 +49,8 @@ class AuthController extends AbstractController {
    *      "avatar": ""
    *    },
    *    "accessToken": "",
-   *    "refreshToken": ""
+   *    "refreshToken": "",
+   *    "instanceId": ""
    *  }
    *
    * @apiErrorExample {json} Error-Response:
@@ -88,7 +89,8 @@ class AuthController extends AbstractController {
           res.json({
             user: serialize(user),
             accessToken,
-            refreshToken
+            refreshToken,
+            instanceId: userService.getInstanceId()
           });
         });
       })(req, res, next);

@@ -14,10 +14,15 @@ export default class UserService {
   private readonly saltRounds = 12;
   private readonly accessTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
   private readonly refreshTokenSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
+  private instanceId: string;
   private user: User;
 
   getUser(): User {
     return this.user;
+  }
+
+  getInstanceId(): string {
+    return this.instanceId;
   }
 
   async setUser(identifier: number | string): Promise<User> {
@@ -136,11 +141,11 @@ export default class UserService {
     }
 
     const ttl = config.get<number>('jwt.refreshToken.ttl');
-    const instanceId = uuidv1();
+    this.instanceId = uuidv1();
 
     const refreshToken = jwt.sign({
       id: this.user.id,
-      instanceId
+      instanceId: this.instanceId
     },
     this.refreshTokenSecret,
     {
@@ -150,7 +155,7 @@ export default class UserService {
     await UserSession.create({
       fkUser: this.user.id,
       refreshToken,
-      instanceId
+      instanceId: this.instanceId
     });
 
     return refreshToken;

@@ -49,6 +49,7 @@ describe('Auth Controller', () => {
     expect(response.body.user).toBeDefined();
     expect(response.body.accessToken).toBeDefined();
     expect(response.body.refreshToken).toBeDefined();
+    expect(response.body.instanceId).toBeDefined();
   });
 
   test('Logging in with wrong password does not work', async () => {
