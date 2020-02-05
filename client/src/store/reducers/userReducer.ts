@@ -12,6 +12,7 @@ export interface UserSessions {
 export interface UserState {
   user: SerializedModel;
   jwtValidated: false;
+  instanceId: string;
   sessions: UserSessions[];
 };
 
@@ -25,6 +26,7 @@ export const initialState: UserState = {
     avatar: ''
   },
   jwtValidated: false,
+  instanceId: '',
   sessions: []
 };
 
@@ -45,13 +47,18 @@ const userReducer: Reducer<UserState, UserActions> = (
       };
     case 'USER_LOG_OUT':
       return initialState;
-    default:
-      return state;
+    case 'USER_SET_INSTANCE_ID':
+      return {
+        ...state,
+        instanceId: action.instanceId
+      };
     case 'USER_SET_SESSIONS':
       return {
         ...state,
         sessions: action.sessions
       };
+    default:
+      return state;
   }
 };
 

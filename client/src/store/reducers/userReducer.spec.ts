@@ -41,6 +41,17 @@ describe('User Reducer', () => {
     ).toEqual(initialState)
   });
 
+  test('Should handle USER_SET_INSTANCE_ID', () => {
+    const instanceId = 'test';
+
+    expect(
+      userReducer(undefined, { type: 'USER_SET_INSTANCE_ID', instanceId })
+    ).toEqual({
+      ...initialState,
+      instanceId
+    })
+  });
+
   test('Should handle USER_SET_SESSIONS', () => {
     const sessions: UserSessions[] = [{
       loginDate: new Date(),

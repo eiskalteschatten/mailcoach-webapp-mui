@@ -12,6 +12,9 @@ export interface UserSetInfo extends Action<'USER_SET_INFO'> {
 }
 export interface UserLogin extends Action<'USER_LOG_IN'> {}
 export interface UserLogout extends Action<'USER_LOG_OUT'> {}
+export interface UserSetInstanceId extends Action<'USER_SET_INSTANCE_ID'> {
+  instanceId: string;
+}
 export interface UserSetSessions extends Action<'USER_SET_SESSIONS'> {
   sessions: UserSessions[];
 }
@@ -20,6 +23,7 @@ export type UserActions =
   UserSetInfo |
   UserLogin |
   UserLogout |
+  UserSetInstanceId |
   UserSetSessions;
 
 export const userSetInfo = (user: SerializedModel): UserSetInfo => ({
@@ -29,6 +33,11 @@ export const userSetInfo = (user: SerializedModel): UserSetInfo => ({
 
 export const userLogin = (): UserLogin => ({ type: 'USER_LOG_IN' });
 export const userLogout = (): UserLogout => ({ type: 'USER_LOG_OUT' });
+
+export const userSetInstanceId = (instanceId: string): UserSetInstanceId => ({
+  type: 'USER_SET_INSTANCE_ID',
+  instanceId
+});
 
 export const userSetSessions = (sessions: UserSessions[]): UserSetSessions => ({
   type: 'USER_SET_SESSIONS',
