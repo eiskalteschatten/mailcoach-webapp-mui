@@ -156,6 +156,7 @@ describe('User Actions', () => {
   test('User is logged in', async () => {
     const accessToken = 'Iamatoken';
     const refreshToken = 'Iamarefreshtoken';
+    const instanceId = 'testId';
     const user = {
       username: 'testuser',
       password: 'testpassword'
@@ -166,7 +167,8 @@ describe('User Actions', () => {
       .reply(200, {
         user: {},
         accessToken,
-        refreshToken
+        refreshToken,
+        instanceId
       });
 
     const localStore: MockStore = mockStore();
@@ -181,8 +183,12 @@ describe('User Actions', () => {
       type: 'USER_SET_INFO',
       user: {}
     });
-    expect(actions[3]).toEqual({type: 'USER_LOG_IN'});
-    expect(actions[4]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[3]).toEqual({
+      type: 'USER_SET_INSTANCE_ID',
+      instanceId
+    });
+    expect(actions[4]).toEqual({type: 'USER_LOG_IN'});
+    expect(actions[5]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('User is logged out', async () => {
