@@ -7,6 +7,7 @@ import AbstractModule from '@mc/modules/AbstractModule';
 import authController from './controllers/auth';
 import userController from './controllers/user';
 import userAdminController from './controllers/userAdmin';
+import sessionsController from './controllers/sessions';
 
 export class AuthModule extends AbstractModule implements Module {
   protected modulePath: string = path.resolve(__dirname);
@@ -16,6 +17,7 @@ export class AuthModule extends AbstractModule implements Module {
     const router = Router();
 
     router.use(`${this.entryRoute}/users/self`, userController.router);
+    router.use(`${this.entryRoute}/users/sessions`, sessionsController.router);
     router.use(`${this.entryRoute}/users`, userAdminController.router);
     router.use(this.entryRoute, authController.router);
 
