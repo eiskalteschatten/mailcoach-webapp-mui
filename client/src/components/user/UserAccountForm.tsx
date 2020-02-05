@@ -21,7 +21,7 @@ import {
 } from './UserAccountFormElements';
 
 import { State, dispatch } from '../../store';
-import { loginUser } from '../../store/actions/userActions';
+import { updateUserSelf } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
 interface FormValues extends SerializedModel {}
@@ -59,7 +59,7 @@ const UserAccountForm: React.FC = () => {
   return (<Formik
     initialValues={user}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
-      // await dispatch(loginUser(values));
+      await dispatch(updateUserSelf(values));
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}

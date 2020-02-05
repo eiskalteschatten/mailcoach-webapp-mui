@@ -156,3 +156,34 @@ export const logoutUser: ActionCreator<
 
   return dispatch(appStopLoading());
 };
+
+export const updateUserSelf: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (user: ModelCreateUpdate): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetFormError(''));
+
+  try {
+    const res: any = await axios.put('/api/auth/users/self', user);
+    dispatch(userSetInfo(res.data.user));
+  }
+  catch (error) {
+    if (error.response.status === 409) {
+      dispatch(appSetFormError('errors.usernameAlreadyExists'));
+    }
+    else if (error.response.status === 400) {
+      dispatch(appSetFormError('errors.requiredFieldsMissing'));
+    }
+    else {
+      dispatch(appSetFormError('errors.registrationError'));
+      console.error(error);
+    }
+  }
+
+  return dispatch(appStopLoading());
+};

@@ -10,7 +10,8 @@ import {
   registerUser,
   loginUser,
   logoutUser,
-  renewAccessToken
+  renewAccessToken,
+  updateUserSelf
 } from './userActions';
 
 import mockStore from '../../lib/tests/mockStore';
@@ -250,5 +251,27 @@ describe('User Actions', () => {
     expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
     expect(actions[1]).toEqual({type: 'USER_LOG_OUT'});
     expect(actions[2]).toEqual({type: 'APP_STOP_LOADING'});
+  });
+
+  test('User can update his own account information', async () => {
+    nock('http://localhost')
+      .put('/api/auth/users/self')
+      .reply(200, {
+        user: addUser
+      });
+
+    const localStore: MockStore = mockStore();
+    await localStore.dispatch(updateUserSelf(addUser) as any);
+    const actions = localStore.getActions();
+    expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
+    expect(actions[1]).toEqual({
+      type: 'APP_SET_FORM_ERROR',
+      error: ''
+    });
+    expect(actions[2]).toEqual({
+      type: 'USER_SET_INFO',
+      user: addUser
+    });
+    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
   });
 });
