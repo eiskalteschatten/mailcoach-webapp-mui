@@ -4,7 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 
 import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '../../../../interfaces/Users';
 
-import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError } from './appActions';
+import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError, appSetError } from './appActions';
 
 export interface UserSetInfo extends Action<'USER_SET_INFO'> {
   user: SerializedModel
@@ -166,7 +166,7 @@ export const updateUserSelf: ActionCreator<
   >
 > = (user: ModelCreateUpdate): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
-  dispatch(appSetFormError(''));
+  dispatch(appSetError(''));
 
   try {
     const res: any = await axios.put('/api/auth/users/self', user);
@@ -174,10 +174,10 @@ export const updateUserSelf: ActionCreator<
   }
   catch (error) {
     if (error.response.status === 409) {
-      dispatch(appSetFormError('errors.usernameAlreadyExists'));
+      dispatch(appSetError('errors.usernameAlreadyExists'));
     }
     else {
-      dispatch(appSetFormError('errors.anErrorOccurred'));
+      dispatch(appSetError('errors.anErrorOccurred'));
       console.error(error);
     }
   }
@@ -194,17 +194,17 @@ export const updateOwnPassword: ActionCreator<
   >
 > = (passwordInfo: PasswordChange): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
-  dispatch(appSetFormError(''));
+  dispatch(appSetError(''));
 
   try {
     await axios.patch('/api/auth/users/self/password', passwordInfo);
   }
   catch (error) {
     if (error.response.status === 406) {
-      dispatch(appSetFormError('errors.oldPasswordIncorrect'));
+      dispatch(appSetError('errors.oldPasswordIncorrect'));
     }
     else {
-      dispatch(appSetFormError('errors.anErrorOccurred'));
+      dispatch(appSetError('errors.anErrorOccurred'));
       console.error(error);
     }
   }

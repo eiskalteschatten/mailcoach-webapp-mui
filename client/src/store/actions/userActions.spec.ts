@@ -266,7 +266,7 @@ describe('User Actions', () => {
     const actions = localStore.getActions();
     expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
     expect(actions[1]).toEqual({
-      type: 'APP_SET_FORM_ERROR',
+      type: 'APP_SET_ERROR',
       error: ''
     });
     expect(actions[2]).toEqual({
@@ -286,7 +286,7 @@ describe('User Actions', () => {
     const actions = localStore.getActions();
     expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
     expect(actions[1]).toEqual({
-      type: 'APP_SET_FORM_ERROR',
+      type: 'APP_SET_ERROR',
       error: ''
     });
     expect(actions[2]).toEqual({type: 'APP_STOP_LOADING'});

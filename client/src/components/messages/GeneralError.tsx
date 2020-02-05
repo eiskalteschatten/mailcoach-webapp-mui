@@ -1,5 +1,6 @@
 import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import {
   createStyles,
@@ -45,7 +46,7 @@ const GeneralError: React.FC = () => {
 
   const ErrorMessage: React.FC = () => <span className={classes.message}>
     <ErrorIcon className={classes.icon} />
-    {generalError}
+    <FormattedMessage id={generalError} />
   </span>;
 
   return (<Snackbar
