@@ -15,7 +15,7 @@ import { PasswordChange } from '../../../../interfaces/Users';
 import { CurrentPassword, NewPassword, NewPasswordRepeat } from './ChangePasswordFormElements';
 
 import { dispatch } from '../../store';
-import { loginUser } from '../../store/actions/userActions';
+import { updateOwnPassword } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
 interface FormValues extends PasswordChange {}
@@ -57,7 +57,7 @@ const ChangePasswordForm: React.FC = () => {
   return (<Formik
     initialValues={initialValues}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
-      // await dispatch(loginUser(values));
+      await dispatch(updateOwnPassword(values));
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}

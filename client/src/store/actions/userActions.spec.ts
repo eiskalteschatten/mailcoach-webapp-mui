@@ -11,7 +11,8 @@ import {
   loginUser,
   logoutUser,
   renewAccessToken,
-  updateUserSelf
+  updateUserSelf,
+  updateOwnPassword
 } from './userActions';
 
 import mockStore from '../../lib/tests/mockStore';
@@ -273,5 +274,21 @@ describe('User Actions', () => {
       user: addUser
     });
     expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+  });
+
+  test('User can update his own password', async () => {
+    nock('http://localhost')
+      .patch('/api/auth/users/self/password')
+      .reply(204);
+
+    const localStore: MockStore = mockStore();
+    await localStore.dispatch(updateOwnPassword(addUser) as any);
+    const actions = localStore.getActions();
+    expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
+    expect(actions[1]).toEqual({
+      type: 'APP_SET_FORM_ERROR',
+      error: ''
+    });
+    expect(actions[2]).toEqual({type: 'APP_STOP_LOADING'});
   });
 });

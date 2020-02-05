@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch, ActionCreator, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { SerializedModel, ModelCreateUpdate, LoginModel } from '../../../../interfaces/Users';
+import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '../../../../interfaces/Users';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError } from './appActions';
 
@@ -171,6 +171,36 @@ export const updateUserSelf: ActionCreator<
   try {
     const res: any = await axios.put('/api/auth/users/self', user);
     dispatch(userSetInfo(res.data.user));
+  }
+  catch (error) {
+    if (error.response.status === 409) {
+      dispatch(appSetFormError('errors.usernameAlreadyExists'));
+    }
+    else if (error.response.status === 400) {
+      dispatch(appSetFormError('errors.requiredFieldsMissing'));
+    }
+    else {
+      dispatch(appSetFormError('errors.registrationError'));
+      console.error(error);
+    }
+  }
+
+  return dispatch(appStopLoading());
+};
+
+export const updateOwnPassword: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (passwordInfo: PasswordChange): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetFormError(''));
+
+  try {
+    await axios.patch('/api/auth/users/self/password', passwordInfo);
   }
   catch (error) {
     if (error.response.status === 409) {
