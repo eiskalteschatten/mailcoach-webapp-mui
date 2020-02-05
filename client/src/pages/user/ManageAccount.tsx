@@ -13,10 +13,14 @@ import {
 
 import UserAccountForm from '../../components/user/UserAccountForm';
 import ChangePasswordForm from '../../components/user/ChangePasswordForm';
+import SessionManagement from '../../components/user/SessionManagement';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     padding: theme.spacing(3)
+  },
+  paddedTitle: {
+    paddingBottom: theme.spacing(3)
   }
 }));
 
@@ -27,7 +31,6 @@ const ManageAccount: React.FC = () => {
     <Grid
       container
       spacing={2}
-      justify='center'
     >
       <Grid item xs={12} md={6}>
         <Paper className={classes.paper}>
@@ -46,6 +49,16 @@ const ManageAccount: React.FC = () => {
           </Typography>
 
           <ChangePasswordForm />
+        </Paper>
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <Paper className={classes.paper}>
+          <Typography variant='h5' className={classes.paddedTitle}>
+            <FormattedMessage id='account.sessionManagement' />
+          </Typography>
+
+          <SessionManagement />
         </Paper>
       </Grid>
     </Grid>

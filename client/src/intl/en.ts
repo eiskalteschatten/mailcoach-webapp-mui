@@ -22,6 +22,8 @@ export default {
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',
   'account.updatePassword': 'Update Password',
+  'account.sessionManagement': 'Session Management',
+  'account.logOutAllOtherSessions': 'Log Out All Other Sessions',
 
   'errors.loginError': 'Login failed. Please check your username and password.',
   'errors.registrationError': 'Registration failed. An error occurred while trying to register your account. Please try again later.',
