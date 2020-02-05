@@ -49,7 +49,6 @@ export const Username = () => {
     component={McTextField}
     name='username'
     label={messages.username}
-    disabled
   />);
 }
 
