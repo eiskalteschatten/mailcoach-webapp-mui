@@ -600,6 +600,111 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get All of a User's Sessions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3025/api/auth/users/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3025",
+							"path": [
+								"api",
+								"auth",
+								"users",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log Out of All User's Sessions Except the Current One",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"instanceId\": \"05a0fd20-4858-11ea-9aef-29890c65a438\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3025/api/auth/users/sessions/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3025",
+							"path": [
+								"api",
+								"auth",
+								"users",
+								"sessions",
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
