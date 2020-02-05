@@ -132,6 +132,8 @@ export const renewAccessToken: ActionCreator<
 
     const res: any = await localAxios.post('/api/auth/token');
 
+    dispatch(userSetInstanceId(res.data.instanceId));
+
     if (res.status === 200 && res.data && res.data.user) {
       dispatch(userSetInfo(res.data.user));
       dispatch(userLogin());

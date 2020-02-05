@@ -152,7 +152,8 @@ class AuthController extends AbstractController {
    * @apiSuccessExample {json} Success-Response:
    *  HTTP/1.1 200 OK
    *  {
-   *    "accessToken": "..."
+   *    "accessToken": "...",
+   *    "instanceId": ""
    *  }
    *
    * @apiErrorExample {string} Error-Response:
@@ -174,7 +175,8 @@ class AuthController extends AbstractController {
       res.json({
         user: serialize(user),
         accessToken,
-        refreshToken: userSession.refreshToken
+        refreshToken: userSession.refreshToken,
+        instanceId: userSession.instanceId
       });
     }
     catch(error) {

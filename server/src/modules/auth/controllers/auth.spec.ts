@@ -82,6 +82,7 @@ describe('Auth Controller', () => {
       expect(response.body.user).toBeDefined();
       expect(response.body.accessToken).toBeDefined();
       expect(response.body.refreshToken).toBeDefined();
+      expect(response.body.instanceId).toBeDefined();
   });
 
   test('Logging out works', async () => {

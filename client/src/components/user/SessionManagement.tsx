@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -6,11 +6,22 @@ import {
 } from '@material-ui/core';
 
 import { dispatch } from '../../store';
-import { updateUserSelf } from '../../store/actions/userActions';
+import { getAllUserSessions, logOutAllOtherUserSessions } from '../../store/actions/userActions';
+
+const useAllUserSessions = () => {
+  useEffect(() => {
+    dispatch(getAllUserSessions());
+  }, [])
+}
 
 const SessionManagement: React.FC = () => {
+  // useAllUserSessions();
+
   return (<>
-    <Button variant='contained'>
+    <Button
+      variant='contained'
+      onClick={() => dispatch(logOutAllOtherUserSessions())}
+    >
       <FormattedMessage id='account.logOutAllOtherSessions' />
     </Button>
   </>);
