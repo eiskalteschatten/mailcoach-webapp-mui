@@ -224,3 +224,26 @@ export const updateOwnPassword: ActionCreator<
 
   return dispatch(appStopLoading());
 };
+
+export const getAllUserSessions: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    const res: any = await axios.get('/api/auth/users/sessions');
+    dispatch(userSetSessions(res.data.sessions));
+  }
+  catch (error) {
+    dispatch(appSetError('errors.anErrorOccurred'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
