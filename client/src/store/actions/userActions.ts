@@ -5,14 +5,22 @@ import { ThunkAction } from 'redux-thunk';
 import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '../../../../interfaces/Users';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError, appSetError } from './appActions';
+import { UserSessions } from '../reducers/userReducer';
 
 export interface UserSetInfo extends Action<'USER_SET_INFO'> {
   user: SerializedModel
 }
 export interface UserLogin extends Action<'USER_LOG_IN'> {}
 export interface UserLogout extends Action<'USER_LOG_OUT'> {}
+export interface UserSetSessions extends Action<'USER_SET_SESSIONS'> {
+  sessions: UserSessions[];
+}
 
-export type UserActions = UserSetInfo | UserLogin | UserLogout;
+export type UserActions =
+  UserSetInfo |
+  UserLogin |
+  UserLogout |
+  UserSetSessions;
 
 export const userSetInfo = (user: SerializedModel): UserSetInfo => ({
   type: 'USER_SET_INFO',
@@ -21,6 +29,11 @@ export const userSetInfo = (user: SerializedModel): UserSetInfo => ({
 
 export const userLogin = (): UserLogin => ({ type: 'USER_LOG_IN' });
 export const userLogout = (): UserLogout => ({ type: 'USER_LOG_OUT' });
+
+export const userSetSessions = (sessions: UserSessions[]): UserSetSessions => ({
+  type: 'USER_SET_SESSIONS',
+  sessions
+});
 
 
 // See https://www.carlrippon.com/strongly-typed-react-redux-code-with-typescript/ for more on the return type

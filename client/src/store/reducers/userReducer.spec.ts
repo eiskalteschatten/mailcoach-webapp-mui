@@ -1,6 +1,6 @@
 import { SerializedModel } from '../../../../interfaces/Users';
 
-import userReducer, { initialState } from './userReducer';
+import userReducer, { initialState, UserSessions } from './userReducer';
 import { UserActions } from '../actions/userActions';
 
 describe('User Reducer', () => {
@@ -39,5 +39,19 @@ describe('User Reducer', () => {
     expect(
       userReducer(undefined, { type: 'USER_LOG_OUT' })
     ).toEqual(initialState)
+  });
+
+  test('Should handle USER_SET_SESSIONS', () => {
+    const sessions: UserSessions[] = [{
+      loginDate: new Date(),
+      instanceId: 'test'
+    }];
+
+    expect(
+      userReducer(undefined, { type: 'USER_SET_SESSIONS', sessions })
+    ).toEqual({
+      ...initialState,
+      sessions
+    })
   });
 });

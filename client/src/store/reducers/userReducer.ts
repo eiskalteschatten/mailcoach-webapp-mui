@@ -4,9 +4,15 @@ import { SerializedModel } from '../../../../interfaces/Users';
 
 import { UserActions } from '../actions/userActions';
 
+export interface UserSessions {
+  loginDate: Date;
+  instanceId: string;
+}
+
 export interface UserState {
   user: SerializedModel;
   jwtValidated: false;
+  sessions: UserSessions[];
 };
 
 export const initialState: UserState = {
@@ -18,7 +24,8 @@ export const initialState: UserState = {
     email: '',
     avatar: ''
   },
-  jwtValidated: false
+  jwtValidated: false,
+  sessions: []
 };
 
 const userReducer: Reducer<UserState, UserActions> = (
@@ -40,6 +47,11 @@ const userReducer: Reducer<UserState, UserActions> = (
       return initialState;
     default:
       return state;
+    case 'USER_SET_SESSIONS':
+      return {
+        ...state,
+        sessions: action.sessions
+      };
   }
 };
 
