@@ -12,7 +12,6 @@ import {
 import { State } from '../../store';
 import { getAllUserSessions, logOutAllOtherUserSessions } from '../../store/actions/userActions';
 import { UserSessions } from '../../store/reducers/userReducer';
-import classes from '*.module.css';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   sessions: {
