@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   makeStyles,
@@ -7,16 +7,23 @@ import {
   createStyles,
   Container,
   Grid,
-  Paper,
-  Typography
+  Card,
+  CardHeader,
+  IconButton,
+  CardContent
 } from '@material-ui/core';
+
+import RefreshIcon from '@material-ui/icons/Refresh';
+
+import { IntlContext } from '../../intl/IntlContext';
+import { getAllUserSessions } from '../../store/actions/userActions';
 
 import UserAccountForm from '../../components/user/UserAccountForm';
 import ChangePasswordForm from '../../components/user/ChangePasswordForm';
 import SessionManagement from '../../components/user/SessionManagement';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-  paper: {
+  card: {
     padding: theme.spacing(3)
   },
   paddedTitle: {
@@ -26,6 +33,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const ManageAccount: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { messages } = useContext(IntlContext);
 
   return (<Container>
     <Grid
@@ -33,33 +42,44 @@ const ManageAccount: React.FC = () => {
       spacing={2}
     >
       <Grid item xs={12} md={6}>
-        <Paper className={classes.paper}>
-          <Typography variant='h5'>
-            <FormattedMessage id='account.accountInformation' />
-          </Typography>
+        <Card className={classes.card}>
+          <CardHeader
+            title={messages['account.accountInformation']}
+          />
 
-          <UserAccountForm />
-        </Paper>
+          <CardContent>
+            <UserAccountForm />
+          </CardContent>
+        </Card>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <Paper className={classes.paper}>
-          <Typography variant='h5'>
-            <FormattedMessage id='account.updatePassword' />
-          </Typography>
+        <Card className={classes.card}>
+          <CardHeader
+            title={messages['account.updatePassword']}
+          />
 
-          <ChangePasswordForm />
-        </Paper>
+          <CardContent>
+            <ChangePasswordForm />
+          </CardContent>
+        </Card>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <Paper className={classes.paper}>
-          <Typography variant='h5' className={classes.paddedTitle}>
-            <FormattedMessage id='account.sessionManagement' />
-          </Typography>
+        <Card className={classes.card}>
+          <CardHeader
+            title={messages['account.sessionManagement']}
+            action={
+              <IconButton onClick={() => dispatch(getAllUserSessions())}>
+                <RefreshIcon />
+              </IconButton>
+            }
+          />
 
-          <SessionManagement />
-        </Paper>
+          <CardContent>
+            <SessionManagement />
+          </CardContent>
+        </Card>
       </Grid>
     </Grid>
   </Container>);
