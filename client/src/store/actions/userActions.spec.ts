@@ -234,7 +234,8 @@ describe('User Actions', () => {
     nock('http://localhost')
       .post('/api/auth/token')
       .reply(200, {
-        user: {}
+        user: {},
+        instanceId: ''
       });
 
     const localStore: MockStore = mockStore();
@@ -242,11 +243,15 @@ describe('User Actions', () => {
     const actions = localStore.getActions();
     expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
     expect(actions[1]).toEqual({
+      type: 'USER_SET_INSTANCE_ID',
+      instanceId: ''
+    });
+    expect(actions[2]).toEqual({
       type: 'USER_SET_INFO',
       user: {}
     });
-    expect(actions[2]).toEqual({type: 'USER_LOG_IN'});
-    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[3]).toEqual({type: 'USER_LOG_IN'});
+    expect(actions[4]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Refresh token is not valid', async () => {
