@@ -24,6 +24,8 @@ export default {
   'account.updatePassword': 'Update Password',
   'account.sessionManagement': 'Session Management',
   'account.logOutAllOtherSessions': 'Log Out All Other Sessions',
+  'account.loginDate': 'Login Date',
+  'account.thisSession': 'This Session',
 
   'errors.loginError': 'Login failed. Please check your username and password.',
   'errors.registrationError': 'Registration failed. An error occurred while trying to register your account. Please try again later.',

@@ -24,6 +24,8 @@ export default {
   'account.updatePassword': 'Passwort aktualisieren',
   'account.sessionManagement': 'Sitzungsverwaltung',
   'account.logOutAllOtherSessions': 'Alle andere Sitzungen abmelden',
+  'account.loginDate': 'Anmeldedatum',
+  'account.thisSession': 'Diese Sitzung',
 
   'errors.loginError': 'Anmeldung fehlgeschlagen. Bitte prüfen Sie Ihren Benutzernamen und Ihr Passwort.',
   'errors.registrationError': 'Registrierung fehlgeschlagen. Ein Fehler ist bei der Registrierung Ihres Kontos aufgetreten. Bitte versuchen Sie es später noch einmal.',
