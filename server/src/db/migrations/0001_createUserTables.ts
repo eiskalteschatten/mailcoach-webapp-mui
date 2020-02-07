@@ -67,7 +67,7 @@ export default {
         unique: true,
         primaryKey: true
       },
-      kUser: {
+      fkUser: {
         type: DataTypes.INTEGER,
         field: 'fk_user'
       },
