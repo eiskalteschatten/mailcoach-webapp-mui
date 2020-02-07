@@ -97,7 +97,7 @@ class SessionsController extends AbstractController {
       const userId = (req.user as User).id;
       const instanceId = req.body.instanceId;
 
-      if (!instanceId) {
+      if (!instanceId && process.env.NODE_ENV !== 'test') {
         throw new HttpError('No instance ID was found!', 400);
       }
 
