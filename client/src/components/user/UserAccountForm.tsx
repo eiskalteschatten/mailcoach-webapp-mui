@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, FormikProps } from 'formik';
 import { FormattedMessage } from 'react-intl';
 import * as Yup from 'yup';  // For some reason this still has to be done for yup
@@ -20,7 +20,7 @@ import {
   Email
 } from './UserAccountFormElements';
 
-import { State, dispatch } from '../../store';
+import { State } from '../../store';
 import { updateUserSelf } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const UserAccountForm: React.FC = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
   const user = useSelector((state: State) => state.user.user);

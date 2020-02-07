@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, FormikProps } from 'formik';
 import { FormattedMessage } from 'react-intl';
 import * as Yup from 'yup';  // For some reason this still has to be done for yup
@@ -14,7 +15,6 @@ import { LoginModel } from '../../../../interfaces/Users';
 
 import { Username, Password } from './LoginFormElements';
 
-import { dispatch } from '../../store';
 import { loginUser } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const LoginForm: React.FC = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
 

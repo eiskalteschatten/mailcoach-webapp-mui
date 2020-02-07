@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import {
@@ -15,7 +15,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import { grey } from '@material-ui/core/colors';
 
-import { State, dispatch } from '../../store';
+import { State } from '../../store';
 import { logoutUser } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) => {
 interface Props extends RouteComponentProps {};
 
 const UserMenu: React.FC<Props> = (props: Props) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { firstName, lastName, username } = useSelector((state: State) => state.user.user);

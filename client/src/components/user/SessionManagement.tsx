@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Button
 } from '@material-ui/core';
 
-import { dispatch } from '../../store';
 import { getAllUserSessions, logOutAllOtherUserSessions } from '../../store/actions/userActions';
 
 const SessionManagement: React.FC = () => {
-  useEffect(() => {
-    dispatch(getAllUserSessions());
-  }, [])
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getAllUserSessions());
+  // }, [dispatch])
 
   return (<>
     <Button
