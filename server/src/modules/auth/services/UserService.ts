@@ -9,6 +9,7 @@ import { serialize } from '../serializer/user';
 import { ModelCreateUpdate, PasswordChange } from '../interfaces/User';
 import { User } from '../models/User';
 import UserSession from '../models/UserSession';
+import UserSetting from '../models/UserSetting';
 
 export default class UserService {
   private readonly saltRounds = 12;
@@ -164,6 +165,16 @@ export default class UserService {
   async jwtLogin(id: number): Promise<boolean> {
     await this.getUserById(id);
     return !!this.user;
+  }
+
+  async getUserSettings(): Promise<UserSetting> {
+    const settings = await UserSetting.findOne({
+      where: {
+        fkUser: this.user.id
+      }
+    });
+
+    return settings;
   }
 
   async updateUser(id: number, updatedUser: ModelCreateUpdate): Promise<void> {

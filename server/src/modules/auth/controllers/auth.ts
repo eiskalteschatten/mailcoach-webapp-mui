@@ -9,6 +9,7 @@ import logger from '@mc/logger';
 import User from '../models/User';
 import UserService from '../services/UserService';
 import { serialize } from '../serializer/user';
+import { serialize as serializeUserSettings } from '../serializer/userSettings';
 import { UserSessionWithUser } from '../interfaces/UserSession';
 
 class AuthController extends AbstractController {
@@ -85,12 +86,14 @@ class AuthController extends AbstractController {
           const userService = new UserService();
           const accessToken = await userService.generateAccessToken(user.id);
           const refreshToken = await userService.generateRefreshToken(user.id);
+          const settings = await userService.getUserSettings();
 
           res.json({
             user: serialize(user),
             accessToken,
             refreshToken,
-            instanceId: userService.getInstanceId()
+            instanceId: userService.getInstanceId(),
+            settings: serializeUserSettings(settings)
           });
         });
       })(req, res, next);

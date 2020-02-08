@@ -40,7 +40,7 @@ UserSetting.belongsTo(User, {
 });
 
 User.hasMany(UserSetting, {
-  as: 'UserSetting',
+  as: 'userSetting',
   foreignKey: 'fkUser',
   sourceKey: 'id'
 });
