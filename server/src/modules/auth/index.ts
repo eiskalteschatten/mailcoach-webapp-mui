@@ -8,6 +8,7 @@ import authController from './controllers/auth';
 import userController from './controllers/user';
 import userAdminController from './controllers/userAdmin';
 import sessionsController from './controllers/sessions';
+import settingsController from './controllers/settings';
 
 export class AuthModule extends AbstractModule implements Module {
   protected modulePath: string = path.resolve(__dirname);
@@ -18,6 +19,7 @@ export class AuthModule extends AbstractModule implements Module {
 
     router.use(`${this.entryRoute}/users/self`, userController.router);
     router.use(`${this.entryRoute}/users/sessions`, sessionsController.router);
+    router.use(`${this.entryRoute}/users/settings`, settingsController.router);
     router.use(`${this.entryRoute}/users`, userAdminController.router);
     router.use(this.entryRoute, authController.router);
 
