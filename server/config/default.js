@@ -12,7 +12,11 @@ module.exports = {
       email: '',
       avatar: ''
     },
-    defaultAvatar: ''
+    defaultAvatar: '',
+    defaultSettings: {
+      language: 'en',
+      theme: 'light'
+    }
   },
   jwt: {
     accessToken: {

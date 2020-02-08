@@ -75,6 +75,13 @@ export default class UserService {
         status
       });
 
+      const defaultUserSettings = config.get<object>('users.defaultSettings');
+
+      await UserSetting.create({
+        ...defaultUserSettings,
+        fkUser: userModel.id
+      });
+
       await this.getUserById(userModel.id);
       return this.user;
     }
@@ -265,6 +272,7 @@ export default class UserService {
   async deleteUser(userId: number): Promise<void> {
     try {
       await UserSession.destroy({ where: { fkUser: userId } });
+      await UserSetting.destroy({ where: { fkUser: userId } });
       await User.destroy({ where: { id: userId } });
     }
     catch(error) {
