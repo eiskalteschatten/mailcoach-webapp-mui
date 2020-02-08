@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 
 import { SerializedModel } from '../../../../interfaces/Users';
+import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/UserSettings';
 
 import { UserActions } from '../actions/userActions';
 
@@ -14,6 +15,7 @@ export interface UserState {
   jwtValidated: false;
   instanceId: string;
   sessions: UserSessions[];
+  settings: SerializedModelSettings;
 };
 
 export const initialState: UserState = {
@@ -27,7 +29,11 @@ export const initialState: UserState = {
   },
   jwtValidated: false,
   instanceId: '',
-  sessions: []
+  sessions: [],
+  settings: {
+    language: 'en',
+    theme: 'light'
+  }
 };
 
 const userReducer: Reducer<UserState, UserActions> = (
@@ -56,6 +62,11 @@ const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         sessions: action.sessions
+      };
+    case 'USER_SET_SETTINGS':
+      return {
+        ...state,
+        settings: action.settings
       };
     default:
       return state;

@@ -65,4 +65,18 @@ describe('User Reducer', () => {
       sessions
     })
   });
+
+  test('Should handle USER_SET_SETTINGS', () => {
+    const settings = {
+      language: 'en',
+      theme: 'light'
+    };
+
+    expect(
+      userReducer(undefined, { type: 'USER_SET_SETTINGS', settings })
+    ).toEqual({
+      ...initialState,
+      settings
+    })
+  });
 });

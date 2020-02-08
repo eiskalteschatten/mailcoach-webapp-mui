@@ -3,6 +3,7 @@ import { Dispatch, ActionCreator, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '../../../../interfaces/Users';
+import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/UserSettings';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError, appSetError } from './appActions';
 import { UserSessions } from '../reducers/userReducer';
@@ -19,12 +20,17 @@ export interface UserSetSessions extends Action<'USER_SET_SESSIONS'> {
   sessions: UserSessions[];
 }
 
+export interface UserSetSettings extends Action<'USER_SET_SETTINGS'> {
+  settings: SerializedModelSettings;
+}
+
 export type UserActions =
   UserSetInfo |
   UserLogin |
   UserLogout |
   UserSetInstanceId |
-  UserSetSessions;
+  UserSetSessions |
+  UserSetSettings;
 
 export const userSetInfo = (user: SerializedModel): UserSetInfo => ({
   type: 'USER_SET_INFO',
@@ -42,6 +48,11 @@ export const userSetInstanceId = (instanceId: string): UserSetInstanceId => ({
 export const userSetSessions = (sessions: UserSessions[]): UserSetSessions => ({
   type: 'USER_SET_SESSIONS',
   sessions
+});
+
+export const userSetSettings = (settings: SerializedModelSettings): UserSetSettings => ({
+  type: 'USER_SET_SETTINGS',
+  settings
 });
 
 
@@ -102,6 +113,7 @@ export const loginUser: ActionCreator<
     dispatch(userLogin());
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
+    localStorage.setItem('userSettings', JSON.stringify(res.data.settings));
   }
   catch (error) {
     dispatch(appSetFormError('errors.loginError'));
@@ -171,6 +183,7 @@ export const logoutUser: ActionCreator<
     if (res.status === 204) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('userSettings');
       dispatch(userLogout());
     }
   }
