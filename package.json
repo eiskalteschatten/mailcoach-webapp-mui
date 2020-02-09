@@ -13,8 +13,9 @@
     "dev": "concurrently \"npm run -C ./server dev\" \"npm -C ./client start\"",
     "start": "npm run -C ./server start",
     "install:all": "npm install && npm -C ./server install && npm -C ./client install",
-    "launchdb": "docker-compose -f ./docker-compose.dbonly.yml up -d",
-    "launchdb:attached": "docker-compose -f ./docker-compose.dbonly.yml up",
+    "dbup": "docker-compose -f ./docker-compose.dbonly.yml up -d",
+    "dbup:attached": "docker-compose -f ./docker-compose.dbonly.yml up",
+    "dbdown": "docker-compose -f ./docker-compose.dbonly.yml down",
     "devdb": "docker exec -it mailcoach_postgres psql mailcoach -U mailcoach"
   },
   "devDependencies": {
