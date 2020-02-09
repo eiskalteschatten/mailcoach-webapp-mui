@@ -5,6 +5,19 @@ import { SerializedModel as SerializedModelSettings } from '../../../../interfac
 
 import { UserActions } from '../actions/userActions';
 
+const userSettingsString = localStorage.getItem('userSettings');
+let userSettings;
+
+if (userSettingsString) {
+  userSettings = JSON.parse(userSettingsString);
+}
+
+const defaultUserSettings = {
+  language: 'en',
+  theme: 'light'
+};
+
+
 export interface UserSessions {
   loginDate: Date;
   instanceId: string;
@@ -30,10 +43,7 @@ export const initialState: UserState = {
   jwtValidated: false,
   instanceId: '',
   sessions: [],
-  settings: {
-    language: 'en',
-    theme: 'light'
-  }
+  settings: userSettings || defaultUserSettings
 };
 
 const userReducer: Reducer<UserState, UserActions> = (
