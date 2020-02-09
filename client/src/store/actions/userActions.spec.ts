@@ -356,7 +356,7 @@ describe('User Actions', () => {
 
   test('Saving user settings works', async () => {
     nock('http://localhost')
-      .post('/api/auth/users/settings')
+      .put('/api/auth/users/settings')
       .reply(200, {
         settings: {}
       });

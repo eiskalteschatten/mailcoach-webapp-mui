@@ -313,7 +313,7 @@ export const saveUserSettings: ActionCreator<
   dispatch(appSetError(''));
 
   try {
-    const res = await axios.post('/api/auth/users/settings', settings);
+    const res = await axios.put('/api/auth/users/settings', settings);
     dispatch(userSetSettings(res.data.settings));
     localStorage.setItem('userSettings', JSON.stringify(res.data.settings));
   }
