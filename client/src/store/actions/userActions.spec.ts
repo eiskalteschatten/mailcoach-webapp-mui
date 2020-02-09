@@ -14,7 +14,8 @@ import {
   updateUserSelf,
   updateOwnPassword,
   getAllUserSessions,
-  logOutAllOtherUserSessions
+  logOutAllOtherUserSessions,
+  saveUserSettings
 } from './userActions';
 
 import mockStore from '../../lib/tests/mockStore';
@@ -349,6 +350,28 @@ describe('User Actions', () => {
     expect(actions[2]).toEqual({
       type: 'USER_SET_SESSIONS',
       sessions: []
+    });
+    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+  });
+
+  test('Saving user settings works', async () => {
+    nock('http://localhost')
+      .post('/api/auth/users/settings')
+      .reply(200, {
+        settings: {}
+      });
+
+    const localStore: MockStore = mockStore();
+    await localStore.dispatch(saveUserSettings(addUser) as any);
+    const actions = localStore.getActions();
+    expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
+    expect(actions[1]).toEqual({
+      type: 'APP_SET_ERROR',
+      error: ''
+    });
+    expect(actions[2]).toEqual({
+      type: 'USER_SET_SETTINGS',
+      settings: {}
     });
     expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
   });

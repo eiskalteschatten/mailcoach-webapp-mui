@@ -300,3 +300,27 @@ export const logOutAllOtherUserSessions: ActionCreator<
 
   return dispatch(appStopLoading());
 };
+
+export const saveUserSettings: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (settings: SerializedModelSettings): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    const res = await axios.post('/api/auth/users/settings', settings);
+    dispatch(userSetSettings(res.data.settings));
+    localStorage.setItem('userSettings', JSON.stringify(res.data.settings));
+  }
+  catch (error) {
+    dispatch(appSetError('errors.anErrorOccurred'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
