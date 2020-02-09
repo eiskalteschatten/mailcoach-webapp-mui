@@ -163,6 +163,7 @@ describe('User Actions', () => {
       username: 'testuser',
       password: 'testpassword'
     };
+    const settings = {};
 
     nock('http://localhost')
       .post('/api/auth/login')
@@ -170,7 +171,8 @@ describe('User Actions', () => {
         user: {},
         accessToken,
         refreshToken,
-        instanceId
+        instanceId,
+        settings
       });
 
     const localStore: MockStore = mockStore();
@@ -189,8 +191,12 @@ describe('User Actions', () => {
       type: 'USER_SET_INSTANCE_ID',
       instanceId
     });
-    expect(actions[4]).toEqual({type: 'USER_LOG_IN'});
-    expect(actions[5]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[4]).toEqual({
+      type: 'USER_SET_SETTINGS',
+      settings
+    });
+    expect(actions[5]).toEqual({type: 'USER_LOG_IN'});
+    expect(actions[6]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('User is logged out', async () => {

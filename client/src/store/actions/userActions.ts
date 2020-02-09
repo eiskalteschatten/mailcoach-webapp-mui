@@ -110,6 +110,7 @@ export const loginUser: ActionCreator<
     const res: any = await axios.post('/api/auth/login', user);
     dispatch(userSetInfo(res.data.user));
     dispatch(userSetInstanceId(res.data.instanceId));
+    dispatch(userSetSettings(res.data.settings));
     dispatch(userLogin());
     localStorage.setItem('accessToken', res.data.accessToken);
     localStorage.setItem('refreshToken', res.data.refreshToken);
