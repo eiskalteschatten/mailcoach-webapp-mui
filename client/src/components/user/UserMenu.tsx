@@ -8,7 +8,9 @@ import {
   createStyles,
   IconButton,
   Menu,
-  Button
+  Button,
+  FormControlLabel,
+  Switch
 } from '@material-ui/core';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -16,7 +18,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { grey } from '@material-ui/core/colors';
 
 import { State } from '../../store';
-import { logoutUser } from '../../store/actions/userActions';
+import { logoutUser, saveUserSettings } from '../../store/actions/userActions';
 import { IntlContext } from '../../intl/IntlContext';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -36,6 +38,11 @@ const useStyles = makeStyles((theme: Theme) => {
       fontWeight: 'bold',
       fontSize: '1.3em'
     },
+    settings: {
+      borderTop: `1px solid ${borderBottomColor}`,
+      paddingTop: 15,
+      paddingBottom: 15
+    },
     logout: {
       borderTop: `1px solid ${borderBottomColor}`,
       paddingTop: 25
@@ -48,9 +55,11 @@ interface Props extends RouteComponentProps {};
 const UserMenu: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
+  const { messages } = useContext(IntlContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { firstName, lastName, username } = useSelector((state: State) => state.user.user);
-  const { messages } = useContext(IntlContext);
+  const { theme } = useSelector((state: State) => state.user.settings);
+  const [darkMode, setDarkMode] = useState<boolean>(theme === 'dark');
 
   const handleOpenClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -63,6 +72,12 @@ const UserMenu: React.FC<Props> = (props: Props) => {
   const handleManageAccountClick = () => {
     handleClose();
     props.history.push('/account');
+  };
+
+  const handleDarkModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const theme = event.target.checked ? 'dark' : 'light';
+    setDarkMode(!!event.target.checked);
+    dispatch(saveUserSettings({ theme }));
   };
 
   return (<>
@@ -98,6 +113,15 @@ const UserMenu: React.FC<Props> = (props: Props) => {
           <Button variant='outlined' onClick={handleManageAccountClick}>
             { messages['account.manageAccount'] }
           </Button>
+        </div>
+
+        <div className={classes.settings}>
+          <FormControlLabel
+            control={
+              <Switch checked={darkMode} onChange={handleDarkModeChange} />
+            }
+            label={messages['account.darkMode']}
+          />
         </div>
 
         <div className={classes.logout}>
