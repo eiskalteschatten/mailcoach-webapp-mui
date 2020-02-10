@@ -1,11 +1,11 @@
-import authModule from '.';
+import rssModule from '.';
 
-describe('AuthModule', () => {
+describe('ssModule', () => {
   test('Exists', () => {
-    expect(authModule).toBeDefined();
+    expect(rssModule).toBeDefined();
   });
 
   test('entryRoute to be correct', () => {
-    expect(authModule.entryRoute).toBe('/auth');
+    expect(rssModule.entryRoute).toBe('/rss');
   });
 });
