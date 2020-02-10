@@ -17,7 +17,7 @@ export const serialize = (article: DeserializedModel): SerializedModel => ({
   guid: article.guid,
   read: article.read,
   markedAsReadAt: article.markedAsReadAt,
-  feed: serializeFeed(article.feed)
+  feed: article.feed && serializeFeed(article.feed)
 });
 
 export default serialize;
