@@ -19,6 +19,8 @@ export default {
   'wrongPasswordFormat': 'Password must contain at least 8 characters, 1 lowercase and 1 uppercase letter, 1 number, and 1 symbol',
   'passwordsMustMatch': 'Passwords must match',
 
+  'dashboard': 'Dashboard',
+
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',
   'account.updatePassword': 'Update Password',

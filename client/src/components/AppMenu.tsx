@@ -1,4 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import {
   makeStyles,
@@ -6,20 +8,35 @@ import {
   createStyles,
   IconButton,
   Menu,
-  Button,
+  ButtonBase,
   Grid
 } from '@material-ui/core';
 
 import AppsIcon from '@material-ui/icons/Apps';
-
-import { IntlContext } from '../intl/IntlContext';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
+  button: {
+    width: 125,
+    height: 125,
+    textAlign: 'center',
+    borderRadius: 5,
+    margin: '5px 10px',
+    display: 'block'
+  },
+  buttonIcon: {
+    fontSize: 50
+  },
+  buttonLabel: {
+    fontSize: 15,
+    paddingTop: 5
+  }
 }));
 
-const AppMenu: React.FC = () => {
+interface Props extends RouteComponentProps {};
+
+const AppMenu: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
-  const { messages } = useContext(IntlContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleOpenClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -28,6 +45,11 @@ const AppMenu: React.FC = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleButtonClick = (route: string) => {
+    handleClose();
+    props.history.push(route);
   };
 
   return (<>
@@ -41,6 +63,12 @@ const AppMenu: React.FC = () => {
     >
       <Grid container>
         <Grid item xs={4}>
+          <ButtonBase className={classes.button} onClick={() => handleButtonClick('/')}>
+            <DashboardIcon className={classes.buttonIcon} />
+            <div className={classes.buttonLabel}>
+              <FormattedMessage id='dashboard' />
+            </div>
+          </ButtonBase>
         </Grid>
         <Grid item xs={4}>
         </Grid>
@@ -51,4 +79,4 @@ const AppMenu: React.FC = () => {
   </>);
 }
 
-export default AppMenu;
+export default withRouter(AppMenu);

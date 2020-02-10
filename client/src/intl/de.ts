@@ -19,6 +19,8 @@ export default {
   'wrongPasswordFormat': 'Passwort muss aus mindestens 8 Zeichen, 1 Klein- and 1 Großbuchstabe, 1 Zahl, und 1 Sonderzeichen bestehen',
   'passwordsMustMatch': 'Passwörter müssen übereinstimmen',
 
+  'dashboard': 'Dashboard',
+
   'account.manageAccount': 'Konto verwalten',
   'account.accountInformation': 'Konto-Informationen',
   'account.updatePassword': 'Passwort aktualisieren',
