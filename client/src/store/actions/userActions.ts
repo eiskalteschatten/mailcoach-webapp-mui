@@ -2,8 +2,8 @@ import axios from 'axios';
 import { Dispatch, ActionCreator, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '../../../../interfaces/Users';
-import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/UserSettings';
+import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '../../../../interfaces/auth/Users';
+import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/auth/UserSettings';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError, appSetError } from './appActions';
 import { UserSessions } from '../reducers/userReducer';

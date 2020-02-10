@@ -1,1 +1,1 @@
-export * from '../../../../../interfaces/Users';
+export * from '../../../../../interfaces/auth/Users';

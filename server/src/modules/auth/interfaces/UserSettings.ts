@@ -1,1 +1,1 @@
-export * from '../../../../../interfaces/UserSettings';
+export * from '../../../../../interfaces/auth/UserSettings';

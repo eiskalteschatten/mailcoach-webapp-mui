@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 
-import { SerializedModel } from '../../../../interfaces/Users';
-import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/UserSettings';
+import { SerializedModel } from '../../../../interfaces/auth/Users';
+import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/auth/UserSettings';
 
 import { UserActions } from '../actions/userActions';
 

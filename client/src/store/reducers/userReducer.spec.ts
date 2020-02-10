@@ -1,4 +1,4 @@
-import { SerializedModel } from '../../../../interfaces/Users';
+import { SerializedModel } from '../../../../interfaces/auth/Users';
 
 import userReducer, { initialState, UserSessions } from './userReducer';
 import { UserActions } from '../actions/userActions';

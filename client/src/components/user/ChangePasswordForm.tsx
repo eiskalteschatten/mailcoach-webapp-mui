@@ -11,7 +11,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import { PasswordChange } from '../../../../interfaces/Users';
+import { PasswordChange } from '../../../../interfaces/auth/Users';
 
 import { CurrentPassword, NewPassword, NewPasswordRepeat } from './ChangePasswordFormElements';
 

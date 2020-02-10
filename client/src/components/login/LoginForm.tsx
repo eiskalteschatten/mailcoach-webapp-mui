@@ -11,7 +11,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import { LoginModel } from '../../../../interfaces/Users';
+import { LoginModel } from '../../../../interfaces/auth/Users';
 
 import { Username, Password } from './LoginFormElements';
 

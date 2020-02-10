@@ -11,7 +11,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import { SerializedModel } from '../../../../interfaces/Users';
+import { SerializedModel } from '../../../../interfaces/auth/Users';
 
 import {
   Username,
