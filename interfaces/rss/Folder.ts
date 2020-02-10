@@ -1,6 +1,15 @@
-export interface Folder {
+export interface DeserializedModel {
   id: number;
   name: string;
   createdAt: Date;
   updatedAt: Date;
-} // eslint-disable-line semi
+}
+
+export interface SerializedModel {
+  id: number;
+  name: string;
+}
+
+export interface ModelCreateUpdate {
+  name?: string;
+}

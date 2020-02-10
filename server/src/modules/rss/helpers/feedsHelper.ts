@@ -3,7 +3,7 @@ import RssParser from 'rss-parser';
 
 import { HttpError } from '@mc/lib/Error';
 
-import { Article as ArticleInterface } from '../interfaces/Article';
+import { DeserializedModel as ArticleInterface } from '../interfaces/Article';
 
 import Article from '../models/Article';
 import Feed from '../models/Feed';
