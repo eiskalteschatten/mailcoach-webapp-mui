@@ -1,4 +1,4 @@
-export default interface Folder {
+export interface Folder {
   id: number;
   name: string;
   createdAt: Date;

@@ -1,4 +1,4 @@
-export default interface Feed {
+export interface Feed {
   id: number;
   name: string;
   feedUrl: string;

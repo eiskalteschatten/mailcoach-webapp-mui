@@ -1,6 +1,6 @@
 import Feed from './Feed';
 
-export default interface Article {
+export interface Article {
   id: number;
   title: string;
   link: string;
