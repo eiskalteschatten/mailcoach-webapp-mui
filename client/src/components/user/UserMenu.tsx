@@ -9,11 +9,15 @@ import {
   IconButton,
   Menu,
   Button,
+  Grid,
   FormControlLabel,
-  Switch
+  Switch,
+  MenuItem
 } from '@material-ui/core';
 
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LanguageIcon from '@material-ui/icons/Language';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import { grey } from '@material-ui/core/colors';
 
@@ -29,7 +33,10 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     wrapper: {
       textAlign: 'center',
-      padding: 15
+      padding: 15,
+      [theme.breakpoints.up('sm')]: {
+        minWidth: 350
+      }
     },
     paddingBottom: {
       paddingBottom: 25
@@ -43,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) => {
       paddingTop: 15,
       paddingBottom: 15
     },
+    languageSelectorWrapper: {
+      textAlign: 'right'
+    },
     logout: {
       borderTop: `1px solid ${borderBottomColor}`,
       paddingTop: 25
@@ -55,8 +65,9 @@ interface Props extends RouteComponentProps {};
 const UserMenu: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { messages } = useContext(IntlContext);
+  const { messages, locale } = useContext(IntlContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorLangEl, setAnchorLangEl] = useState<null | HTMLElement>(null);
   const { firstName, lastName, username } = useSelector((state: State) => state.user.user);
   const { theme } = useSelector((state: State) => state.user.settings);
   const [darkMode, setDarkMode] = useState<boolean>(theme === 'dark');
@@ -67,6 +78,14 @@ const UserMenu: React.FC<Props> = (props: Props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleOpenLangClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorLangEl(event.currentTarget);
+  };
+
+  const handleLangClose = () => {
+    setAnchorLangEl(null);
   };
 
   const handleManageAccountClick = () => {
@@ -80,25 +99,22 @@ const UserMenu: React.FC<Props> = (props: Props) => {
     dispatch(saveUserSettings({ theme }));
   };
 
+  const handleLanguageChange = (language: string) => {
+    handleLangClose();
+    dispatch(saveUserSettings({ language }));
+  };
+
   return (<>
     <IconButton
         onClick={handleOpenClick}
         edge='end'
       >
-      <AccountCircle />
+      <AccountCircleIcon />
     </IconButton>
     <Menu
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}
       onClose={handleClose}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right'
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'left'
-      }}
     >
       <div className={classes.wrapper}>
         <div className={classes.paddingBottom}>
@@ -115,14 +131,33 @@ const UserMenu: React.FC<Props> = (props: Props) => {
           </Button>
         </div>
 
-        <div className={classes.settings}>
-          <FormControlLabel
-            control={
-              <Switch checked={darkMode} onChange={handleDarkModeChange} />
-            }
-            label={messages['account.darkMode']}
-          />
-        </div>
+        <Grid container className={classes.settings}>
+          <Grid item xs={6}>
+            <FormControlLabel
+              control={
+                <Switch checked={darkMode} onChange={handleDarkModeChange} />
+              }
+              label={messages['account.darkMode']}
+            />
+          </Grid>
+          <Grid item xs={6} className={classes.languageSelectorWrapper}>
+            <Button
+              onClick={handleOpenLangClick}
+            >
+              <LanguageIcon />
+              <ArrowDropDownIcon />
+            </Button>
+            <Menu
+              anchorEl={anchorLangEl}
+              keepMounted
+              open={Boolean(anchorLangEl)}
+              onClose={handleLangClose}
+            >
+              <MenuItem onClick={() => handleLanguageChange('en')}>English</MenuItem>
+              <MenuItem onClick={() => handleLanguageChange('de')}>Deutsch</MenuItem>
+            </Menu>
+          </Grid>
+        </Grid>
 
         <div className={classes.logout}>
           <Button variant='outlined' onClick={() => dispatch(logoutUser())}>
