@@ -9,7 +9,6 @@ export default {
     content: 'test',
     guid: 'test',
     read: false,
-    markedAsReadAt: new Date(),
-    fkFeed: 1
+    markedAsReadAt: new Date()
   }
 };

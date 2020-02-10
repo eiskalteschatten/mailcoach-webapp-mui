@@ -4,7 +4,6 @@ export default {
     name: 'test',
     feedUrl: 'test',
     link: 'test',
-    icon: 'test',
-    fkFolder: 1
+    icon: 'test'
   }
 };
