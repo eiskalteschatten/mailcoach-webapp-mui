@@ -1,4 +1,4 @@
-import Feed from './Feed';
+import { Feed } from './Feed';
 
 export interface Article {
   id: number;
