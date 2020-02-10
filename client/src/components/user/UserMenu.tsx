@@ -65,7 +65,7 @@ interface Props extends RouteComponentProps {};
 const UserMenu: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { messages, locale } = useContext(IntlContext);
+  const { messages, switchLocale } = useContext(IntlContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorLangEl, setAnchorLangEl] = useState<null | HTMLElement>(null);
   const { firstName, lastName, username } = useSelector((state: State) => state.user.user);
@@ -101,6 +101,7 @@ const UserMenu: React.FC<Props> = (props: Props) => {
 
   const handleLanguageChange = (language: string) => {
     handleLangClose();
+    switchLocale(language);
     dispatch(saveUserSettings({ language }));
   };
 

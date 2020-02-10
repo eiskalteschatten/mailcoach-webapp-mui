@@ -4,7 +4,14 @@ import { IntlProvider } from 'react-intl';
 import enMessages from './en';
 import deMessages from './de';
 
-const defaultLocale = 'en';
+const userSettingsString = localStorage.getItem('userSettings');
+let userSettings;
+
+if (userSettingsString) {
+  userSettings = JSON.parse(userSettingsString);
+}
+
+const defaultLocale = userSettings ? userSettings.language : 'en';
 
 const availableLocales: string[] = ['en', 'de'];
 
