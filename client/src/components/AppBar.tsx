@@ -16,6 +16,7 @@ import { grey } from '@material-ui/core/colors';
 import MenuIcon from '@material-ui/icons/Menu';
 import AppsIcon from '@material-ui/icons/Apps';
 
+import AppMenu from './AppMenu';
 import UserMenu from './user/UserMenu';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -67,12 +68,7 @@ const AppBar: React.FC<Props> = (props: Props) => {
 
       <div className={classes.grow} />
 
-      <IconButton
-        onClick={() => {}}
-      >
-        <AppsIcon />
-      </IconButton>
-
+      <AppMenu />
       <UserMenu />
     </Toolbar>
   </MuiAppBar>);
