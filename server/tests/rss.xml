@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:georss="http://www.georss.org/georss" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" version="2.0">
+  <channel>
+    <title>History Rhymes</title>
+    <atom:link href="https://www.historyrhymes.info/feed/" rel="self" type="application/rss+xml" />
+    <link>https://www.historyrhymes.info</link>
+    <description>Nineteenth-century History</description>
+    <lastBuildDate>Mon, 12 Aug 2019 11:55:48 +0000</lastBuildDate>
+    <language>en-US</language>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <generator>https://wordpress.org/?v=5.3.2</generator>
+    <site xmlns="com-wordpress:feed-additions:1">3693950</site>
+    <item>
+      <title>A Decade of History Rhymes</title>
+      <link>https://www.historyrhymes.info/2018/04/10/a-decade-of-history-rhymes/</link>
+      <comments>https://www.historyrhymes.info/2018/04/10/a-decade-of-history-rhymes/#respond</comments>
+      <pubDate>Tue, 10 Apr 2018 21:46:11 +0000</pubDate>
+      <dc:creator><![CDATA[Alex Seifert]]></dc:creator>
+      <category><![CDATA[General]]></category>
+      <category><![CDATA[News]]></category>
+      <category><![CDATA[10 years]]></category>
+      <category><![CDATA[anniversary]]></category>
+      <guid isPermaLink="false">https://www.historyrhymes.info/?p=3266</guid>
+      <description><![CDATA[It is hard to believe that an entire decade has elapsed since I published my first History Rhymes blog post entitled "Starting Out." A lot has changed in the past ten years and I have big plans for it for the future.<img src="https://matomo.alexseifert.com/piwik.php?idsite=1&amp;rec=1&amp;url=https%3A%2F%2Fwww.historyrhymes.info%2F2018%2F04%2F10%2Fa-decade-of-history-rhymes%2F&amp;action_name=A+Decade+of+History+Rhymes&amp;urlref=https%3A%2F%2Fwww.historyrhymes.info%2Ffeed%2F" style="border:0;width:0;height:0" width="0" height="0" alt="" />]]></description>
+      <content:encoded><![CDATA[<div id="attachment_3268" style="width: 230px" class="wp-caption alignright"><a href="https://www.historyrhymes.info/?attachment_id=3268" rel="attachment wp-att-3268"><img aria-describedby="caption-attachment-3268" src="https://www.historyrhymes.info/wp-content/uploads/2018/04/History-Rhymes-original-blog-220x300.png" alt="History Rhymes - Original Blog" width="220" height="300" class="size-medium wp-image-3268" srcset="https://www.historyrhymes.info/wp-content/uploads/2018/04/History-Rhymes-original-blog-220x300.png 220w, https://www.historyrhymes.info/wp-content/uploads/2018/04/History-Rhymes-original-blog-110x150.png 110w, https://www.historyrhymes.info/wp-content/uploads/2018/04/History-Rhymes-original-blog-768x1048.png 768w, https://www.historyrhymes.info/wp-content/uploads/2018/04/History-Rhymes-original-blog-751x1024.png 751w, https://www.historyrhymes.info/wp-content/uploads/2018/04/History-Rhymes-original-blog.png 826w" sizes="(max-width: 220px) 100vw, 220px" /></a><p id="caption-attachment-3268" class="wp-caption-text">History Rhymes &#8211; Original Blog</p></div>
+<p>It is hard to believe that an entire decade has elapsed since I published my first History Rhymes blog post entitled &#8220;<a href="https://www.historyrhymes.info/2008/04/14/starting-out/">Starting Out</a>.&#8221; At that time, the blog was still hosted on WordPress.com and used a standard theme (see the image to the right). In fact, it is even still <a href="https://historyrhymes.wordpress.com" target="_blank" rel="noopener noreferrer">online</a>.</p>
+<p>A lot more than just the theme has changed in the past ten years though. Originally, this blog was intended to be a spot where I could dump interesting research material I found that may or may not have interested others. It has since developed into a full-fledged history website whose goal it is to provide informative historical articles about the nineteenth century. Over the years, I have tried to raise the quality and make the whole project more professional.</p>
+<p>History remains a passion of mine and I thoroughly enjoy researching and writing posts for History Rhymes even if I do not always have the time I would like to invest in it. I have big plans for it for the future and am looking forward to the next ten years!</p>
+<p>— Alex</p>
+<img src="https://matomo.alexseifert.com/piwik.php?idsite=1&amp;rec=1&amp;url=https%3A%2F%2Fwww.historyrhymes.info%2F2018%2F04%2F10%2Fa-decade-of-history-rhymes%2F&amp;action_name=A+Decade+of+History+Rhymes&amp;urlref=https%3A%2F%2Fwww.historyrhymes.info%2Ffeed%2F" style="border:0;width:0;height:0" width="0" height="0" alt="" />]]></content:encoded>
+      <wfw:commentRss>https://www.historyrhymes.info/2018/04/10/a-decade-of-history-rhymes/feed/</wfw:commentRss>
+      <slash:comments>0</slash:comments>
+      <post-id xmlns="com-wordpress:feed-additions:1">3266</post-id>
+    </item>
+  </channel>
+</rss>
