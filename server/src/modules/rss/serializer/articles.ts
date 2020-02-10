@@ -4,6 +4,8 @@ import {
   ModelCreateUpdate
 } from '../interfaces/Article';
 
+import { serialize as serializeFeed } from './feeds';
+
 export const serialize = (article: DeserializedModel): SerializedModel => ({
   id: article.id,
   title: article.title,
@@ -15,7 +17,7 @@ export const serialize = (article: DeserializedModel): SerializedModel => ({
   guid: article.guid,
   read: article.read,
   markedAsReadAt: article.markedAsReadAt,
-  feed: article.feed
+  feed: serializeFeed(article.feed)
 });
 
 export default serialize;
