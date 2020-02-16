@@ -298,16 +298,16 @@ class ArticlesController extends AbstractController {
    * @apiVersion 1.0.0
    *
    * @apiParam {number} id The article's ID
-   * @apiParam {string} title The article's title.
-   * @apiParam {string} link The article's link.
-   * @apiParam {string} pubDate The article's date of publication.
-   * @apiParam {string} creator The article's creator.
-   * @apiParam {string} contentSnippet A content snippet of the article.
-   * @apiParam {string} content The article's content.
-   * @apiParam {string} guid The article's unique ID.
-   * @apiParam {boolean} read Whether the article should be marked as read or not.
-   * @apiParam {string} markedAsReadAt When the article should be marked as read at.
-   * @apiParam {number} fkFeed The article's feed ID.
+   * @apiParam {string} [title] The article's title.
+   * @apiParam {string} [link] The article's link.
+   * @apiParam {string} [pubDate] The article's date of publication.
+   * @apiParam {string} [creator] The article's creator.
+   * @apiParam {string} [contentSnippet] A content snippet of the article.
+   * @apiParam {string} [content] The article's content.
+   * @apiParam {string} [guid] The article's unique ID.
+   * @apiParam {boolean} [read] Whether the article should be marked as read or not.
+   * @apiParam {string} [markedAsReadAt] When the article should be marked as read at.
+   * @apiParam {number} [fkFeed] The article's feed ID.
    *
    * @apiParamExample {json} Request-Example:
    *  {
