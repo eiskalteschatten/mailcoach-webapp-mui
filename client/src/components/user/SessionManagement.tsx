@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import axios from 'axios';
 
 import {
   makeStyles,
@@ -10,8 +11,11 @@ import {
 } from '@material-ui/core';
 
 import { State } from '../../store';
-import { getAllUserSessions, logOutAllOtherUserSessions } from '../../store/actions/userActions';
-import { UserSessions } from '../../store/reducers/userReducer';
+
+interface UserSessions {
+  loginDate?: Date;
+  instanceId?: string;
+}
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   sessions: {
@@ -28,20 +32,27 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const SessionManagement: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const sessions = useSelector((state: State) => state.user.sessions);
+  const [sessions, setSessions] = useState<UserSessions[] | undefined>();
   const instanceId = useSelector((state: State) => state.user.instanceId);
 
-  useEffect(() => {
-    if (!sessions.length) {
-      dispatch(getAllUserSessions());
+  const logOutAllOtherUserSessions = async (): Promise<void> => {
+    await axios.post('/api/auth/users/sessions/logout', { instanceId });
+    const res: any = await axios.get('/api/auth/users/sessions');
+    setSessions(res.data.sessions)
+  };
+
+  useEffect((): void => {
+    if (!sessions) {
+      axios.get('/api/auth/users/sessions')
+        .then((res: any) => setSessions(res.data.sessions))
+        .catch(console.error);
     }
-  }, [sessions, dispatch])
+  }, [sessions]);
 
   return (<>
     <Button
       variant='contained'
-      onClick={() => dispatch(logOutAllOtherUserSessions())}
+      onClick={logOutAllOtherUserSessions}
     >
       <FormattedMessage id='account.logOutAllOtherSessions' />
     </Button>
@@ -51,7 +62,7 @@ const SessionManagement: React.FC = () => {
         <FormattedMessage id='account.loginDate' />
       </div>
 
-      {sessions.map((session: UserSessions): any =>
+      {sessions && sessions.map((session: UserSessions): any =>
         <div>
           {session.instanceId === instanceId ? (
             <span className={classes.thisSession}>{session.loginDate} (<FormattedMessage id='account.thisSession' />)</span>

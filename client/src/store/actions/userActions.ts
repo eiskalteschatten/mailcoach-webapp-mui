@@ -6,7 +6,6 @@ import { SerializedModel, ModelCreateUpdate, LoginModel, PasswordChange } from '
 import { SerializedModel as SerializedModelSettings } from '../../../../interfaces/auth/UserSettings';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError, appSetError } from './appActions';
-import { UserSessions } from '../reducers/userReducer';
 
 export interface UserSetInfo extends Action<'USER_SET_INFO'> {
   user: SerializedModel
@@ -15,9 +14,6 @@ export interface UserLogin extends Action<'USER_LOG_IN'> {}
 export interface UserLogout extends Action<'USER_LOG_OUT'> {}
 export interface UserSetInstanceId extends Action<'USER_SET_INSTANCE_ID'> {
   instanceId: string;
-}
-export interface UserSetSessions extends Action<'USER_SET_SESSIONS'> {
-  sessions: UserSessions[];
 }
 
 export interface UserSetSettings extends Action<'USER_SET_SETTINGS'> {
@@ -29,7 +25,6 @@ export type UserActions =
   UserLogin |
   UserLogout |
   UserSetInstanceId |
-  UserSetSessions |
   UserSetSettings;
 
 export const userSetInfo = (user: SerializedModel): UserSetInfo => ({
@@ -43,11 +38,6 @@ export const userLogout = (): UserLogout => ({ type: 'USER_LOG_OUT' });
 export const userSetInstanceId = (instanceId: string): UserSetInstanceId => ({
   type: 'USER_SET_INSTANCE_ID',
   instanceId
-});
-
-export const userSetSessions = (sessions: UserSessions[]): UserSetSessions => ({
-  type: 'USER_SET_SESSIONS',
-  sessions
 });
 
 export const userSetSettings = (settings: SerializedModelSettings): UserSetSettings => ({
@@ -246,57 +236,6 @@ export const updateOwnPassword: ActionCreator<
       dispatch(appSetError('errors.anErrorOccurred'));
       console.error(error);
     }
-  }
-
-  return dispatch(appStopLoading());
-};
-
-export const getAllUserSessions: ActionCreator<
-  ThunkAction<
-    Promise<AppStopLoadingAction>,
-    null,
-    null,
-    AppStopLoadingAction
-  >
-> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
-  dispatch(appStartLoading());
-  dispatch(appSetError(''));
-
-  try {
-    const res: any = await axios.get('/api/auth/users/sessions');
-    dispatch(userSetSessions(res.data.sessions));
-  }
-  catch (error) {
-    dispatch(appSetError('errors.anErrorOccurred'));
-    console.error(error);
-  }
-
-  return dispatch(appStopLoading());
-};
-
-export const logOutAllOtherUserSessions: ActionCreator<
-  ThunkAction<
-    Promise<AppStopLoadingAction>,
-    null,
-    null,
-    AppStopLoadingAction
-  >
-> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
-  dispatch(appStartLoading());
-  dispatch(appSetError(''));
-
-  try {
-    const state = getState();
-    await axios.post('/api/auth/users/sessions/logout', {
-      instanceId: state.user && state.user.instanceId
-    });
-
-    const res: any = await axios.get('/api/auth/users/sessions');
-    dispatch(userSetSessions(res.data.sessions));
-  }
-  catch (error) {
-    dispatch(appSetError('errors.anErrorOccurred'));
-    console.error(error);
   }
 
   return dispatch(appStopLoading());

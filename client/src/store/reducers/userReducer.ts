@@ -18,16 +18,10 @@ const defaultUserSettings = {
 };
 
 
-export interface UserSessions {
-  loginDate: Date;
-  instanceId: string;
-}
-
 export interface UserState {
   user: SerializedModel;
   jwtValidated: false;
   instanceId: string;
-  sessions: UserSessions[];
   settings: SerializedModelSettings;
 };
 
@@ -42,7 +36,6 @@ export const initialState: UserState = {
   },
   jwtValidated: false,
   instanceId: '',
-  sessions: [],
   settings: userSettings || defaultUserSettings
 };
 
@@ -67,11 +60,6 @@ const userReducer: Reducer<UserState, UserActions> = (
       return {
         ...state,
         instanceId: action.instanceId
-      };
-    case 'USER_SET_SESSIONS':
-      return {
-        ...state,
-        sessions: action.sessions
       };
     case 'USER_SET_SETTINGS':
       return {

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
   makeStyles,
@@ -9,14 +8,10 @@ import {
   Grid,
   Card,
   CardHeader,
-  IconButton,
   CardContent
 } from '@material-ui/core';
 
-import RefreshIcon from '@material-ui/icons/Refresh';
-
 import { IntlContext } from '../../intl/IntlContext';
-import { getAllUserSessions } from '../../store/actions/userActions';
 
 import UserAccountForm from '../../components/user/UserAccountForm';
 import ChangePasswordForm from '../../components/user/ChangePasswordForm';
@@ -33,7 +28,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const ManageAccount: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { messages } = useContext(IntlContext);
 
   return (<Container>
@@ -69,11 +63,6 @@ const ManageAccount: React.FC = () => {
         <Card className={classes.card}>
           <CardHeader
             title={messages['account.sessionManagement']}
-            action={
-              <IconButton onClick={() => dispatch(getAllUserSessions())}>
-                <RefreshIcon />
-              </IconButton>
-            }
           />
 
           <CardContent>
