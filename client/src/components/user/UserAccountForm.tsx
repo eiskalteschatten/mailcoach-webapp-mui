@@ -64,7 +64,8 @@ const UserAccountForm: React.FC = () => {
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}
-    render={(formikProps: FormikProps<FormValues>) => (
+  >
+    {(formikProps: FormikProps<FormValues>) => (
       <Form className={classes.root}>
         <Username />
         <FirstName />
@@ -83,7 +84,7 @@ const UserAccountForm: React.FC = () => {
           </Button>
         </div>
       </Form>
-  )}/>);
+  )}</Formik>);
 }
 
 export default UserAccountForm;
