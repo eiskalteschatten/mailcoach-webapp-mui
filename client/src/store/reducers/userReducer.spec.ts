@@ -52,20 +52,6 @@ describe('User Reducer', () => {
     })
   });
 
-  test('Should handle USER_SET_SESSIONS', () => {
-    const sessions: UserSessions[] = [{
-      loginDate: new Date(),
-      instanceId: 'test'
-    }];
-
-    expect(
-      userReducer(undefined, { type: 'USER_SET_SESSIONS', sessions })
-    ).toEqual({
-      ...initialState,
-      sessions
-    })
-  });
-
   test('Should handle USER_SET_SETTINGS', () => {
     const settings = {
       language: 'en',
