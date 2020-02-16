@@ -77,6 +77,7 @@ class SessionsController extends AbstractController {
    *  {
    *    "instanceId": ""
    *  }
+   *
    * @apiHeaderExample {json} Header-Example:
    *  {
    *    "Authorization": "Bearer accessToken"
