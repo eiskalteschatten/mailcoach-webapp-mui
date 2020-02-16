@@ -1,3 +1,8 @@
+export interface SerializedFeedFolder {
+  id: number;
+  name: string;
+}
+
 export interface DeserializedModel {
   id: number;
   name: string;
@@ -5,6 +10,7 @@ export interface DeserializedModel {
   link: string;
   icon: string;
   fkFolder: number;
+  folder?: SerializedFeedFolder;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,7 +21,7 @@ export interface SerializedModel {
   feedUrl: string;
   link: string;
   icon: string;
-  fkFolder: number;
+  folder: SerializedFeedFolder;
 }
 
 export interface ModelCreateUpdate {

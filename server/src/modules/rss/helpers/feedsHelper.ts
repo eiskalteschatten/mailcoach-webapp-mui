@@ -58,7 +58,7 @@ export async function refreshAllFeeds(): Promise<ArticleInterface[]> {
 }
 
 interface RefreshSingleFeed {
-  articles: ArticleInterface;
+  articles: ArticleInterface[];
   parsedFeed: any;
 }
 

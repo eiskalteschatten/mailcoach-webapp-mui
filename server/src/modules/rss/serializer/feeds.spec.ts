@@ -20,13 +20,23 @@ describe('FeedSerializer', () => {
     const testModel = await Feed.create(data);
     expect(testModel).toBeDefined();
 
-    const expectedData = {
-      ...data,
-      id: testModel.id
+    const folder = {
+      id: 1,
+      name: 'test name'
     };
 
-    const serializedData = serialize(testModel);
+    const createData = {
+      ...testModel.get({ plain: true }),
+      folder
+    };
 
+    const expectedData = {
+      ...data,
+      id: testModel.id,
+      folder
+    };
+
+    const serializedData = serialize(createData);
     expect(serializedData).toEqual(expectedData);
   });
 
