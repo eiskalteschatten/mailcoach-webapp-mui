@@ -77,18 +77,9 @@ describe('Feeds Helper', () => {
 
     const articles = result.articles;
 
+
     expect(articles).toBeDefined();
-    // The following are undefined because the article has already been "read" by the test above
-    expect(articles.title).toBeUndefined();
-    expect(articles.link).toBeUndefined();
-    expect(articles.pubDate).toBeUndefined();
-    expect(articles.creator).toBeUndefined();
-    expect(articles.contentSnippet).toBeUndefined();
-    expect(articles.content).toBeUndefined();
-    expect(articles.guid).toBeUndefined();
-    expect(articles.read).toBeUndefined();
-    expect(articles.markedAsReadAt).toBeUndefined();
-    expect(articles.fkFeed).toBeUndefined();
+    expect(articles[0]).toBeUndefined();  // Undefined because the article has already been "read" by the test above
 
     done();
   });
