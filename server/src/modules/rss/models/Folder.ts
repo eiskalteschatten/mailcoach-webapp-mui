@@ -16,7 +16,9 @@ Folder.init({
   }
 }, {
   sequelize,
-  modelName: 'rss_folder'
+  modelName: 'rss_folder',
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
 });
 
 if (process.env.NODE_ENV === 'test') {

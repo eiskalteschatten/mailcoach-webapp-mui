@@ -38,7 +38,9 @@ Feed.init({
   }
 }, {
   sequelize,
-  modelName: 'rss_feed'
+  modelName: 'rss_feed',
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
 });
 
 Feed.belongsTo(Folder, {

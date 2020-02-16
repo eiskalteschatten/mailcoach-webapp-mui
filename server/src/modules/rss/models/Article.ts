@@ -71,7 +71,9 @@ Article.init({
   }
 }, {
   sequelize,
-  modelName: 'rss_article'
+  modelName: 'rss_article',
+  updatedAt: 'updated_at',
+  createdAt: 'created_at'
 });
 
 Article.belongsTo(Feed, {
