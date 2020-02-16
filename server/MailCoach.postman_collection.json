@@ -708,6 +708,860 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "RSS",
+			"item": [
+				{
+					"name": "Articles",
+					"item": [
+						{
+							"name": "Get All RSS Articles",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/articles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"articles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Unread RSS Articles",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/articles/unread",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"articles",
+										"unread"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mark All Articles as Read",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/articles/mark-all-read",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"articles",
+										"mark-all-read"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mark an Article as Read or Unread",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/articles/mark-read-unread/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"articles",
+										"mark-read-unread",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update an Article",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"\",\n    \"link\": \"\",\n    \"pubDate\": \"\",\n    \"creator\": \"\",\n    \"contentSnippet\": \"\",\n    \"content\": \"\",\n    \"guid\": \"\",\n    \"read\": false,\n    \"markedAsReadAt\": \"\",\n    \"fkFeed\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/articles/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"articles",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete an Article",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/articles/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"articles",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Feeds",
+					"item": [
+						{
+							"name": "Get All RSS Feeds",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/feeds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"feeds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Feed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\",\n    \"feedUrl\": \"\",\n    \"link\": \"\",\n    \"icon\": \"\",\n    \"fkFolder\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/feeds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"feeds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Feed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/feeds/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"feeds",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Feed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/feeds/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"feeds",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh All Feeds",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/refresh",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh A Feed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/refresh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"refresh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Folders",
+					"item": [
+						{
+							"name": "Get All RSS Folders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3025/api/rss/folders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"folders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Folder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"My Folder\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/folders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"folders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a Folder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"My Renamed Folder\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/folders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"folders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Folder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3025/api/rss/folders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3025",
+									"path": [
+										"api",
+										"rss",
+										"folders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
