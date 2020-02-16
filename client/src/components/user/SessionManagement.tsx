@@ -63,7 +63,7 @@ const SessionManagement: React.FC = () => {
       </div>
 
       {sessions && sessions.map((session: UserSessions): any =>
-        <div>
+        <div key={session.instanceId}>
           {session.instanceId === instanceId ? (
             <span className={classes.thisSession}>{session.loginDate} (<FormattedMessage id='account.thisSession' />)</span>
           ) : (
