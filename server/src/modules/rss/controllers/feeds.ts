@@ -108,19 +108,18 @@ class FeedsController extends AbstractController {
    * @apiSuccessExample {json} Success-Response:
    *  HTTP/1.1 200 OK
    *  {
-   *    "feeds": [
-   *      {
+   *    "feed": {
+   *      "id": 1,
+   *      "name": "",
+   *      "feedUrl": "",
+   *      "link": "",
+   *      "icon": "",
+   *      "folder": {
    *        "id": 1,
-   *        "name": "",
-   *        "feedUrl": "",
-   *        "link": "",
-   *        "icon": "",
-   *        "folder": {
-   *          "id": 1,
-   *          "name": ""
-   *        }
+   *        "name": ""
    *      }
-   *    ]
+   *    },
+   *    "articles": [{ ... }]
    *  }
    */
 
