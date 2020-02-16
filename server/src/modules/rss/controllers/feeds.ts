@@ -128,7 +128,8 @@ class FeedsController extends AbstractController {
       const deserialized = deserializeModelCreateUpdate(req.body);
 
       const feed = await Feed.create({
-        feedUrl: deserialized.feedUrl
+        feedUrl: deserialized.feedUrl,
+        icon: deserialized.icon
       });
 
       const refreshed = await refreshForSingleFeed(feed.id);
