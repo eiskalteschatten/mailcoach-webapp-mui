@@ -1,33 +1,20 @@
 import React, { useContext } from 'react';
 
 import {
-  makeStyles,
-  Theme,
-  createStyles,
   Container,
   Grid,
-  Card,
   CardHeader,
   CardContent
 } from '@material-ui/core';
 
 import { IntlContext } from '../../intl/IntlContext';
 
+import LoadingCard from '../../components/elements/LoadingCard';
 import UserAccountForm from '../../components/user/UserAccountForm';
 import ChangePasswordForm from '../../components/user/ChangePasswordForm';
 import SessionManagement from '../../components/user/SessionManagement';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  card: {
-    padding: theme.spacing(3)
-  },
-  paddedTitle: {
-    paddingBottom: theme.spacing(3)
-  }
-}));
-
 const ManageAccount: React.FC = () => {
-  const classes = useStyles();
   const { messages } = useContext(IntlContext);
 
   return (<Container>
@@ -36,7 +23,7 @@ const ManageAccount: React.FC = () => {
       spacing={2}
     >
       <Grid item xs={12} md={6}>
-        <Card className={classes.card}>
+        <LoadingCard>
           <CardHeader
             title={messages['account.accountInformation']}
           />
@@ -44,11 +31,11 @@ const ManageAccount: React.FC = () => {
           <CardContent>
             <UserAccountForm />
           </CardContent>
-        </Card>
+        </LoadingCard>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <Card className={classes.card}>
+        <LoadingCard>
           <CardHeader
             title={messages['account.updatePassword']}
           />
@@ -56,11 +43,11 @@ const ManageAccount: React.FC = () => {
           <CardContent>
             <ChangePasswordForm />
           </CardContent>
-        </Card>
+        </LoadingCard>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <Card className={classes.card}>
+        <LoadingCard>
           <CardHeader
             title={messages['account.sessionManagement']}
           />
@@ -68,7 +55,7 @@ const ManageAccount: React.FC = () => {
           <CardContent>
             <SessionManagement />
           </CardContent>
-        </Card>
+        </LoadingCard>
       </Grid>
     </Grid>
   </Container>);
