@@ -1,9 +1,9 @@
 export default {
   model: 'Feed',
   data: {
-    name: 'test',
-    feedUrl: 'test',
-    link: 'test',
-    icon: 'test'
+    name: 'History Rhymes',
+    feedUrl: 'https://www.historyrhymes.info/feed',
+    link: 'https://www.historyrhymes.info',
+    icon: 'test',
   }
 };
