@@ -14,6 +14,7 @@ import {
 
 import AppsIcon from '@material-ui/icons/Apps';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import RssFeedIcon from '@material-ui/icons/RssFeed';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   button: {
@@ -71,6 +72,12 @@ const AppMenu: React.FC<Props> = (props: Props) => {
           </ButtonBase>
         </Grid>
         <Grid item xs={4}>
+          <ButtonBase className={classes.button} onClick={() => handleButtonClick('/rss')}>
+            <RssFeedIcon className={classes.buttonIcon} />
+            <div className={classes.buttonLabel}>
+              <FormattedMessage id='rssFeeds' />
+            </div>
+          </ButtonBase>
         </Grid>
         <Grid item xs={4}>
         </Grid>

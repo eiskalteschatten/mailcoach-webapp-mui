@@ -21,6 +21,8 @@ export default {
 
   'dashboard': 'Dashboard',
 
+  'rssFeeds': 'RSS Feeds',
+
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',
   'account.updatePassword': 'Update Password',
