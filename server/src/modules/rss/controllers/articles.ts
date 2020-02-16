@@ -148,7 +148,7 @@ class ArticlesController extends AbstractController {
   }
 
   /**
-   * @api {patch} /api/rss/articles/mark-all-read Make All Articles as Read
+   * @api {patch} /api/rss/articles/mark-all-read Mark All Articles as Read
    * @apiName MarkAllArticlesAsRead
    * @apiGroup RSS
    * @apiVersion 1.0.0
@@ -331,28 +331,26 @@ class ArticlesController extends AbstractController {
    * @apiSuccessExample {json} Success-Response:
    *  HTTP/1.1 200 OK
    *  {
-   *    "articles": [
-   *      {
+   *    "article": {
+   *      "id": 1,
+   *      "title": "",
+   *      "link": "",
+   *      "pubDate": "",
+   *      "creator": "",
+   *      "contentSnippet": "",
+   *      "content": "",
+   *      "guid": "",
+   *      "read": false,
+   *      "markedAsReadAt": "",
+   *      "feed": {
    *        "id": 1,
-   *        "title": "",
+   *        "name": "",
+   *        "feedUrl": "",
    *        "link": "",
-   *        "pubDate": "",
-   *        "creator": "",
-   *        "contentSnippet": "",
-   *        "content": "",
-   *        "guid": "",
-   *        "read": false,
-   *        "markedAsReadAt": "",
-   *        "feed": {
-   *          "id": 1,
-   *          "name": "",
-   *          "feedUrl": "",
-   *          "link": "",
-   *          "icon": "",
-   *          "fkFolder": 1
-   *        }
+   *        "icon": "",
+   *        "fkFolder": 1
    *      }
-   *    ]
+   *    }
    *  }
    */
 
