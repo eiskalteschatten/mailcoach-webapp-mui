@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react';
+import React, { ComponentType, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 
 interface Props {
@@ -6,10 +6,15 @@ interface Props {
   component: ComponentType;
   path: string;
   exact?: boolean;
+  title?: string;
 }
 
 const RouteWithLayout: React.FC<Props> = (props) => {
-  const { layout: Layout, component: Component, path, exact } = props;
+  const { layout: Layout, component: Component, path, exact, title } = props;
+
+  useEffect(() => {
+    document.title = title ? `${title} - MailCoach` : 'MailCoach';
+  }, [title]);
 
   const routeWithLayout: React.FC = () => <Layout>
     <Component />
