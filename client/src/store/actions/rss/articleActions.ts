@@ -28,9 +28,9 @@ export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   articles
 });
 
-export const articleToggleDialog = (): ArticleToggleDialog => ({
+export const articleToggleDialog = (dialogOpen: boolean): ArticleToggleDialog => ({
   type: 'ARTICLE_TOGGLE_DIALOG',
-  dialogOpen: true
+  dialogOpen
 });
 
 export const articleSetSelectedIndex = (selectedArticleIndex: number): ArticleSetSelectedIndex => ({
@@ -50,7 +50,7 @@ export const articleGetAllUnread: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.get('/api/article/unread');
+    const res: any = await axios.get('/api/rss/articles/unread');
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
@@ -73,8 +73,8 @@ export const articleRefreshAndGetAllUnread: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    await axios.post('/api/refresh');
-    const res: any = await axios.get('/api/article/unread');
+    await axios.post('/api/rss/refresh');
+    const res: any = await axios.get('/api/rss/articles/unread');
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
@@ -97,7 +97,7 @@ export const articleGetAll: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.get('/api/article');
+    const res: any = await axios.get('/api/rss/articles');
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
@@ -122,11 +122,11 @@ export const articleMarkReadUnread: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.patch(`/api/article/mark-read-unread/${id}`, { read });
+    const res: any = await axios.patch(`/api/rss/article/mark-read-unread/${id}`, { read });
 
     const state = getState();
-    const articles = Object.create(state.article.articles);
-    const selectedArticleIndex = state.article.selectedArticleIndex;
+    const articles = state.article && Object.create(state.article.articles);
+    const selectedArticleIndex = state.article && state.article.selectedArticleIndex;
 
     if (selectedArticleIndex !== undefined && selectedArticleIndex !== null) {
       articles[selectedArticleIndex] = res.data.article;
@@ -157,10 +157,10 @@ export const articleMarkAllRead: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    await axios.patch('/api/article/mark-all-read');
+    await axios.patch('/api/rss/article/mark-all-read');
 
     const state = getState();
-    const articles = Object.create(state.article.articles);
+    const articles = state.article && Object.create(state.article.articles);
 
     for (const i in articles) {
       articles[i].read = true;
