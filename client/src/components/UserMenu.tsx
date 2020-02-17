@@ -21,9 +21,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import { grey } from '@material-ui/core/colors';
 
-import { State } from '../../store';
-import { logoutUser, saveUserSettings } from '../../store/actions/userActions';
-import { IntlContext } from '../../intl/IntlContext';
+import { State } from '../store';
+import { logoutUser, saveUserSettings } from '../store/actions/userActions';
+import { IntlContext } from '../intl/IntlContext';
 
 const useStyles = makeStyles((theme: Theme) => {
   const borderBottomColor = theme.palette.type === 'light'

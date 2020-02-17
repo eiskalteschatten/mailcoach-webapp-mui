@@ -10,10 +10,10 @@ import {
   Button
 } from '@material-ui/core';
 
-import { State } from '../../store';
-import { appSetError } from '../../store/actions/appActions';
+import { State } from '../../../store';
+import { appSetError } from '../../../store/actions/appActions';
 
-import ComponentLoader from '../ComponentLoader';
+import ComponentLoader from '../../../components/ComponentLoader';
 
 interface UserSessions {
   loginDate?: Date;

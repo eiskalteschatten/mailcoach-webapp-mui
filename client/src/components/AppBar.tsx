@@ -16,7 +16,7 @@ import { grey } from '@material-ui/core/colors';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import AppMenu from './AppMenu';
-import UserMenu from './user/UserMenu';
+import UserMenu from './UserMenu';
 
 const useStyles = makeStyles((theme: Theme) => {
   const appBarBorderBottomColor = theme.palette.type === 'light'
@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) => {
   return createStyles({
     root: {
       boxShadow: 'none',
-      borderBottom: `1px solid ${appBarBorderBottomColor}`
+      borderBottom: `1px solid ${appBarBorderBottomColor}`,
+      zIndex: theme.zIndex.drawer + 1
     },
     title: {
       marginLeft: 10,

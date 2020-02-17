@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, FormikProps } from 'formik';
 import { FormattedMessage } from 'react-intl';
 import * as Yup from 'yup';  // For some reason this still has to be done for yup
@@ -11,50 +11,56 @@ import {
   Button
 } from '@material-ui/core';
 
-import { LoginModel } from '../../../../interfaces/auth/Users';
+import { SerializedModel } from '../../../../../interfaces/auth/Users';
 
-import { Username, Password } from './LoginFormElements';
+import {
+  Username,
+  FirstName,
+  LastName,
+  Email
+} from './UserAccountFormElements';
 
-import { loginUser } from '../../store/actions/userActions';
-import { IntlContext } from '../../intl/IntlContext';
+import { State } from '../../../store';
+import { updateUserSelf } from '../../../store/actions/userActions';
+import { IntlContext } from '../../../intl/IntlContext';
 
-interface FormValues extends LoginModel {}
-
-const initialValues: FormValues = {
-  username: '',
-  password: ''
-};
+interface FormValues extends SerializedModel {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       margin: 25
     },
-    loginButtonWrapper: {
+    buttonWrapper: {
       textAlign: 'right'
     },
-    loginButton: {
+    button: {
       margin: '15px 0'
     }
   })
 );
 
-const LoginForm: React.FC = () => {
+const UserAccountForm: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
+  const user = useSelector((state: State) => state.user.user);
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .required(messages.required),
-    password: Yup.string()
+    firstName: Yup.string()
+      .required(messages.required),
+    lastName: Yup.string()
+      .required(messages.required),
+    email: Yup.string()
       .required(messages.required)
   });
 
   return (<Formik
-    initialValues={initialValues}
+    initialValues={user}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
-      await dispatch(loginUser(values));
+      await dispatch(updateUserSelf(values));
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}
@@ -62,21 +68,24 @@ const LoginForm: React.FC = () => {
     {(formikProps: FormikProps<FormValues>) => (
       <Form className={classes.root}>
         <Username />
-        <Password />
-        <div className={classes.loginButtonWrapper}>
+        <FirstName />
+        <LastName />
+        <Email />
+
+        <div className={classes.buttonWrapper}>
           <Button
             variant='contained'
             color='primary'
-            className={classes.loginButton}
+            className={classes.button}
             type='submit'
             disabled={formikProps.isSubmitting}
           >
-            <FormattedMessage id='logIn' />
+            <FormattedMessage id='save' />
           </Button>
         </div>
       </Form>
   )}</Formik>);
 }
 
-export default LoginForm;
+export default UserAccountForm;
 

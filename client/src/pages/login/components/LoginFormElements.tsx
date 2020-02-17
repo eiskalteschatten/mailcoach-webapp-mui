@@ -9,7 +9,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import { IntlContext } from '../../intl/IntlContext';
+import { IntlContext } from '../../../intl/IntlContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

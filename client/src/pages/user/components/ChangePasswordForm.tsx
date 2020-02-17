@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, FormikProps } from 'formik';
 import { FormattedMessage } from 'react-intl';
 import * as Yup from 'yup';  // For some reason this still has to be done for yup
@@ -11,20 +11,19 @@ import {
   Button
 } from '@material-ui/core';
 
-import { SerializedModel } from '../../../../interfaces/auth/Users';
+import { PasswordChange } from '../../../../../interfaces/auth/Users';
 
-import {
-  Username,
-  FirstName,
-  LastName,
-  Email
-} from './UserAccountFormElements';
+import { CurrentPassword, NewPassword, NewPasswordRepeat } from './ChangePasswordFormElements';
 
-import { State } from '../../store';
-import { updateUserSelf } from '../../store/actions/userActions';
-import { IntlContext } from '../../intl/IntlContext';
+import { updateOwnPassword } from '../../../store/actions/userActions';
+import { IntlContext } from '../../../intl/IntlContext';
 
-interface FormValues extends SerializedModel {}
+interface FormValues extends PasswordChange {}
+
+const initialValues: FormValues = {
+  currentPassword: '',
+  newPassword: ''
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,37 +39,35 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const UserAccountForm: React.FC = () => {
+const ChangePasswordForm: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
-  const user = useSelector((state: State) => state.user.user);
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string()
+    currentPassword: Yup.string()
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, messages.wrongPasswordFormat)
       .required(messages.required),
-    firstName: Yup.string()
+    newPassword: Yup.string()
       .required(messages.required),
-    lastName: Yup.string()
-      .required(messages.required),
-    email: Yup.string()
+    newPasswordRepeat: Yup.string()
+      .oneOf([Yup.ref('newPassword')], messages.passwordsMustMatch)
       .required(messages.required)
   });
 
   return (<Formik
-    initialValues={user}
+    initialValues={initialValues}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
-      await dispatch(updateUserSelf(values));
+      await dispatch(updateOwnPassword(values));
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}
   >
     {(formikProps: FormikProps<FormValues>) => (
       <Form className={classes.root}>
-        <Username />
-        <FirstName />
-        <LastName />
-        <Email />
+        <CurrentPassword />
+        <NewPassword />
+        <NewPasswordRepeat />
 
         <div className={classes.buttonWrapper}>
           <Button
@@ -87,5 +84,5 @@ const UserAccountForm: React.FC = () => {
   )}</Formik>);
 }
 
-export default UserAccountForm;
+export default ChangePasswordForm;
 

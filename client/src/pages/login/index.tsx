@@ -9,10 +9,10 @@ import {
   CardContent
 } from '@material-ui/core';
 
-import { State } from '../store';
+import { State } from '../../store';
 
-import Error from '../components/messages/InlineError';
-import LoginForm from '../components/login/LoginForm';
+import Error from '../../components/messages/InlineError';
+import LoginForm from './components/LoginForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

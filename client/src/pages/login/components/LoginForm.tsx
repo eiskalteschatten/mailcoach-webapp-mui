@@ -11,18 +11,18 @@ import {
   Button
 } from '@material-ui/core';
 
-import { PasswordChange } from '../../../../interfaces/auth/Users';
+import { LoginModel } from '../../../../../interfaces/auth/Users';
 
-import { CurrentPassword, NewPassword, NewPasswordRepeat } from './ChangePasswordFormElements';
+import { Username, Password } from './LoginFormElements';
 
-import { updateOwnPassword } from '../../store/actions/userActions';
-import { IntlContext } from '../../intl/IntlContext';
+import { loginUser } from '../../../store/actions/userActions';
+import { IntlContext } from '../../../intl/IntlContext';
 
-interface FormValues extends PasswordChange {}
+interface FormValues extends LoginModel {}
 
 const initialValues: FormValues = {
-  currentPassword: '',
-  newPassword: ''
+  username: '',
+  password: ''
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,59 +30,53 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       margin: 25
     },
-    buttonWrapper: {
+    loginButtonWrapper: {
       textAlign: 'right'
     },
-    button: {
+    loginButton: {
       margin: '15px 0'
     }
   })
 );
 
-const ChangePasswordForm: React.FC = () => {
+const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
 
   const validationSchema = Yup.object().shape({
-    currentPassword: Yup.string()
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, messages.wrongPasswordFormat)
+    username: Yup.string()
       .required(messages.required),
-    newPassword: Yup.string()
-      .required(messages.required),
-    newPasswordRepeat: Yup.string()
-      .oneOf([Yup.ref('newPassword')], messages.passwordsMustMatch)
+    password: Yup.string()
       .required(messages.required)
   });
 
   return (<Formik
     initialValues={initialValues}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
-      await dispatch(updateOwnPassword(values));
+      await dispatch(loginUser(values));
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}
   >
     {(formikProps: FormikProps<FormValues>) => (
       <Form className={classes.root}>
-        <CurrentPassword />
-        <NewPassword />
-        <NewPasswordRepeat />
-
-        <div className={classes.buttonWrapper}>
+        <Username />
+        <Password />
+        <div className={classes.loginButtonWrapper}>
           <Button
             variant='contained'
             color='primary'
-            className={classes.button}
+            className={classes.loginButton}
             type='submit'
             disabled={formikProps.isSubmitting}
           >
-            <FormattedMessage id='save' />
+            <FormattedMessage id='logIn' />
           </Button>
         </div>
       </Form>
   )}</Formik>);
 }
 
-export default ChangePasswordForm;
+export default LoginForm;
 

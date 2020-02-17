@@ -10,9 +10,9 @@ import {
 import { IntlContext } from '../../intl/IntlContext';
 
 import LoadingCard from '../../components/elements/LoadingCard';
-import UserAccountForm from '../../components/user/UserAccountForm';
-import ChangePasswordForm from '../../components/user/ChangePasswordForm';
-import SessionManagement from '../../components/user/SessionManagement';
+import UserAccountForm from './components/UserAccountForm';
+import ChangePasswordForm from './components/ChangePasswordForm';
+import SessionManagement from './components/SessionManagement';
 
 const ManageAccount: React.FC = () => {
   const { messages } = useContext(IntlContext);

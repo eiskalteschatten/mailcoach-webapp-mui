@@ -9,7 +9,7 @@ import {
   TextField
 } from '@material-ui/core';
 
-import { IntlContext } from '../../intl/IntlContext';
+import { IntlContext } from '../../../intl/IntlContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,35 +42,42 @@ const McTextField: React.FC<any> = (props) => {
   />);
 };
 
-export const CurrentPassword = () => {
+export const Username = () => {
   const { messages } = useContext(IntlContext);
 
   return (<Field
     component={McTextField}
-    name='currentPassword'
-    label={messages.currentPassword}
-    type='password'
+    name='username'
+    label={messages.username}
   />);
 }
 
-export const NewPassword = () => {
+export const FirstName = () => {
   const { messages } = useContext(IntlContext);
 
   return (<Field
     component={McTextField}
-    name='newPassword'
-    label={messages.newPassword}
-    type='password'
+    name='firstName'
+    label={messages.firstName}
   />);
 }
 
-export const NewPasswordRepeat = () => {
+export const LastName = () => {
   const { messages } = useContext(IntlContext);
 
   return (<Field
     component={McTextField}
-    name='newPasswordRepeat'
-    label={messages.passwordRepeat}
-    type='password'
+    name='lastName'
+    label={messages.lastName}
+  />);
+}
+
+export const Email = () => {
+  const { messages } = useContext(IntlContext);
+
+  return (<Field
+    component={McTextField}
+    name='email'
+    label={messages.emailAddress}
   />);
 }
