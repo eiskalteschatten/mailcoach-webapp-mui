@@ -3,6 +3,7 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 
 import app, { AppState } from './reducers/appReducer';
 import user, { UserState } from './reducers/userReducer';
+import rss, { RssState } from './reducers/rss';
 
 const devExtension = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
@@ -10,7 +11,8 @@ const composeEnhancers = devExtension && process.env.NODE_ENV !== 'production' ?
 
 const reducer = combineReducers({
   app,
-  user
+  user,
+  rss
 });
 
 const store = createStore(
@@ -23,6 +25,7 @@ const store = createStore(
 export interface State {
   app: AppState;
   user: UserState;
+  rss: RssState;
 }
 
 // Shortcuts
