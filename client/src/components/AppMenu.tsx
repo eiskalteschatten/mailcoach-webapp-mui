@@ -18,18 +18,28 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   button: {
-    width: 125,
-    height: 125,
+    width: 75,
+    height: 75,
+    [theme.breakpoints.up('sm')]: {
+      width: 125,
+      height: 125,
+    },
     textAlign: 'center',
     borderRadius: 5,
     margin: '5px 10px',
     display: 'block'
   },
   buttonIcon: {
-    fontSize: 50
+    fontSize: 45,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 50
+    }
   },
   buttonLabel: {
-    fontSize: 15,
+    fontSize: 13,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 15
+    },
     paddingTop: 5
   }
 }));
@@ -62,7 +72,7 @@ const AppMenu: React.FC<Props> = (props: Props) => {
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      <Grid container>
+      <Grid container spacing={0}>
         <Grid item xs={4}>
           <ButtonBase className={classes.button} onClick={() => handleButtonClick('/')}>
             <DashboardIcon className={classes.buttonIcon} />
