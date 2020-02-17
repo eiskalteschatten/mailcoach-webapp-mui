@@ -1,9 +1,11 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import {
   createStyles,
   Theme,
-  makeStyles
+  makeStyles,
+  Typography
 } from '@material-ui/core';
 
 import FoldersDrawer from './components/FoldersDrawer';
@@ -26,7 +28,11 @@ const RssPage: React.FC = () => {
   return (<div className={classes.root}>
     <FoldersDrawer />
     <div className={classes.content}>
-      RssPage
+      <div>
+        <Typography variant='h4' noWrap>
+          <FormattedMessage id='rssFeeds.feeds' />
+        </Typography>
+      </div>
     </div>
   </div>);
 }
