@@ -1,7 +1,7 @@
 import articleReducer, { initialState } from './articleReducer';
 import { ArticleActions } from '../../actions/rss/articleActions';
 
-describe('App Reducer', () => {
+describe('RSS Article Reducer', () => {
   test('Should return the initial state', () => {
     expect(articleReducer(undefined, {} as ArticleActions)).toEqual(initialState);
   })
