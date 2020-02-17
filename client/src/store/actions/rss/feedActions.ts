@@ -29,7 +29,7 @@ export const feedGetAll: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.get('/api/feed');
+    const res: any = await axios.get('/api/rss/feed');
     dispatch(feedSetAll(res.data.feeds));
   }
   catch (error) {
