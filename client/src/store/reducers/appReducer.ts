@@ -9,12 +9,14 @@ export interface AppState {
   leftDrawerOpen: boolean;
 }
 
+const smallUpMediaQuery = window.matchMedia('(min-width: 600px)');
+
 export const initialState: AppState = {
   isLoading: false,
   isBooting: true,
   error: '',
   formError: '',
-  leftDrawerOpen: true
+  leftDrawerOpen: smallUpMediaQuery.matches
 };
 
 const appReducer: Reducer<AppState, AppActions> = (
