@@ -24,12 +24,12 @@ export const feedGetAll: ActionCreator<
     null,
     AppStopLoadingAction
   >
-> = (feeds: Feed[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.get('/api/rss/feed');
+    const res: any = await axios.get('/api/rss/feeds');
     dispatch(feedSetAll(res.data.feeds));
   }
   catch (error) {

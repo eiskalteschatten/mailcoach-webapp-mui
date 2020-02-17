@@ -30,7 +30,7 @@ export const folderGetAll: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.get('/api/rss/folder');
+    const res: any = await axios.get('/api/rss/folders');
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
