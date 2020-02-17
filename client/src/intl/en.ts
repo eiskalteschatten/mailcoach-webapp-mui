@@ -14,6 +14,11 @@ export default {
   'register': 'Register',
   'save': 'Save',
 
+  'allItems': 'All Items',
+  'unreadItems': 'Unread Items',
+  'archive': 'Archive',
+  'addFolder': 'Add Folder',
+
   'required': 'Required',
   'invalidEmailAddress': 'Invalid Email Address',
   'wrongPasswordFormat': 'Password must contain at least 8 characters, 1 lowercase and 1 uppercase letter, 1 number, and 1 symbol',

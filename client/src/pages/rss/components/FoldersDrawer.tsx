@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
   createStyles,
   Theme,
   makeStyles,
   Drawer,
-  Typography,
   Divider,
   IconButton,
   List,
@@ -26,6 +24,7 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
 import { State } from '../../../store';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
+import { IntlContext } from '../../../intl/IntlContext';
 
 const drawerWidth = 300;
 
@@ -82,7 +81,7 @@ function sortFolders(a: Folder, b: Folder): number {
 
 const FolderDrawer: React.FC = () => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
+  const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
   let sortedFolders: Folder[] = folders;
 
@@ -100,34 +99,26 @@ const FolderDrawer: React.FC = () => {
   >
     <div className={classes.toolbar} />
 
-    <div className={classes.drawerHeader}>
-      <Typography variant='h6' noWrap>
-        <FormattedMessage id='rssFeeds.feeds' />
-      </Typography>
-    </div>
-
-    <Divider />
-
     <List>
       <ListItem button>
         <ListItemIcon>
           <RssFeedIcon />
         </ListItemIcon>
-        <ListItemText primary='All Items' />
+        <ListItemText primary={messages.allItems} />
       </ListItem>
 
       <ListItem button>
         <ListItemIcon>
           <NewReleasesIcon />
         </ListItemIcon>
-        <ListItemText primary='Unread Items' />
+        <ListItemText primary={messages.unreadItems} />
       </ListItem>
 
       <ListItem button>
         <ListItemIcon>
           <ArchiveIcon />
         </ListItemIcon>
-        <ListItemText primary='Archive' />
+        <ListItemText primary={messages.archive} />
       </ListItem>
     </List>
 
@@ -158,7 +149,7 @@ const FolderDrawer: React.FC = () => {
         <ListItemIcon>
           <CreateNewFolderIcon />
         </ListItemIcon>
-        <ListItemText primary='Add Folder' />
+        <ListItemText primary={messages.addFolder} />
       </ListItem>
     </List>
   </Drawer>);
