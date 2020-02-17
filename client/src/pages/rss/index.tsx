@@ -1,8 +1,4 @@
 import React from 'react';
-// import { compose } from 'recompose';
-
-// import withToolbar from '../components/layout/wrappers/withToolbar';
-// import MainToolbar from '../components/toolbars/MainToolbar';
 
 const RssPage: React.FC = () => {
   return (<div>
@@ -11,7 +7,3 @@ const RssPage: React.FC = () => {
 }
 
 export default RssPage;
-
-// export default compose(
-//   withToolbar(MainToolbar)
-// )(Dashboard);
