@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
-import articleReducer, { ArticleState } from './articleReducer';
-import feedReducer, { FeedState } from './feedReducer';
-import folderReducer, { FolderState } from './folderReducer';
+import article, { ArticleState } from './articleReducer';
+import feed, { FeedState } from './feedReducer';
+import folder, { FolderState } from './folderReducer';
 
 export default combineReducers({
-  articleReducer,
-  feedReducer,
-  folderReducer
+  article,
+  feed,
+  folder
 });
 
 export interface RssState {

@@ -22,6 +22,7 @@ export default {
   'dashboard': 'Dashboard',
 
   'rssFeeds': 'RSS Feeds',
+  'rssFeeds.feeds': 'Feeds',
 
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',
