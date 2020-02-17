@@ -10,12 +10,8 @@ export interface ArticleSetAll extends Action<'ARTICLE_SET_ALL'> {
   articles: Article[];
 }
 
-export interface ArticleOpenMobileDialog extends Action<'ARTICLE_OPEN_MOBILE_DIALOG'> {
-  mobileDialogOpen: boolean;
-}
-
-export interface ArticleCloseMobileDialog extends Action<'ARTICLE_CLOSE_MOBILE_DIALOG'> {
-  mobileDialogOpen: boolean;
+export interface ArticleToggleDialog extends Action<'ARTICLE_TOGGLE_DIALOG'> {
+  dialogOpen: boolean;
 }
 
 export interface ArticleSetSelectedIndex extends Action<'ARTICLE_SET_SELECTED_INDEX'> {
@@ -24,8 +20,7 @@ export interface ArticleSetSelectedIndex extends Action<'ARTICLE_SET_SELECTED_IN
 
 export type ArticleActions =
   ArticleSetAll |
-  ArticleOpenMobileDialog |
-  ArticleCloseMobileDialog |
+  ArticleToggleDialog |
   ArticleSetSelectedIndex;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
@@ -33,14 +28,9 @@ export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   articles
 });
 
-export const articleOpenMobileDialog = (): ArticleOpenMobileDialog => ({
-  type: 'ARTICLE_OPEN_MOBILE_DIALOG',
-  mobileDialogOpen: true
-});
-
-export const articleCloseMobileDialog = (): ArticleCloseMobileDialog => ({
-  type: 'ARTICLE_CLOSE_MOBILE_DIALOG',
-  mobileDialogOpen: false
+export const articleToggleDialog = (): ArticleToggleDialog => ({
+  type: 'ARTICLE_TOGGLE_DIALOG',
+  dialogOpen: true
 });
 
 export const articleSetSelectedIndex = (selectedArticleIndex: number): ArticleSetSelectedIndex => ({
