@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
     listItemDelete: {
       display: 'none'
     }
-  }),
+  })
 );
 
 function sortFolders(a: Folder, b: Folder): number {

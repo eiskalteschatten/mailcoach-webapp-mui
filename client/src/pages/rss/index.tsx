@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(1)
     }
-  }),
+  })
 );
 
 const RssPage: React.FC = () => {
