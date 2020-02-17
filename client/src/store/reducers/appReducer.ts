@@ -6,13 +6,15 @@ export interface AppState {
   isBooting: boolean;
   error: string;
   formError: string;
+  leftDrawerOpen: boolean;
 }
 
 export const initialState: AppState = {
   isLoading: false,
   isBooting: true,
   error: '',
-  formError: ''
+  formError: '',
+  leftDrawerOpen: true
 };
 
 const appReducer: Reducer<AppState, AppActions> = (
@@ -44,6 +46,11 @@ const appReducer: Reducer<AppState, AppActions> = (
       return {
         ...state,
         formError: action.error
+      };
+    case 'APP_TOGGLE_LEFT_DRAWER':
+      return {
+        ...state,
+        leftDrawerOpen: action.leftDrawerOpen
       };
     default:
       return state;

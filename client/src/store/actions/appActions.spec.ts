@@ -5,7 +5,8 @@ import {
   appStopLoading,
   appStopBooting,
   appSetError,
-  appSetFormError
+  appSetFormError,
+  appToggleLeftDrawer
 } from './appActions';
 
 import mockStore from '../../lib/tests/mockStore';
@@ -46,5 +47,15 @@ describe('App Actions', () => {
     await localStore.dispatch(appSetFormError(error));
     const actions = localStore.getActions();
     expect(actions[0]).toEqual({type: 'APP_SET_FORM_ERROR', error});
+  });
+
+  test('Toggling the left drawer works', async () => {
+    const localStore: MockStore = mockStore();
+    await localStore.dispatch(appToggleLeftDrawer(false));
+    const actions = localStore.getActions();
+    expect(actions[0]).toEqual({
+      type: 'APP_TOGGLE_LEFT_DRAWER',
+      leftDrawerOpen: false
+    });
   });
 });

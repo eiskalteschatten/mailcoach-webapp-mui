@@ -52,4 +52,16 @@ describe('App Reducer', () => {
       formError: error
     })
   })
+
+  test('Should handle APP_TOGGLE_LEFT_DRAWER', () => {
+    expect(
+      appReducer(undefined, {
+        type: 'APP_TOGGLE_LEFT_DRAWER',
+        leftDrawerOpen: false
+      })
+    ).toEqual({
+      ...initialState,
+      leftDrawerOpen: false
+    })
+  })
 });

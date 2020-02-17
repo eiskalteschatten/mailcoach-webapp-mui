@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
+import clsx from 'clsx';
 
 import {
   createStyles,
@@ -26,12 +27,11 @@ import { State } from '../../../store';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { IntlContext } from '../../../intl/IntlContext';
 
-const drawerWidth = 300;
+const drawerWidth = 325;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
       flexShrink: 0,
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth
@@ -44,9 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     toolbar: theme.mixins.toolbar,
-    drawerHeader: {
-      padding: theme.spacing(2)
-    },
     folderList: {
       flex: 'auto'
     },
@@ -83,6 +80,7 @@ const FolderDrawer: React.FC = () => {
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
+  const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
   let sortedFolders: Folder[] = folders;
 
   useEffect(() => {
@@ -91,8 +89,12 @@ const FolderDrawer: React.FC = () => {
   }, [folders]);
 
   return (<Drawer
-    className={classes.root}
-    variant='permanent'
+    className={clsx({
+      [classes.root]: leftDrawerOpen
+    })}
+    variant='persistent'
+    anchor='left'
+    open={leftDrawerOpen}
     classes={{
       paper: classes.drawerPaper
     }}

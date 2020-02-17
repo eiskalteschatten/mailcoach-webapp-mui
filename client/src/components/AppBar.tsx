@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   AppBar as MuiAppBar,
@@ -17,6 +18,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import AppMenu from './AppMenu';
 import UserMenu from './UserMenu';
+
+import { State } from '../store';
+import { appToggleLeftDrawer } from '../store/actions/appActions';
 
 const useStyles = makeStyles((theme: Theme) => {
   const appBarBorderBottomColor = theme.palette.type === 'light'
@@ -43,6 +47,12 @@ interface Props extends RouteComponentProps {};
 
 const AppBar: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
+  const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
+  const dispatch = useDispatch();
+
+  const handleDrawerToggle = () => {
+    dispatch(appToggleLeftDrawer(!leftDrawerOpen));
+  };
 
   return (<MuiAppBar
     position='static'
@@ -51,7 +61,7 @@ const AppBar: React.FC<Props> = (props: Props) => {
   >
     <Toolbar>
       <IconButton
-        onClick={() => {}}
+        onClick={handleDrawerToggle}
         edge='start'
       >
         <MenuIcon />
