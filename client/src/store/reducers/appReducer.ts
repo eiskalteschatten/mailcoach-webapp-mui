@@ -9,7 +9,9 @@ export interface AppState {
   leftDrawerOpen: boolean;
 }
 
-const smallUpMediaQuery = window.matchMedia('(min-width: 600px)');
+const smallUpMediaQuery = process.env.NODE_ENV === 'test'
+  ? { matches: false }
+  : window.matchMedia('(min-width: 600px)');
 
 export const initialState: AppState = {
   isLoading: false,
