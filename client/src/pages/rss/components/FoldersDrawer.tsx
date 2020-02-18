@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -81,11 +81,11 @@ const FolderDrawer: React.FC = () => {
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
-  let sortedFolders: Folder[] = folders;
+  let sortedFolders = useRef<Folder[]>(folders);
 
   useEffect(() => {
-    sortedFolders = folders;
-    sortedFolders.sort(sortFolders);
+    sortedFolders.current = folders;
+    sortedFolders.current.sort(sortFolders);
   }, [folders]);
 
   return (<Drawer
@@ -128,7 +128,7 @@ const FolderDrawer: React.FC = () => {
 
     <div className={classes.folderList}>
       <List>
-        {sortedFolders.map((folder) => (
+        {sortedFolders.current.map((folder) => (
           <span className={classes.listItem} key={folder.id}>
             <ListItem button>
               <ListItemIcon>
