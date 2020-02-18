@@ -13,6 +13,7 @@ import {
 import RefreshIcon from '@material-ui/icons/Refresh';
 import CheckIcon from '@material-ui/icons/Check';
 
+import { smallUpMediaQuery } from '../../lib/mediaQueries';
 import FoldersDrawer from './components/FoldersDrawer';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RssPage: React.FC = () => {
   const classes = useStyles();
-  const smallUpMediaQuery = window.matchMedia('(min-width: 600px)');
 
   return (<div className={classes.root}>
     <FoldersDrawer />
