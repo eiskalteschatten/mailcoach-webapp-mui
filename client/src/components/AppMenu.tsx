@@ -73,7 +73,7 @@ const AppMenu: React.FC<Props> = (props: Props) => {
       onClose={handleClose}
     >
       <Grid container spacing={0}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <ButtonBase className={classes.button} onClick={() => handleButtonClick('/')}>
             <DashboardIcon className={classes.buttonIcon} />
             <div className={classes.buttonLabel}>
@@ -81,15 +81,13 @@ const AppMenu: React.FC<Props> = (props: Props) => {
             </div>
           </ButtonBase>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <ButtonBase className={classes.button} onClick={() => handleButtonClick('/rss')}>
             <RssFeedIcon className={classes.buttonIcon} />
             <div className={classes.buttonLabel}>
               <FormattedMessage id='rssFeeds' />
             </div>
           </ButtonBase>
-        </Grid>
-        <Grid item xs={4}>
         </Grid>
       </Grid>
     </Menu>
