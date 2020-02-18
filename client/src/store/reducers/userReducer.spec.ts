@@ -1,6 +1,6 @@
 import { SerializedModel } from '../../../../interfaces/auth/Users';
 
-import userReducer, { initialState, UserSessions } from './userReducer';
+import userReducer, { initialState } from './userReducer';
 import { UserActions } from '../actions/userActions';
 
 describe('User Reducer', () => {
