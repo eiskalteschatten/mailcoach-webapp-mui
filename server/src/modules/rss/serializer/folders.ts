@@ -1,12 +1,15 @@
 import {
-  DeserializedModel,
+  FullFolder,
   SerializedModel,
   ModelCreateUpdate
 } from '../interfaces/Folder';
 
-export const serialize = (feed: DeserializedModel): SerializedModel => ({
-  id: feed.id,
-  name: feed.name
+import serializeFeed from './feeds';
+
+export const serialize = (folder: FullFolder): SerializedModel => ({
+  id: folder.id,
+  name: folder.name,
+  feeds: folder.feeds && folder.feeds.map(serializeFeed)
 });
 
 export default serialize;

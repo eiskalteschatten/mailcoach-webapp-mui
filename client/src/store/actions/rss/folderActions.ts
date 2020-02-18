@@ -40,3 +40,26 @@ export const folderGetAll: ActionCreator<
 
   return dispatch(appStopLoading());
 };
+
+export const folderGetAllWithFeeds: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (folders: Folder[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetFormError(''));
+
+  try {
+    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    dispatch(folderSetAll(res.data.folders));
+  }
+  catch (error) {
+    dispatch(appSetFormError('An error occurred while fetching all folders.'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};

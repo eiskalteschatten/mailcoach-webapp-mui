@@ -49,6 +49,12 @@ Feed.belongsTo(Folder, {
   targetKey: 'id'
 });
 
+Folder.hasMany(Feed, {
+  as: 'feeds',
+  foreignKey: 'fkFolder',
+  sourceKey: 'id'
+});
+
 if (process.env.NODE_ENV === 'test') {
   Feed.sync();
 }

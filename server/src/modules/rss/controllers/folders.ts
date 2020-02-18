@@ -5,6 +5,7 @@ import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 
 import Folder from '../models/Folder';
+import Feed from '../models/Feed';
 
 import { serialize, deserializeModelCreateUpdate } from '../serializer/folders';
 
@@ -16,6 +17,7 @@ class FoldersController extends AbstractController {
 
   private initilizeRoutes(): void {
     this.router.get('/', this.getAllFolders);
+    this.router.get('/with-feeds', this.getAllFoldersWithFeeds);
     this.router.post('/', this.createFolder);
     this.router.put('/:id', this.updateFolder);
     this.router.delete('/:id', this.deleteFolder);
@@ -50,6 +52,60 @@ class FoldersController extends AbstractController {
         order: [
           ['name', 'DESC']
         ]
+      });
+
+      res.json({
+        folders: folders.map(serialize)
+      });
+    }
+    catch(error) {
+      returnError(error as HttpError, req, res);
+    }
+  }
+
+  /**
+   * @api {get} /api/rss/folders/with-feeds Get All Folders with Feeds
+   * @apiName GetAllFoldersWithFeeds
+   * @apiGroup RSS
+   * @apiVersion 1.0.0
+   *
+   * @apiHeaderExample {json} Header-Example:
+   *  {
+   *    "Authorization": "Bearer accessToken"
+   *  }
+   *
+   * @apiSuccessExample {json} Success-Response:
+   *  HTTP/1.1 200 OK
+   *  {
+   *    "folders": [
+   *      {
+   *        "id": 1,
+   *        "name": "",
+   *        "feeds": [{
+   *          "id": 1,
+   *          "name": "",
+   *          "feedUrl": "",
+   *          "link": "",
+   *          "icon": ""
+   *        }]
+   *      }
+   *    ]
+   *  }
+   */
+
+  private async getAllFoldersWithFeeds(req: Request, res: Response): Promise<void> {
+    try {
+      const folders = await Folder.findAll({
+        order: [
+          ['name', 'DESC']
+        ],
+        include: [{
+          model: Feed,
+          as: 'feeds',
+          order: [
+            ['name', 'DESC']
+          ]
+        }]
       });
 
       res.json({
