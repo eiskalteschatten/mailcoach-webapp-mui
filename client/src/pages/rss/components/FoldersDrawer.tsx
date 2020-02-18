@@ -10,6 +10,7 @@ import {
   Divider,
   IconButton,
   List,
+  ListSubheader,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -119,7 +120,13 @@ const FolderDrawer: React.FC = () => {
     <Divider />
 
     <div className={classes.folderList}>
-      <List>
+      <List
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            {messages['rssFeeds.feeds']}
+          </ListSubheader>
+        }
+      >
         {folders.map((folder: Folder) => (
           <span className={classes.listItem} key={folder.id}>
             <ListItem button>
