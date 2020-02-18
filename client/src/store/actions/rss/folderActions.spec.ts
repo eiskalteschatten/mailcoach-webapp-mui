@@ -3,7 +3,8 @@ import nock from 'nock';
 
 import {
   folderSetAll,
-  folderGetAll
+  folderGetAll,
+  folderGetAllWithFeeds
 } from './folderActions';
 
 import mockStore from '../../../lib/tests/mockStore';
@@ -50,7 +51,7 @@ describe('RSS Folder Actions', () => {
       });
 
     const localStore: MockStore = mockStore();
-    await localStore.dispatch(folderGetAll() as any);
+    await localStore.dispatch(folderGetAllWithFeeds() as any);
     const actions = localStore.getActions();
 
     expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
