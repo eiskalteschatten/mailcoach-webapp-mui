@@ -27,8 +27,10 @@ import ComponentLoader from '../../../components/ComponentLoader';
 
 import { State } from '../../../store';
 import { folderGetAll } from '../../../store/actions/rss/folderActions';
-import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
+import { feedGetAll } from '../../../store/actions/rss/feedActions';
 import { IntlContext } from '../../../intl/IntlContext';
+import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
+import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 const drawerWidth = 325;
 
@@ -63,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function sortFolders(a: Folder, b: Folder): number {
+function sortFoldersOrFeeds(a: Folder, b: Folder): number {
   const aName = a.name.toUpperCase();
   const bName = b.name.toUpperCase();
 
@@ -79,12 +81,31 @@ function sortFolders(a: Folder, b: Folder): number {
   return comparison;
 }
 
+interface FolderWithFeeds extends Folder {
+  feeds: Feed[];
+}
+
+const addFeedsToFolders = (folders: Folder[], feeds: Feed[]): FolderWithFeeds[] =>
+  folders.map((folder: Folder): FolderWithFeeds => ({
+    ...folder,
+    feeds: feeds
+      .filter((feed: Feed): boolean => feed.folder && feed.folder.id === folder.id)
+      .sort(sortFoldersOrFeeds)
+  }));
+
+const getFeedsWithoutFolders = (feeds: Feed[]): Feed[] =>
+  feeds
+    .filter((feed: Feed): boolean => !feed.folder)
+    .sort(sortFoldersOrFeeds);
+
 const FolderDrawer: React.FC = () => {
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
+  const feeds = useSelector((state: State) => state.rss.feed.feeds) as Feed[];
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
-  const [sortedFolders, setSortedFolders] = useState<Folder[]>(folders);
+  const [foldersWithFeeds, setFoldersWithFeeds] = useState<FolderWithFeeds[]>([]);
+  const [feedsWithoutFolders, setFeedsWithoutFolders] = useState<Feed[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -96,10 +117,22 @@ const FolderDrawer: React.FC = () => {
   }, [folders, dispatch]);
 
   useEffect(() => {
-    const localSortedFolders = folders;
-    localSortedFolders.sort(sortFolders);
-    setSortedFolders(localSortedFolders);
-  }, [folders]);
+    if (!feeds || feeds.length === 0) {
+      setIsLoading(true);
+      dispatch(feedGetAll());
+    }
+  }, [feeds, dispatch]);
+
+  useEffect(() => {
+    const sortedFolders = folders;
+    sortedFolders.sort(sortFoldersOrFeeds);
+
+    const foldersWithFeeds = addFeedsToFolders(sortedFolders, feeds);
+    setFoldersWithFeeds(foldersWithFeeds);
+
+    const feedsWithoutFolders = getFeedsWithoutFolders(feeds);
+    setFeedsWithoutFolders(feedsWithoutFolders);
+  }, [folders, feeds]);
 
   return (<Drawer
     className={clsx({
@@ -143,7 +176,7 @@ const FolderDrawer: React.FC = () => {
 
     <div className={classes.folderList}>
       <List>
-        {sortedFolders.map((folder) => (
+        {foldersWithFeeds.map((folder: FolderWithFeeds) => (
           <span className={classes.listItem} key={folder.id}>
             <ListItem button>
               <ListItemIcon>
