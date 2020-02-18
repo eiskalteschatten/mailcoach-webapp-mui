@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useContext, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 import {
@@ -23,7 +23,10 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
+import ComponentLoader from '../../../components/ComponentLoader';
+
 import { State } from '../../../store';
+import { folderGetAll } from '../../../store/actions/rss/folderActions';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { IntlContext } from '../../../intl/IntlContext';
 
@@ -81,11 +84,21 @@ const FolderDrawer: React.FC = () => {
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
-  let sortedFolders = useRef<Folder[]>(folders);
+  const [sortedFolders, setSortedFolders] = useState<Folder[]>(folders);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    sortedFolders.current = folders;
-    sortedFolders.current.sort(sortFolders);
+    if (!folders || folders.length === 0) {
+      setIsLoading(true);
+      dispatch(folderGetAll());
+    }
+  }, [folders, dispatch]);
+
+  useEffect(() => {
+    const localSortedFolders = folders;
+    localSortedFolders.sort(sortFolders);
+    setSortedFolders(localSortedFolders);
   }, [folders]);
 
   return (<Drawer
@@ -99,6 +112,8 @@ const FolderDrawer: React.FC = () => {
       paper: classes.drawerPaper
     }}
   >
+    <ComponentLoader isLoading={isLoading} />
+
     <div className={classes.toolbar} />
 
     <List>
@@ -128,7 +143,7 @@ const FolderDrawer: React.FC = () => {
 
     <div className={classes.folderList}>
       <List>
-        {sortedFolders.current.map((folder) => (
+        {sortedFolders.map((folder) => (
           <span className={classes.listItem} key={folder.id}>
             <ListItem button>
               <ListItemIcon>
