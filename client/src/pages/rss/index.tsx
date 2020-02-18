@@ -5,8 +5,13 @@ import {
   createStyles,
   Theme,
   makeStyles,
-  Typography
+  Grid,
+  Typography,
+  IconButton
 } from '@material-ui/core';
+
+import RefreshIcon from '@material-ui/icons/Refresh';
+import CheckIcon from '@material-ui/icons/Check';
 
 import FoldersDrawer from './components/FoldersDrawer';
 
@@ -18,21 +23,45 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing(1)
+    },
+    toolbar: {
+      [theme.breakpoints.up('sm')]: {
+        textAlign: 'right'
+      },
+      [theme.breakpoints.down('xs')]: {
+        paddingTop: theme.spacing(1)
+      }
     }
   })
 );
 
 const RssPage: React.FC = () => {
   const classes = useStyles();
+  const smallUpMediaQuery = window.matchMedia('(min-width: 600px)');
 
   return (<div className={classes.root}>
     <FoldersDrawer />
     <div className={classes.content}>
-      <div>
-        <Typography variant='h4' noWrap>
-          <FormattedMessage id='rssFeeds.feeds' />
-        </Typography>
-      </div>
+      <Grid container>
+      <Grid item xs={12} sm={6}>
+          <Typography variant='h4' noWrap>
+            <FormattedMessage id='rssFeeds.feeds' />
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={6} className={classes.toolbar}>
+          <IconButton edge={!smallUpMediaQuery.matches && 'start'}>
+            <CheckIcon />
+          </IconButton>
+
+          <IconButton
+            edge={smallUpMediaQuery.matches && 'end'}
+          >
+            <RefreshIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
+
     </div>
   </div>);
 }
