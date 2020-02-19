@@ -14,15 +14,18 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  Collapse
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
-import DeleteIcon from '@material-ui/icons/Delete';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
@@ -53,12 +56,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     listItem: {
       '&:hover': {
-        '& $listItemDelete': {
+        '& $listItemMenu': {
           display: 'inline !important'
         }
       }
     },
-    listItemDelete: {
+    listItemMenu: {
       display: 'none'
     }
   })
@@ -134,9 +137,9 @@ const FolderDrawer: React.FC = () => {
                 <FolderIcon />
               </ListItemIcon>
               <ListItemText primary={folder.name} />
-              <ListItemSecondaryAction  className={classes.listItemDelete}>
+              <ListItemSecondaryAction className={classes.listItemMenu}>
                 <IconButton edge='end'>
-                  <DeleteIcon />
+                  <MoreVertIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
