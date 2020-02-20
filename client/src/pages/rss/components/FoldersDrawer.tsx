@@ -83,6 +83,7 @@ const FolderDrawer: React.FC = () => {
   const dispatch = useDispatch();
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [feedAnchorEl, setFeedAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     if (!folders || folders.length === 0) {
@@ -115,6 +116,14 @@ const FolderDrawer: React.FC = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleFeedMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setFeedAnchorEl(event.currentTarget);
+  };
+
+  const handleFeedMenuClose = () => {
+    setFeedAnchorEl(null);
   };
 
   return (<Drawer
@@ -188,8 +197,33 @@ const FolderDrawer: React.FC = () => {
                 <List component='div' disablePadding>
                   <ListItem button className={classes.nested}>
                     <ListItemText primary={feed.name} />
+                    <ListItemSecondaryAction className={classes.listItemMenu}>
+                      <IconButton edge='end' onClick={handleFeedMenuOpen}>
+                        <MoreVertIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
                   </ListItem>
                 </List>
+                <Menu
+                  anchorEl={feedAnchorEl}
+                  open={Boolean(feedAnchorEl)}
+                  onClose={handleFeedMenuClose}
+                >
+                  <List component='nav'>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <CreateIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={messages['rssFeeds.renameFeed']} />
+                    </ListItem>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <DeleteIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={messages['rssFeeds.deleteFeed']} />
+                    </ListItem>
+                  </List>
+                </Menu>
               </Collapse>
             ))}
 
