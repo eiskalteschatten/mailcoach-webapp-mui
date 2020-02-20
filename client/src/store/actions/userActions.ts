@@ -138,6 +138,7 @@ export const renewAccessToken: ActionCreator<
     dispatch(userSetInstanceId(res.data.instanceId));
 
     if (res.status === 200 && res.data && res.data.user) {
+      localStorage.setItem('accessToken', res.data.accessToken);
       dispatch(userSetInfo(res.data.user));
       dispatch(userLogin());
     }
