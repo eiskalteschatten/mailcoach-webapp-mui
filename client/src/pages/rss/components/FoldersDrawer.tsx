@@ -15,7 +15,8 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
-  Collapse
+  Collapse,
+  Menu
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -24,8 +25,10 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CreateIcon from '@material-ui/icons/Create';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
@@ -79,6 +82,7 @@ const FolderDrawer: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const [openFolders, setOpenFolders] = useState<any>({});
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     if (!folders || folders.length === 0) {
@@ -103,6 +107,14 @@ const FolderDrawer: React.FC = () => {
       ...openFolders,
       [id]: !openFolders[id]
     });
+  };
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
   return (<Drawer
@@ -161,15 +173,16 @@ const FolderDrawer: React.FC = () => {
               </ListItemIcon>
               <ListItemText primary={folder.name} />
               {openFolders[folder.id]
-                ? <ExpandLess onClick={() => handleToggleFolder(folder.id)} />
-                : <ExpandMore onClick={() => handleToggleFolder(folder.id)} />
+                ? <ExpandLessIcon onClick={() => handleToggleFolder(folder.id)} />
+                : <ExpandMoreIcon onClick={() => handleToggleFolder(folder.id)} />
               }
               <ListItemSecondaryAction className={classes.listItemMenu}>
-                <IconButton edge='end'>
+                <IconButton edge='end' onClick={handleMenuOpen}>
                   <MoreVertIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
+
             {folder.feeds && folder.feeds.map((feed: Feed) => (
               <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
@@ -179,6 +192,27 @@ const FolderDrawer: React.FC = () => {
                 </List>
               </Collapse>
             ))}
+
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <List component='nav'>
+                <ListItem button>
+                  <ListItemIcon>
+                    <CreateIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={messages['rssFeeds.renameFolder']} />
+                </ListItem>
+                <ListItem button>
+                  <ListItemIcon>
+                    <DeleteIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={messages['rssFeeds.deleteFolder']} />
+                </ListItem>
+              </List>
+            </Menu>
           </span>
         ))}
       </List>

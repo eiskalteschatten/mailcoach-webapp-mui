@@ -28,6 +28,8 @@ export default {
 
   'rssFeeds': 'RSS Feeds',
   'rssFeeds.feeds': 'Feeds',
+  'rssFeeds.renameFolder': 'Rename Folder',
+  'rssFeeds.deleteFolder': 'Delete Folder',
 
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',
