@@ -33,6 +33,7 @@ import { State } from '../../../store';
 import { folderGetAllWithFeeds } from '../../../store/actions/rss/folderActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
+import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 const drawerWidth = 325;
 
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     listItemMenu: {
       display: 'none'
+    },
+    nested: {
+      paddingLeft: theme.spacing(4)
     }
   })
 );
@@ -74,6 +78,7 @@ const FolderDrawer: React.FC = () => {
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [openFolders, setOpenFolders] = useState<any>({});
 
   useEffect(() => {
     if (!folders || folders.length === 0) {
@@ -81,6 +86,13 @@ const FolderDrawer: React.FC = () => {
       dispatch(folderGetAllWithFeeds());
     }
   }, [folders, dispatch]);
+
+  const handleToggleFolder = (id: number) => {
+    setOpenFolders({
+      ...openFolders,
+      [id]: !openFolders[id]
+    });
+  };
 
   return (<Drawer
     className={clsx({
@@ -125,7 +137,7 @@ const FolderDrawer: React.FC = () => {
     <div className={classes.folderList}>
       <List
         subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
+          <ListSubheader component='div' id='nested-list-subheader'>
             {messages['rssFeeds.feeds']}
           </ListSubheader>
         }
@@ -137,12 +149,25 @@ const FolderDrawer: React.FC = () => {
                 <FolderIcon />
               </ListItemIcon>
               <ListItemText primary={folder.name} />
+              {openFolders[folder.id]
+                ? <ExpandLess onClick={() => handleToggleFolder(folder.id)} />
+                : <ExpandMore onClick={() => handleToggleFolder(folder.id)} />
+              }
               <ListItemSecondaryAction className={classes.listItemMenu}>
                 <IconButton edge='end'>
                   <MoreVertIcon />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
+            {folder.feeds && folder.feeds.map((feed: Feed) => (
+              <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit>
+                <List component='div' disablePadding>
+                  <ListItem button className={classes.nested}>
+                    <ListItemText primary={feed.name} />
+                  </ListItem>
+                </List>
+              </Collapse>
+            ))}
           </span>
         ))}
       </List>
