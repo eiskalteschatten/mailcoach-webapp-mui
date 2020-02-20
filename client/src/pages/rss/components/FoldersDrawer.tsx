@@ -87,6 +87,17 @@ const FolderDrawer: React.FC = () => {
     }
   }, [folders, dispatch]);
 
+  useEffect(() => {
+    if (folders && folders.length > 0) {
+      for (const folder of folders) {
+        setOpenFolders({
+          ...openFolders,
+          [folder.id]: true
+        });
+      }
+    }
+  }, [folders]);
+
   const handleToggleFolder = (id: number) => {
     setOpenFolders({
       ...openFolders,
