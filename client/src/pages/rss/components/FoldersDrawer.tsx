@@ -257,7 +257,7 @@ const FolderDrawer: React.FC = () => {
         <ListItemIcon>
           <CreateNewFolderIcon />
         </ListItemIcon>
-        <ListItemText primary={messages.addFolder} />
+        <ListItemText primary={messages['rssFeeds.addFeedOrFolder']} />
       </ListItem>
     </List>
   </Drawer>);

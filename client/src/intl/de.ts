@@ -32,6 +32,7 @@ export default {
   'rssFeeds.deleteFolder': 'Ordner löschen',
   'rssFeeds.renameFeed': 'Feed umbenennen',
   'rssFeeds.deleteFeed': 'Feed löschen',
+  'rssFeeds.addFeedOrFolder': 'Feed oder Ordner hinzufügen',
 
   'account.manageAccount': 'Konto verwalten',
   'account.accountInformation': 'Konto-Informationen',
