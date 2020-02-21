@@ -302,8 +302,8 @@ const EditDialog: React.FC<Props> = (props) => {
 
     <ConfirmDialog
       open={confirmFeedDialogOpen}
-      title=''
-      contentText=''
+      title={messages['rssFeeds.areYouSureDeleteFeed']}
+      contentText={messages['rssFeeds.areYouSureDeleteFeedText']}
       handleClickYes={() => handleDeleteFeed(confirmDeleteId)}
       handleClickNo={() => setConfirmFeedDialogOpen(false)}
       handleClose={() => setConfirmFeedDialogOpen(false)}

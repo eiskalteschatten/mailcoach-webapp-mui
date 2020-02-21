@@ -37,6 +37,8 @@ export default {
   'rssFeeds.deleteFolder': 'Delete Folder',
   'rssFeeds.renameFeed': 'Rename Feed',
   'rssFeeds.deleteFeed': 'Delete Feed',
+  'rssFeeds.areYouSureDeleteFeed': 'Are you sure you want to delete this feed?',
+  'rssFeeds.areYouSureDeleteFeedText': 'This action cannot be undone.',
   'rssFeeds.folderName': 'Folder Name',
   'rssFeeds.feedName': 'Feed Name',
   'rssFeeds.feedUrl': 'Feed URL',
