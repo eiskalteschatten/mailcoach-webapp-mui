@@ -55,16 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     toolbar: theme.mixins.toolbar,
-    listItem: {
-      '&:hover': {
-        '& $listItemMenu': {
-          display: 'inline !important'
-        }
-      }
-    },
-    listItemMenu: {
-      display: 'none'
-    },
     nested: {
       paddingLeft: theme.spacing(4)
     },
@@ -194,7 +184,7 @@ const FolderDrawer: React.FC = () => {
       }
     >
       {folders.map((folder: Folder) => (
-        <span className={classes.listItem} key={folder.id}>
+        <span key={folder.id}>
           <ListItem button>
             <ListItemIcon>
               <FolderIcon />
