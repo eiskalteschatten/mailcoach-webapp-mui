@@ -22,7 +22,7 @@ import {
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
@@ -163,7 +163,7 @@ const FolderDrawer: React.FC = () => {
           {messages['rssFeeds.feeds']}
           <div className={classes.editButtonWrapper}>
             <IconButton onClick={handleMenuOpen} edge='end'>
-              <MoreHorizIcon />
+              <MoreVertIcon />
             </IconButton>
 
             <Menu
