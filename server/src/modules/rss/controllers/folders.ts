@@ -223,11 +223,15 @@ class FoldersController extends AbstractController {
 
   private async deleteFolder(req: Request, res: Response): Promise<void> {
     try {
-      await Folder.destroy({
+      const id = req.params.id;
+
+      await Feed.destroy({
         where: {
-          id: req.params.id
+          fkFolder: id
         }
       });
+
+      await Folder.destroy({ where: { id } });
 
       res.status(204).send('');
     }

@@ -35,7 +35,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { State } from '../../../store';
-import { folderUpdateFolder } from '../../../store/actions/rss/folderActions';
+import { folderUpdateFolder, folderDeleteFolder } from '../../../store/actions/rss/folderActions';
 import { feedUpdateFeed, feedDeleteFeed } from '../../../store/actions/rss/feedActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
@@ -143,7 +143,7 @@ const EditDialog: React.FC<Props> = (props) => {
   };
 
   const handleDeleteFolder = (id: number) => {
-    // dispatch(folderDeleteFolder(id));
+    dispatch(folderDeleteFolder(id));
     setConfirmFolderDialogOpen(false);
   };
 
