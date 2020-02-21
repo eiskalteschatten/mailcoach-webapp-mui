@@ -26,9 +26,6 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CreateIcon from '@material-ui/icons/Create';
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
@@ -58,9 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     toolbar: theme.mixins.toolbar,
-    folderList: {
-      flex: 'auto'
-    },
     listItem: {
       '&:hover': {
         '& $listItemMenu': {
@@ -75,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: theme.spacing(4)
     },
     editButtonWrapper: {
-      textAlign: 'right'
+      float: 'right'
     }
   })
 );
@@ -170,63 +164,60 @@ const FolderDrawer: React.FC = () => {
 
     <Divider />
 
-    <div className={classes.folderList}>
-      <List
-        dense={isSmallAndUp}
-        subheader={
-          <ListSubheader component='div' id='nested-list-subheader'>
-            {messages['rssFeeds.feeds']}
-          </ListSubheader>
-        }
-      >
-        {folders.map((folder: Folder) => (
-          <span className={classes.listItem} key={folder.id}>
-            <ListItem button>
-              <ListItemIcon>
-                <FolderIcon />
-              </ListItemIcon>
-              <ListItemText primary={folder.name} />
-              {openFolders[folder.id]
-                ? <ExpandLessIcon onClick={() => handleToggleFolder(folder.id)} />
-                : <ExpandMoreIcon onClick={() => handleToggleFolder(folder.id)} />
-              }
-            </ListItem>
+    <List
+      dense={isSmallAndUp}
+      subheader={
+        <ListSubheader component='div' id='nested-list-subheader'>
+          {messages['rssFeeds.feeds']}
+          <div className={classes.editButtonWrapper}>
+            <IconButton onClick={handleMenuOpen} edge='end'>
+              <MoreHorizIcon />
+            </IconButton>
 
-            {folder.feeds && folder.feeds.map((feed: Feed) => (
-              <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit key={feed.id}>
-                <List dense={isSmallAndUp} component='div' disablePadding>
-                  <ListItem button className={classes.nested}>
-                    <ListItemText primary={feed.name} />
-                  </ListItem>
-                </List>
-              </Collapse>
-            ))}
-          </span>
-        ))}
-      </List>
-    </div>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={handleOpenEditDialog}>{messages['rssFeeds.editFoldersAndFeeds']}</MenuItem>
+              <Divider />
+              <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
+              <MenuItem>{messages['rssFeeds.addFolder']}</MenuItem>
+            </Menu>
+          </div>
 
-    <div className={classes.editButtonWrapper}>
-      <IconButton onClick={handleMenuOpen}>
-        <MoreHorizIcon />
-      </IconButton>
+          <EditDialog
+            open={editDialogOpen}
+            handleClose={() => setEditDialogOpen(false)}
+          />
+        </ListSubheader>
+      }
+    >
+      {folders.map((folder: Folder) => (
+        <span className={classes.listItem} key={folder.id}>
+          <ListItem button>
+            <ListItemIcon>
+              <FolderIcon />
+            </ListItemIcon>
+            <ListItemText primary={folder.name} />
+            {openFolders[folder.id]
+              ? <ExpandLessIcon onClick={() => handleToggleFolder(folder.id)} />
+              : <ExpandMoreIcon onClick={() => handleToggleFolder(folder.id)} />
+            }
+          </ListItem>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleOpenEditDialog}>{messages['rssFeeds.editFoldersAndFeeds']}</MenuItem>
-        <Divider />
-        <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
-        <MenuItem>{messages['rssFeeds.addFolder']}</MenuItem>
-      </Menu>
-    </div>
-
-    <EditDialog
-      open={editDialogOpen}
-      handleClose={() => setEditDialogOpen(false)}
-    />
+          {folder.feeds && folder.feeds.map((feed: Feed) => (
+            <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit key={feed.id}>
+              <List dense={isSmallAndUp} component='div' disablePadding>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary={feed.name} />
+                </ListItem>
+              </List>
+            </Collapse>
+          ))}
+        </span>
+      ))}
+    </List>
   </Drawer>);
 }
 
