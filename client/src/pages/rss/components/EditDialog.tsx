@@ -21,7 +21,11 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   TextField,
-  Collapse
+  Collapse,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -49,6 +53,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     hidden: {
       display: 'none'
+    },
+    formMargin: {
+      marginTop: theme.spacing(2),
+      marginButtom: theme.spacing(2)
+    },
+    select: {
+      width: '100%'
     },
     editorButtons: {
       paddingTop: theme.spacing(1),
@@ -222,6 +233,7 @@ const EditDialog: React.FC<Props> = (props) => {
                       label={messages['rssFeeds.feedName']}
                       value={editorForm.name}
                       onChange={(event) => handleOnFieldChange('name', event.currentTarget.value)}
+                      className={classes.formMargin}
                     />
 
                     <TextField
@@ -230,7 +242,22 @@ const EditDialog: React.FC<Props> = (props) => {
                       label={messages['rssFeeds.feedUrl']}
                       value={editorForm.feedUrl}
                       onChange={(event) => handleOnFieldChange('feedUrl', event.currentTarget.value)}
+                      className={classes.formMargin}
                     />
+
+                    <FormControl className={clsx(classes.formMargin, classes.select)}>
+                      <InputLabel>
+                        <FormattedMessage id='folder' />
+                      </InputLabel>
+                      <Select
+                        value={folder.id}
+                        onChange={(event) => handleOnFieldChange('fkFolder', event.target.value as string)}
+                      >
+                        {folders.map((selectFolder: Folder) => (
+                          <MenuItem value={selectFolder.id} key={selectFolder.id}>{selectFolder.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
 
                     <div className={classes.editorButtons}>
                       <IconButton className={classes.deleteButton} edge='start'>

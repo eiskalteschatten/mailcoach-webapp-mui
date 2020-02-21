@@ -19,6 +19,7 @@ export default {
   'allItems': 'Alle',
   'unreadItems': 'Ungelesen',
   'archive': 'Archiv',
+  'folder': 'Ordner',
   'addFolder': 'Ordner hinzufügen',
 
   'required': 'Erforderlich',

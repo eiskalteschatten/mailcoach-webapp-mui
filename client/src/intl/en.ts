@@ -19,6 +19,7 @@ export default {
   'allItems': 'All Items',
   'unreadItems': 'Unread Items',
   'archive': 'Archive',
+  'folder': 'Folder',
   'addFolder': 'Add Folder',
 
   'required': 'Required',
