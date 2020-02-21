@@ -65,7 +65,11 @@ describe('RSS Folder Actions', () => {
       type: 'FOLDER_SET_ALL',
       folders: []
     });
-    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[3]).toEqual({
+      type: 'FOLDER_CHECKED_FOR_FOLDERS',
+      checkedForFolders: true
+    });
+    expect(actions[4]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Updating a folder works', async () => {

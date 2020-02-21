@@ -10,13 +10,23 @@ export interface FolderSetAll extends Action<'FOLDER_SET_ALL'> {
   folders: Folder[];
 }
 
-export type FolderActions =
-  FolderSetAll;
+export interface FolderSetCheckedForFolders extends Action<'FOLDER_CHECKED_FOR_FOLDERS'> {
+  checkedForFolders: boolean;
+}
 
-export const folderSetAll = (folders: Folder[]): FolderSetAll => ({
-  type: 'FOLDER_SET_ALL',
-  folders
-});
+export type FolderActions =
+  FolderSetAll |
+  FolderSetCheckedForFolders;
+
+  export const folderSetAll = (folders: Folder[]): FolderSetAll => ({
+    type: 'FOLDER_SET_ALL',
+    folders
+  });
+
+  export const folderSetCheckedForFolders = (checkedForFolders: boolean): FolderSetCheckedForFolders => ({
+    type: 'FOLDER_CHECKED_FOR_FOLDERS',
+    checkedForFolders
+  });
 
 export const folderGetAll: ActionCreator<
   ThunkAction<
@@ -55,6 +65,7 @@ export const folderGetAllWithFeeds: ActionCreator<
   try {
     const res: any = await axios.get('/api/rss/folders/with-feeds');
     dispatch(folderSetAll(res.data.folders));
+    dispatch(folderSetCheckedForFolders(true));
   }
   catch (error) {
     dispatch(appSetError('An error occurred while fetching all folders.'));

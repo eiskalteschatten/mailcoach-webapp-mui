@@ -69,6 +69,7 @@ const FolderDrawer: React.FC = () => {
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
+  const checkedForFolders = useSelector((state: State) => state.rss.folder.checkedForFolders) as boolean;
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const FolderDrawer: React.FC = () => {
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
-    if (!folders || folders.length === 0) {
+    if (!checkedForFolders && (!folders || folders.length === 0)) {
       setIsLoading(true);
       dispatch(folderGetAllWithFeeds());
     }
