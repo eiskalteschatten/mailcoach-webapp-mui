@@ -15,7 +15,8 @@ import {
   ListItemIcon,
   ListItemText,
   Collapse,
-  Menu
+  Menu,
+  MenuItem
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -31,6 +32,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
+import { smallUpMediaQuery } from '../../../lib/mediaQueries';
 import { State } from '../../../store';
 import { folderGetAllWithFeeds } from '../../../store/actions/rss/folderActions';
 import { IntlContext } from '../../../intl/IntlContext';
@@ -39,7 +41,7 @@ import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 import EditDialog from './EditDialog';
 
-const drawerWidth = 325;
+const drawerWidth = 275;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,6 +90,7 @@ const FolderDrawer: React.FC = () => {
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
+  const isSmallAndUp = smallUpMediaQuery.matches;
 
   useEffect(() => {
     if (!folders || folders.length === 0) {
@@ -142,7 +145,7 @@ const FolderDrawer: React.FC = () => {
 
     <div className={classes.toolbar} />
 
-    <List>
+    <List dense={isSmallAndUp}>
       <ListItem button>
         <ListItemIcon>
           <RssFeedIcon />
@@ -169,6 +172,7 @@ const FolderDrawer: React.FC = () => {
 
     <div className={classes.folderList}>
       <List
+        dense={isSmallAndUp}
         subheader={
           <ListSubheader component='div' id='nested-list-subheader'>
             {messages['rssFeeds.feeds']}
@@ -190,7 +194,7 @@ const FolderDrawer: React.FC = () => {
 
             {folder.feeds && folder.feeds.map((feed: Feed) => (
               <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit key={feed.id}>
-                <List component='div' disablePadding>
+                <List dense={isSmallAndUp} component='div' disablePadding>
                   <ListItem button className={classes.nested}>
                     <ListItemText primary={feed.name} />
                   </ListItem>
@@ -212,27 +216,10 @@ const FolderDrawer: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <List component='nav'>
-          <ListItem button onClick={handleOpenEditDialog}>
-            <ListItemIcon>
-              <CreateIcon />
-            </ListItemIcon>
-            <ListItemText primary={messages['rssFeeds.editFoldersAndFeeds']} />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemIcon>
-              <AddCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary={messages['rssFeeds.addFeed']} />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <CreateNewFolderIcon />
-            </ListItemIcon>
-            <ListItemText primary={messages['rssFeeds.addFolder']} />
-          </ListItem>
-        </List>
+        <MenuItem onClick={handleOpenEditDialog}>{messages['rssFeeds.editFoldersAndFeeds']}</MenuItem>
+        <Divider />
+        <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
+        <MenuItem>{messages['rssFeeds.addFolder']}</MenuItem>
       </Menu>
     </div>
 
