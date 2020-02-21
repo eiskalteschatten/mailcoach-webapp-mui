@@ -9,7 +9,7 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: './test-coverage',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src/' }),
-  setupFilesAfterEnv: ['<rootDir>/tests/setupAuth.ts'],
+  // setupFilesAfterEnv: ['<rootDir>/tests/setupAuth.ts'],
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.test.json'
