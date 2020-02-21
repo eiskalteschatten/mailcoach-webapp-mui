@@ -13,6 +13,7 @@ export default {
   'logOut': 'Abmelden',
   'register': 'Registrieren',
   'save': 'Speichern',
+  'cancel': 'Cancel',
 
   'allItems': 'Alle',
   'unreadItems': 'Ungelesen',
@@ -32,6 +33,7 @@ export default {
   'rssFeeds.deleteFolder': 'Ordner löschen',
   'rssFeeds.renameFeed': 'Feed umbenennen',
   'rssFeeds.deleteFeed': 'Feed löschen',
+  'rssFeeds.folderName': 'Ordername',
   'rssFeeds.addFeedOrFolder': 'Feed oder Ordner hinzufügen',
 
   'account.manageAccount': 'Konto verwalten',

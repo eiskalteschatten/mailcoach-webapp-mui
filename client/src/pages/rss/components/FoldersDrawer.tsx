@@ -38,6 +38,8 @@ import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
+import RenameFolderDialog from './RenameFolderDialog';
+
 const drawerWidth = 325;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -84,6 +86,9 @@ const FolderDrawer: React.FC = () => {
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [feedAnchorEl, setFeedAnchorEl] = useState<null | HTMLElement>(null);
+  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+  const [renameFolderName, setRenameFolderName] = useState<string>('');
+  const [renameFolderId, setRenameFolderId] = useState<number>(-1);
 
   useEffect(() => {
     if (!folders || folders.length === 0) {
@@ -124,6 +129,13 @@ const FolderDrawer: React.FC = () => {
 
   const handleFeedMenuClose = () => {
     setFeedAnchorEl(null);
+  };
+
+  const handleOpenRenameFolderDialog = (name: string, folderId: number) => {
+    handleMenuClose();
+    setRenameFolderName(name);
+    setRenameFolderId(folderId);
+    setRenameDialogOpen(true);
   };
 
   return (<Drawer
@@ -193,7 +205,7 @@ const FolderDrawer: React.FC = () => {
             </ListItem>
 
             {folder.feeds && folder.feeds.map((feed: Feed) => (
-              <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit>
+              <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit key={feed.id}>
                 <List component='div' disablePadding>
                   <ListItem button className={classes.nested}>
                     <ListItemText primary={feed.name} />
@@ -233,7 +245,7 @@ const FolderDrawer: React.FC = () => {
               onClose={handleMenuClose}
             >
               <List component='nav'>
-                <ListItem button>
+                <ListItem button onClick={() => handleOpenRenameFolderDialog(folder.name, folder.id)}>
                   <ListItemIcon>
                     <CreateIcon />
                   </ListItemIcon>
@@ -260,6 +272,13 @@ const FolderDrawer: React.FC = () => {
         <ListItemText primary={messages['rssFeeds.addFeedOrFolder']} />
       </ListItem>
     </List>
+
+    <RenameFolderDialog
+      open={renameDialogOpen}
+      handleClose={() => setRenameDialogOpen(false)}
+      name={renameFolderName}
+      folderId={renameFolderId}
+    />
   </Drawer>);
 }
 
