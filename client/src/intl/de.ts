@@ -37,6 +37,8 @@ export default {
   'rssFeeds.deleteFolder': 'Ordner löschen',
   'rssFeeds.renameFeed': 'Feed umbenennen',
   'rssFeeds.deleteFeed': 'Feed löschen',
+  'rssFeeds.areYouSureDeleteFolder': 'Sind Sie sicher, dass Sie diesen Ordner löschen wollen?',
+  'rssFeeds.areYouSureDeleteFolderText': 'Alle Feeds in diesem Ordner werden auch gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',
   'rssFeeds.areYouSureDeleteFeed': 'Sind Sie sicher, dass Sie diesen Feed löschen wollen?',
   'rssFeeds.areYouSureDeleteFeedText': 'Dieser Vorgang kann nicht rückgängig gemacht werden.',
   'rssFeeds.folderName': 'Ordnername',

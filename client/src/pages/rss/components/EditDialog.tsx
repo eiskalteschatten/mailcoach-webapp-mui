@@ -93,6 +93,7 @@ const EditDialog: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const [editorForm, setEditorForm] = useState<any>('');
   const [confirmFeedDialogOpen, setConfirmFeedDialogOpen] = useState<boolean>(false);
+  const [confirmFolderDialogOpen, setConfirmFolderDialogOpen] = useState<boolean>(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<number>(-1);
 
   const handleOpenEditor = (id: string, values: any) => {
@@ -134,6 +135,16 @@ const EditDialog: React.FC<Props> = (props) => {
   const handleDeleteFeed = (id: number) => {
     dispatch(feedDeleteFeed(id));
     setConfirmFeedDialogOpen(false);
+  };
+
+  const handleConfirmDeleteFolder = (id: number) => {
+    setConfirmDeleteId(id);
+    setConfirmFolderDialogOpen(true);
+  };
+
+  const handleDeleteFolder = (id: number) => {
+    // dispatch(folderDeleteFolder(id));
+    setConfirmFolderDialogOpen(false);
   };
 
   return (<Dialog
@@ -193,7 +204,11 @@ const EditDialog: React.FC<Props> = (props) => {
               />
 
               <div className={classes.editorButtons}>
-                <IconButton className={classes.deleteButton} edge='start'>
+                <IconButton
+                  className={classes.deleteButton}
+                  edge='start'
+                  onClick={() => handleConfirmDeleteFolder(folder.id)}
+                >
                   <DeleteIcon />
                 </IconButton>
                 <IconButton onClick={() => handleCloseEditor(folderEditorId)}>
@@ -309,14 +324,14 @@ const EditDialog: React.FC<Props> = (props) => {
       handleClose={() => setConfirmFeedDialogOpen(false)}
     />
 
-    {/* <ConfirmDialog
+    <ConfirmDialog
       open={confirmFolderDialogOpen}
-      title=''
-      contentText=''
-      handleClickYes={() => setConfirmFoldDialogOpen(false)}
-      handleClickNo={() => setConfirmFoldDialogOpen(false)}
+      title={messages['rssFeeds.areYouSureDeleteFolder']}
+      contentText={messages['rssFeeds.areYouSureDeleteFolderText']}
+      handleClickYes={() => handleDeleteFolder(confirmDeleteId)}
+      handleClickNo={() => setConfirmFolderDialogOpen(false)}
       handleClose={() => setConfirmFolderDialogOpen(false)}
-    /> */}
+    />
   </Dialog>);
 }
 
