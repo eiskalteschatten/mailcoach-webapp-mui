@@ -75,6 +75,34 @@ export const folderGetAllWithFeeds: ActionCreator<
   return dispatch(appStopLoading());
 };
 
+interface AddFolder {
+  name: string;
+}
+
+export const folderAddFolder: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (data: AddFolder): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    await axios.post('/api/rss/folders', data);
+    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    dispatch(folderSetAll(res.data.folders));
+  }
+  catch (error) {
+    dispatch(appSetError('An error occurred while updating a folder.'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
+
 interface UpdateFolder {
   name: string;
 }

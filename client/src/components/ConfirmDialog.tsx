@@ -44,7 +44,7 @@ const ConfirmDialog: React.FC<Props> = (props) => {
         <FormattedMessage id='no' />
       </Button>
       <Button onClick={handleClickYes} color='primary' variant='contained'>
-      <FormattedMessage id='yes' />
+        <FormattedMessage id='yes' />
       </Button>
     </DialogActions>
   </Dialog>);

@@ -30,6 +30,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ComponentLoader from '../../../components/ComponentLoader';
+import AddFolder from './AddFolder';
 
 import { State } from '../../../store';
 import { folderGetAllWithFeeds } from '../../../store/actions/rss/folderActions';
@@ -76,6 +77,7 @@ const FolderDrawer: React.FC = () => {
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
+  const [addFolderDialogOpen, setAddFolderDialogOpen] = useState<boolean>(false);
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -115,6 +117,11 @@ const FolderDrawer: React.FC = () => {
   const handleOpenEditDialog = () => {
     handleMenuClose();
     setEditDialogOpen(true);
+  };
+
+  const handleOpenAddFolderDialog = () => {
+    handleMenuClose();
+    setAddFolderDialogOpen(true);
   };
 
   return (<Drawer
@@ -177,7 +184,7 @@ const FolderDrawer: React.FC = () => {
                 <Divider />
               </>)}
               <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
-              <MenuItem>{messages['rssFeeds.addFolder']}</MenuItem>
+              <MenuItem onClick={handleOpenAddFolderDialog}>{messages['rssFeeds.addFolder']}</MenuItem>
             </Menu>
           </div>
 
@@ -213,6 +220,11 @@ const FolderDrawer: React.FC = () => {
         </span>
       ))}
     </List>
+
+    <AddFolder
+      open={addFolderDialogOpen}
+      handleClose={() => setAddFolderDialogOpen(false)}
+    />
   </Drawer>);
 }
 
