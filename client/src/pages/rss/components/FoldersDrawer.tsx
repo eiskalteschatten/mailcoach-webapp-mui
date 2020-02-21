@@ -172,8 +172,10 @@ const FolderDrawer: React.FC = () => {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <MenuItem onClick={handleOpenEditDialog}>{messages['rssFeeds.editFoldersAndFeeds']}</MenuItem>
-              <Divider />
+              {folders.length > 0 && (<>
+                <MenuItem onClick={handleOpenEditDialog}>{messages['rssFeeds.editFoldersAndFeeds']}</MenuItem>
+                <Divider />
+              </>)}
               <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
               <MenuItem>{messages['rssFeeds.addFolder']}</MenuItem>
             </Menu>
