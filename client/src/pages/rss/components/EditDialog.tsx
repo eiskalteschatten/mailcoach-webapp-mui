@@ -32,6 +32,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { State } from '../../../store';
 import { folderUpdateFolder } from '../../../store/actions/rss/folderActions';
+import { feedUpdateFeed } from '../../../store/actions/rss/feedActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
@@ -99,7 +100,12 @@ const EditDialog: React.FC<Props> = (props) => {
 
   const handleUpdateFolder = (id: number, editorId: string) => {
     handleCloseEditor(editorId);
-    dispatch(folderUpdateFolder(id, { name: editorForm.name }));
+    dispatch(folderUpdateFolder(id, editorForm));
+  };
+
+  const handleUpdateFeed = (id: number, editorId: string) => {
+    handleCloseEditor(editorId);
+    dispatch(feedUpdateFeed(id, editorForm));
   };
 
   const handleOnFieldChange = (field: string, value: string) => {
@@ -195,7 +201,7 @@ const EditDialog: React.FC<Props> = (props) => {
                         edge='end'
                         onClick={() => handleOpenEditor(feedEditorId, {
                           name: feed.name,
-                          url: feed.feedUrl
+                          feedUrl: feed.feedUrl
                         })}
                       >
                         <CreateIcon />
@@ -222,8 +228,8 @@ const EditDialog: React.FC<Props> = (props) => {
                       fullWidth
                       margin='dense'
                       label={messages['rssFeeds.feedUrl']}
-                      value={editorForm.url}
-                      onChange={(event) => handleOnFieldChange('url', event.currentTarget.value)}
+                      value={editorForm.feedUrl}
+                      onChange={(event) => handleOnFieldChange('feedUrl', event.currentTarget.value)}
                     />
 
                     <div className={classes.editorButtons}>
@@ -234,7 +240,7 @@ const EditDialog: React.FC<Props> = (props) => {
                       <IconButton onClick={() => handleCloseEditor(feedEditorId)}>
                         <CloseIcon />
                       </IconButton>
-                      <IconButton onClick={() => handleCloseEditor(feedEditorId)} edge='end'>
+                      <IconButton onClick={() => handleUpdateFeed(feed.id, feedEditorId)} edge='end'>
                         <CheckIcon />
                       </IconButton>
                     </div>
