@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 import {
@@ -31,6 +31,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { State } from '../../../store';
+import { folderUpdateFolder } from '../../../store/actions/rss/folderActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
@@ -75,18 +76,36 @@ const EditDialog: React.FC<Props> = (props) => {
   const [editorsOpen, setEditorsOpen] = useState<any>();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const dispatch = useDispatch();
+  const [editorForm, setEditorForm] = useState<any>('');
 
-  const handleOpenEditor = (id: string) => {
+  const handleOpenEditor = (id: string, values: any) => {
     setEditorsOpen({
       ...editorsOpen,
       [id]: true
     });
+
+    setEditorForm(values);
   };
 
   const handleCloseEditor = (id: string) => {
     setEditorsOpen({
       ...editorsOpen,
       [id]: false
+    });
+
+    setTimeout(() => setEditorForm({}), 500);
+  };
+
+  const handleUpdateFolder = (id: number, editorId: string) => {
+    handleCloseEditor(editorId);
+    dispatch(folderUpdateFolder(id, { name: editorForm.name }));
+  };
+
+  const handleOnFieldChange = (field: string, value: string) => {
+    setEditorForm({
+      ...editorForm,
+      [field]: value
     });
   };
 
@@ -120,7 +139,12 @@ const EditDialog: React.FC<Props> = (props) => {
                   [classes.hidden]: editorsOpen && editorsOpen[folderEditorId]
                 })}
               >
-                <IconButton edge='end' onClick={() => handleOpenEditor(folderEditorId)}>
+                <IconButton
+                  edge='end'
+                  onClick={() => handleOpenEditor(folderEditorId, {
+                    name: folder.name
+                  })}
+                >
                   <CreateIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -136,8 +160,9 @@ const EditDialog: React.FC<Props> = (props) => {
                 autoFocus
                 fullWidth
                 margin='dense'
-                value={folder.name}
                 label={messages['rssFeeds.folderName']}
+                value={editorForm.name}
+                onChange={(event) => handleOnFieldChange('name', event.currentTarget.value)}
               />
 
               <div className={classes.editorButtons}>
@@ -147,7 +172,7 @@ const EditDialog: React.FC<Props> = (props) => {
                 <IconButton onClick={() => handleCloseEditor(folderEditorId)}>
                   <CloseIcon />
                 </IconButton>
-                <IconButton onClick={() => handleCloseEditor(folderEditorId)} edge='end'>
+                <IconButton onClick={() => handleUpdateFolder(folder.id, folderEditorId)} edge='end'>
                   <CheckIcon />
                 </IconButton>
               </div>
@@ -166,7 +191,13 @@ const EditDialog: React.FC<Props> = (props) => {
                         [classes.hidden]: editorsOpen && editorsOpen[feedEditorId]
                       })}
                     >
-                      <IconButton edge='end' onClick={() => handleOpenEditor(feedEditorId)}>
+                      <IconButton
+                        edge='end'
+                        onClick={() => handleOpenEditor(feedEditorId, {
+                          name: feed.name,
+                          url: feed.feedUrl
+                        })}
+                      >
                         <CreateIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
@@ -182,15 +213,17 @@ const EditDialog: React.FC<Props> = (props) => {
                       autoFocus
                       fullWidth
                       margin='dense'
-                      value={feed.name}
                       label={messages['rssFeeds.feedName']}
+                      value={editorForm.name}
+                      onChange={(event) => handleOnFieldChange('name', event.currentTarget.value)}
                     />
 
                     <TextField
                       fullWidth
                       margin='dense'
-                      value={feed.feedUrl}
                       label={messages['rssFeeds.feedUrl']}
+                      value={editorForm.url}
+                      onChange={(event) => handleOnFieldChange('url', event.currentTarget.value)}
                     />
 
                     <div className={classes.editorButtons}>
