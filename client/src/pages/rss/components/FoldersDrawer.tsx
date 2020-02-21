@@ -30,7 +30,6 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ComponentLoader from '../../../components/ComponentLoader';
-import AddFolder from './AddFolder';
 
 import { State } from '../../../store';
 import { folderGetAllWithFeeds } from '../../../store/actions/rss/folderActions';
@@ -39,6 +38,8 @@ import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder'
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 import EditDialog from './EditDialog';
+import AddFolder from './AddFolder';
+import AddFeed from './AddFeed';
 
 const drawerWidth = 275;
 
@@ -78,6 +79,7 @@ const FolderDrawer: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [addFolderDialogOpen, setAddFolderDialogOpen] = useState<boolean>(false);
+  const [addFeedDialogOpen, setAddFeedDialogOpen] = useState<boolean>(false);
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -122,6 +124,11 @@ const FolderDrawer: React.FC = () => {
   const handleOpenAddFolderDialog = () => {
     handleMenuClose();
     setAddFolderDialogOpen(true);
+  };
+
+  const handleOpenAddFeedDialog = () => {
+    handleMenuClose();
+    setAddFeedDialogOpen(true);
   };
 
   return (<Drawer
@@ -183,7 +190,7 @@ const FolderDrawer: React.FC = () => {
                 <MenuItem onClick={handleOpenEditDialog}>{messages['rssFeeds.editFoldersAndFeeds']}</MenuItem>
                 <Divider />
               </>)}
-              <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
+              <MenuItem onClick={handleOpenAddFeedDialog}>{messages['rssFeeds.addFeed']}</MenuItem>
               <MenuItem onClick={handleOpenAddFolderDialog}>{messages['addFolder']}</MenuItem>
             </Menu>
           </div>
@@ -224,6 +231,11 @@ const FolderDrawer: React.FC = () => {
     <AddFolder
       open={addFolderDialogOpen}
       handleClose={() => setAddFolderDialogOpen(false)}
+    />
+
+    <AddFeed
+      open={addFeedDialogOpen}
+      handleClose={() => setAddFeedDialogOpen(false)}
     />
   </Drawer>);
 }

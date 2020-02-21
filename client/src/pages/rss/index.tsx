@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -18,6 +18,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 
 import FoldersDrawer from './components/FoldersDrawer';
+import AddFeed from './components/AddFeed';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,6 +49,7 @@ const RssPage: React.FC = () => {
   const classes = useStyles();
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const [addFeedDialogOpen, setAddFeedDialogOpen] = useState<boolean>(false);
 
   return (<div className={classes.root}>
     <FoldersDrawer />
@@ -74,9 +76,18 @@ const RssPage: React.FC = () => {
 
     </div>
 
-    <Fab className={classes.fab} color='primary'>
+    <Fab
+      className={classes.fab}
+      color='primary'
+      onClick={() => setAddFeedDialogOpen(true)}
+    >
       <AddIcon />
     </Fab>
+
+    <AddFeed
+      open={addFeedDialogOpen}
+      handleClose={() => setAddFeedDialogOpen(false)}
+    />
   </div>);
 }
 

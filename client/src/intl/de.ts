@@ -44,6 +44,7 @@ export default {
   'rssFeeds.folderName': 'Ordnername',
   'rssFeeds.feedName': 'Feedname',
   'rssFeeds.feedUrl': 'Die URL des Feeds',
+  'rssFeeds.linkToWebsite': 'Link zur Webseite',
   'rssFeeds.editFoldersAndFeeds': 'Ordner und Feeds verwalten',
   'rssFeeds.addFeed': 'Feed hinzufügen',
   'rssFeed.noFolder': 'Kein Ordner',

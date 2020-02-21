@@ -41,6 +41,37 @@ export const feedGetAll: ActionCreator<
   return dispatch(appStopLoading());
 };
 
+interface AddFeed {
+  name: string;
+  feedUrl: string;
+  link: string;
+  fkFolder: number;
+}
+
+export const feedAddFeed: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (data: AddFeed): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    await axios.post('/api/rss/feeds', data);
+    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    dispatch(folderSetAll(res.data.folders));
+  }
+  catch (error) {
+    dispatch(appSetError('An error occurred while adding a feed.'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
+
 interface UpdateFeed {
   name: string;
   feedUrl: string;
