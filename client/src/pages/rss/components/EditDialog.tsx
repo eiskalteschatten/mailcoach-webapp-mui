@@ -25,7 +25,8 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Divider
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -278,6 +279,8 @@ const EditDialog: React.FC<Props> = (props) => {
                         value={folder.id}
                         onChange={(event) => handleOnFieldChange('fkFolder', event.target.value as string)}
                       >
+                        <MenuItem value=''>{messages['rssFeed.noFolder']}</MenuItem>
+                        <Divider />
                         {folders.map((selectFolder: Folder) => (
                           <MenuItem value={selectFolder.id} key={selectFolder.id}>{selectFolder.name}</MenuItem>
                         ))}

@@ -47,6 +47,7 @@ export default {
   'rssFeeds.editFoldersAndFeeds': 'Edit Folders and Feeds',
   'rssFeeds.addFolder': 'Add Folder',
   'rssFeeds.addFeed': 'Add Feed',
+  'rssFeed.noFolder': 'No Folder',
 
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',

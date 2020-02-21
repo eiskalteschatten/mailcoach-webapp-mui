@@ -84,7 +84,7 @@ const FolderDrawer: React.FC = () => {
       setIsLoading(true);
       dispatch(folderGetAllWithFeeds());
     }
-  }, [folders, dispatch]);
+  }, [checkedForFolders, folders, dispatch]);
 
   useEffect(() => {
     if (folders && folders.length > 0) {
