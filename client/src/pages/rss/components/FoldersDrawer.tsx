@@ -14,21 +14,20 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemSecondaryAction,
   Collapse,
   Menu
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
-import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CreateIcon from '@material-ui/icons/Create';
-import DeleteIcon from '@material-ui/icons/Delete';
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
@@ -38,7 +37,7 @@ import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
-import RenameFolderDialog from './RenameFolderDialog';
+import EditDialog from './EditDialog';
 
 const drawerWidth = 325;
 
@@ -72,6 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     nested: {
       paddingLeft: theme.spacing(4)
+    },
+    editButtonWrapper: {
+      textAlign: 'right'
     }
   })
 );
@@ -85,10 +87,7 @@ const FolderDrawer: React.FC = () => {
   const dispatch = useDispatch();
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [feedAnchorEl, setFeedAnchorEl] = useState<null | HTMLElement>(null);
-  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
-  const [renameFolderName, setRenameFolderName] = useState<string>('');
-  const [renameFolderId, setRenameFolderId] = useState<number>(-1);
+  const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (!folders || folders.length === 0) {
@@ -123,19 +122,9 @@ const FolderDrawer: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const handleFeedMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setFeedAnchorEl(event.currentTarget);
-  };
-
-  const handleFeedMenuClose = () => {
-    setFeedAnchorEl(null);
-  };
-
-  const handleOpenRenameFolderDialog = (name: string, folderId: number) => {
+  const handleOpenEditDialog = () => {
     handleMenuClose();
-    setRenameFolderName(name);
-    setRenameFolderId(folderId);
-    setRenameDialogOpen(true);
+    setEditDialogOpen(true);
   };
 
   return (<Drawer
@@ -197,11 +186,6 @@ const FolderDrawer: React.FC = () => {
                 ? <ExpandLessIcon onClick={() => handleToggleFolder(folder.id)} />
                 : <ExpandMoreIcon onClick={() => handleToggleFolder(folder.id)} />
               }
-              <ListItemSecondaryAction className={classes.listItemMenu}>
-                <IconButton edge='end' onClick={handleMenuOpen}>
-                  <MoreVertIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
             </ListItem>
 
             {folder.feeds && folder.feeds.map((feed: Feed) => (
@@ -209,75 +193,52 @@ const FolderDrawer: React.FC = () => {
                 <List component='div' disablePadding>
                   <ListItem button className={classes.nested}>
                     <ListItemText primary={feed.name} />
-                    <ListItemSecondaryAction className={classes.listItemMenu}>
-                      <IconButton edge='end' onClick={handleFeedMenuOpen}>
-                        <MoreVertIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
                   </ListItem>
                 </List>
-                <Menu
-                  anchorEl={feedAnchorEl}
-                  open={Boolean(feedAnchorEl)}
-                  onClose={handleFeedMenuClose}
-                >
-                  <List component='nav'>
-                    <ListItem button>
-                      <ListItemIcon>
-                        <CreateIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={messages['rssFeeds.renameFeed']} />
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemIcon>
-                        <DeleteIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={messages['rssFeeds.deleteFeed']} />
-                    </ListItem>
-                  </List>
-                </Menu>
               </Collapse>
             ))}
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <List component='nav'>
-                <ListItem button onClick={() => handleOpenRenameFolderDialog(folder.name, folder.id)}>
-                  <ListItemIcon>
-                    <CreateIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={messages['rssFeeds.renameFolder']} />
-                </ListItem>
-                <ListItem button>
-                  <ListItemIcon>
-                    <DeleteIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={messages['rssFeeds.deleteFolder']} />
-                </ListItem>
-              </List>
-            </Menu>
           </span>
         ))}
       </List>
     </div>
 
-    <List>
-      <ListItem button>
-        <ListItemIcon>
-          <CreateNewFolderIcon />
-        </ListItemIcon>
-        <ListItemText primary={messages['rssFeeds.addFeedOrFolder']} />
-      </ListItem>
-    </List>
+    <div className={classes.editButtonWrapper}>
+      <IconButton onClick={handleMenuOpen}>
+        <MoreHorizIcon />
+      </IconButton>
 
-    <RenameFolderDialog
-      open={renameDialogOpen}
-      handleClose={() => setRenameDialogOpen(false)}
-      name={renameFolderName}
-      folderId={renameFolderId}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        <List component='nav'>
+          <ListItem button onClick={handleOpenEditDialog}>
+            <ListItemIcon>
+              <CreateIcon />
+            </ListItemIcon>
+            <ListItemText primary={messages['rssFeeds.editFoldersAndFeeds']} />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemIcon>
+              <AddCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary={messages['rssFeeds.addFeed']} />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <CreateNewFolderIcon />
+            </ListItemIcon>
+            <ListItemText primary={messages['rssFeeds.addFolder']} />
+          </ListItem>
+        </List>
+      </Menu>
+    </div>
+
+    <EditDialog
+      open={editDialogOpen}
+      handleClose={() => setEditDialogOpen(false)}
     />
   </Drawer>);
 }

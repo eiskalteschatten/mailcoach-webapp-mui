@@ -28,16 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   open: boolean;
   handleClose: any;
-  name: string;
-  folderId: number;
 }
 
-const RenameFolderDialog: React.FC<Props> = (props) => {
+const EditDialog: React.FC<Props> = (props) => {
   const {
     open,
-    handleClose,
-    name,
-    folderId
+    handleClose
   } = props;
 
   const classes = useStyles();
@@ -62,7 +58,7 @@ const RenameFolderDialog: React.FC<Props> = (props) => {
         id='name'
         label={messages['rssFeeds.folderName']}
         type='name'
-        value={name}
+        // value={name}
         fullWidth
       />
     </DialogContent>
@@ -78,4 +74,4 @@ const RenameFolderDialog: React.FC<Props> = (props) => {
   </Dialog>);
 }
 
-export default RenameFolderDialog;
+export default EditDialog;
