@@ -184,7 +184,7 @@ const FolderDrawer: React.FC = () => {
                 <Divider />
               </>)}
               <MenuItem>{messages['rssFeeds.addFeed']}</MenuItem>
-              <MenuItem onClick={handleOpenAddFolderDialog}>{messages['rssFeeds.addFolder']}</MenuItem>
+              <MenuItem onClick={handleOpenAddFolderDialog}>{messages['addFolder']}</MenuItem>
             </Menu>
           </div>
 

@@ -96,7 +96,7 @@ export const folderAddFolder: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while updating a folder.'));
+    dispatch(appSetError('An error occurred while adding a folder.'));
     console.error(error);
   }
 

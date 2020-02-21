@@ -41,7 +41,7 @@ const AddFolder: React.FC<Props> = (props) => {
     onClose={handleClose}
   >
     <DialogTitle>
-      <FormattedMessage id='rssFeeds.addFolder' />
+      <FormattedMessage id='addFolder' />
     </DialogTitle>
     <DialogContent>
       <TextField
