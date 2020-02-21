@@ -100,10 +100,10 @@ const FolderDrawer: React.FC = () => {
   useEffect(() => {
     if (folders && folders.length > 0) {
       for (const folder of folders) {
-        setOpenFolders({
-          ...openFolders,
+        setOpenFolders((allOpenFolders: any) => ({
+          ...allOpenFolders,
           [folder.id]: true
-        });
+        }));
       }
     }
   }, [folders]);
