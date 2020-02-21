@@ -13,7 +13,7 @@ export default {
   'logOut': 'Abmelden',
   'register': 'Registrieren',
   'save': 'Speichern',
-  'cancel': 'Cancel',
+  'cancel': 'Abbrechen',
 
   'allItems': 'Alle',
   'unreadItems': 'Ungelesen',
