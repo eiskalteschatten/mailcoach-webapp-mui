@@ -69,3 +69,27 @@ export const feedUpdateFeed: ActionCreator<
 
   return dispatch(appStopLoading());
 };
+
+export const feedDeleteFeed: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (id: number): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    await axios.delete(`/api/rss/feeds/${id}`);
+    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    dispatch(folderSetAll(res.data.folders));
+  }
+  catch (error) {
+    dispatch(appSetError('An error occurred while updating a folder.'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};

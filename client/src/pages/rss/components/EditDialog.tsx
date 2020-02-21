@@ -36,7 +36,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { State } from '../../../store';
 import { folderUpdateFolder } from '../../../store/actions/rss/folderActions';
-import { feedUpdateFeed } from '../../../store/actions/rss/feedActions';
+import { feedUpdateFeed, feedDeleteFeed } from '../../../store/actions/rss/feedActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
@@ -93,7 +93,6 @@ const EditDialog: React.FC<Props> = (props) => {
 
   const handleOpenEditor = (id: string, values: any) => {
     setEditorsOpen({
-      ...editorsOpen,
       [id]: true
     });
 
@@ -102,11 +101,8 @@ const EditDialog: React.FC<Props> = (props) => {
 
   const handleCloseEditor = (id: string) => {
     setEditorsOpen({
-      ...editorsOpen,
       [id]: false
     });
-
-    setTimeout(() => setEditorForm({}), 500);
   };
 
   const handleUpdateFolder = (id: number, editorId: string) => {
@@ -124,6 +120,10 @@ const EditDialog: React.FC<Props> = (props) => {
       ...editorForm,
       [field]: value
     });
+  };
+
+  const handleDeleteFeed = (id: number) => {
+    dispatch(feedDeleteFeed(id));
   };
 
   return (<Dialog
@@ -260,7 +260,11 @@ const EditDialog: React.FC<Props> = (props) => {
                     </FormControl>
 
                     <div className={classes.editorButtons}>
-                      <IconButton className={classes.deleteButton} edge='start'>
+                      <IconButton
+                        className={classes.deleteButton}
+                        edge='start'
+                        onClick={() => handleDeleteFeed(feed.id)}
+                      >
                         <DeleteIcon />
                       </IconButton>
 
