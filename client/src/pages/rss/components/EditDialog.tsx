@@ -41,6 +41,8 @@ import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
+import ConfirmDialog from '../../../components/ConfirmDialog';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     dialogPaper: {
@@ -90,6 +92,8 @@ const EditDialog: React.FC<Props> = (props) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const dispatch = useDispatch();
   const [editorForm, setEditorForm] = useState<any>('');
+  const [confirmFeedDialogOpen, setConfirmFeedDialogOpen] = useState<boolean>(false);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number>(-1);
 
   const handleOpenEditor = (id: string, values: any) => {
     setEditorsOpen({
@@ -122,8 +126,14 @@ const EditDialog: React.FC<Props> = (props) => {
     });
   };
 
+  const handleConfirmDeleteFeed = (id: number) => {
+    setConfirmDeleteId(id);
+    setConfirmFeedDialogOpen(true);
+  };
+
   const handleDeleteFeed = (id: number) => {
     dispatch(feedDeleteFeed(id));
+    setConfirmFeedDialogOpen(false);
   };
 
   return (<Dialog
@@ -263,7 +273,7 @@ const EditDialog: React.FC<Props> = (props) => {
                       <IconButton
                         className={classes.deleteButton}
                         edge='start'
-                        onClick={() => handleDeleteFeed(feed.id)}
+                        onClick={() => handleConfirmDeleteFeed(feed.id)}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -289,6 +299,24 @@ const EditDialog: React.FC<Props> = (props) => {
         <FormattedMessage id='close' />
       </Button>
     </DialogActions>
+
+    <ConfirmDialog
+      open={confirmFeedDialogOpen}
+      title=''
+      contentText=''
+      handleClickYes={() => handleDeleteFeed(confirmDeleteId)}
+      handleClickNo={() => setConfirmFeedDialogOpen(false)}
+      handleClose={() => setConfirmFeedDialogOpen(false)}
+    />
+
+    {/* <ConfirmDialog
+      open={confirmFolderDialogOpen}
+      title=''
+      contentText=''
+      handleClickYes={() => setConfirmFoldDialogOpen(false)}
+      handleClickNo={() => setConfirmFoldDialogOpen(false)}
+      handleClose={() => setConfirmFolderDialogOpen(false)}
+    /> */}
   </Dialog>);
 }
 

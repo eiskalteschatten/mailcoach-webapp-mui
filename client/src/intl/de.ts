@@ -15,6 +15,8 @@ export default {
   'save': 'Speichern',
   'cancel': 'Abbrechen',
   'close': 'Schließen',
+  'yes': 'Ja',
+  'no': 'Nein',
 
   'allItems': 'Alle',
   'unreadItems': 'Ungelesen',
