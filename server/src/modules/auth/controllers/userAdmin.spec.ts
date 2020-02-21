@@ -93,7 +93,7 @@ describe('User Admin Controller', () => {
     };
 
     const response: request.Response = await request(app)
-      .patch('/2/password')
+      .patch('/1/password')
       .set({
         Authorization: `Bearer ${token}`
       })

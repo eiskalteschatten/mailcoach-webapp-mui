@@ -1,8 +1,8 @@
 import sequelizeFixtures from 'sequelize-fixtures';
 
-import authModels from '../src/modules/auth/models';
-import authFixtures from '../src/modules/auth/fixtures';
+import User from '../src/modules/auth/models/User';
+import userFixture from '../src/modules/auth/fixtures/users';
 
-beforeAll((): void => // eslint-disable-line no-undef
-  sequelizeFixtures.loadFixture(authFixtures, authModels)
+beforeEach((): void => // eslint-disable-line no-undef
+  sequelizeFixtures.loadFixtures([userFixture], { User })
 );
