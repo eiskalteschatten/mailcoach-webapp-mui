@@ -7,7 +7,7 @@ import fixture from '../fixtures/users';
 const { data } = fixture;
 
 describe('UserSerializer', () => {
-  beforeAll((): Promise<void> =>
+  beforeEach((): Promise<void> =>
     sequelizeFixtures.loadFixtures([fixture], { User })
   );
 
