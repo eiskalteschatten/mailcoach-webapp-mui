@@ -7,11 +7,13 @@ import {
   makeStyles,
   Grid,
   Typography,
-  IconButton
+  IconButton,
+  Fab
 } from '@material-ui/core';
 
 import RefreshIcon from '@material-ui/icons/Refresh';
 import CheckIcon from '@material-ui/icons/Check';
+import AddIcon from '@material-ui/icons/Add';
 
 import { smallUpMediaQuery } from '../../lib/mediaQueries';
 import FoldersDrawer from './components/FoldersDrawer';
@@ -32,6 +34,11 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         paddingTop: theme.spacing(1)
       }
+    },
+    fab: {
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2)
     }
   })
 );
@@ -63,6 +70,10 @@ const RssPage: React.FC = () => {
       </Grid>
 
     </div>
+
+    <Fab className={classes.fab} color='primary'>
+      <AddIcon />
+    </Fab>
   </div>);
 }
 
