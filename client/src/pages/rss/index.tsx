@@ -5,6 +5,8 @@ import {
   createStyles,
   Theme,
   makeStyles,
+  useTheme,
+  useMediaQuery,
   Grid,
   Typography,
   IconButton,
@@ -15,7 +17,6 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 
-import { smallUpMediaQuery } from '../../lib/mediaQueries';
 import FoldersDrawer from './components/FoldersDrawer';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,6 +46,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RssPage: React.FC = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (<div className={classes.root}>
     <FoldersDrawer />
@@ -57,12 +60,12 @@ const RssPage: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} className={classes.toolbar}>
-          <IconButton edge={!smallUpMediaQuery.matches && 'start'}>
+          <IconButton edge={!isSmallAndUp && 'start'}>
             <CheckIcon />
           </IconButton>
 
           <IconButton
-            edge={smallUpMediaQuery.matches && 'end'}
+            edge={isSmallAndUp && 'end'}
           >
             <RefreshIcon />
           </IconButton>

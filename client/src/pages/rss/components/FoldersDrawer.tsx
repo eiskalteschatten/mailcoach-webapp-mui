@@ -6,6 +6,8 @@ import {
   createStyles,
   Theme,
   makeStyles,
+  useTheme,
+  useMediaQuery,
   Drawer,
   Divider,
   IconButton,
@@ -29,7 +31,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
-import { smallUpMediaQuery } from '../../../lib/mediaQueries';
 import { State } from '../../../store';
 import { folderGetAllWithFeeds } from '../../../store/actions/rss/folderActions';
 import { IntlContext } from '../../../intl/IntlContext';
@@ -74,7 +75,8 @@ const FolderDrawer: React.FC = () => {
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
-  const isSmallAndUp = smallUpMediaQuery.matches;
+  const theme = useTheme();
+  const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     if (!folders || folders.length === 0) {

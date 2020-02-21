@@ -14,6 +14,7 @@ export default {
   'register': 'Registrieren',
   'save': 'Speichern',
   'cancel': 'Abbrechen',
+  'close': 'Schließen',
 
   'allItems': 'Alle',
   'unreadItems': 'Ungelesen',
@@ -33,7 +34,9 @@ export default {
   'rssFeeds.deleteFolder': 'Ordner löschen',
   'rssFeeds.renameFeed': 'Feed umbenennen',
   'rssFeeds.deleteFeed': 'Feed löschen',
-  'rssFeeds.folderName': 'Ordername',
+  'rssFeeds.folderName': 'Ordnername',
+  'rssFeeds.feedName': 'Feedname',
+  'rssFeeds.feedUrl': 'Die URL des Feeds',
   'rssFeeds.editFoldersAndFeeds': 'Ordner und Feeds verwalten',
   'rssFeeds.addFolder': 'Ordner hinzufügen',
   'rssFeeds.addFeed': 'Feed hinzufügen',

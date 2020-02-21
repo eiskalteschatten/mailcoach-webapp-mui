@@ -7,6 +7,8 @@ import {
   createStyles,
   Theme,
   makeStyles,
+  useTheme,
+  useMediaQuery,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -18,7 +20,8 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemSecondaryAction,
-  TextField
+  TextField,
+  Collapse
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -44,6 +47,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     hidden: {
       display: 'none'
+    },
+    editorButtons: {
+      paddingTop: theme.spacing(1),
+      textAlign: 'right'
+    },
+    deleteButton: {
+      float: 'left'
     }
   })
 );
@@ -63,6 +73,8 @@ const EditDialog: React.FC<Props> = (props) => {
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
   const [editorsOpen, setEditorsOpen] = useState<any>();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleOpenEditor = (id: string) => {
     setEditorsOpen({
@@ -84,6 +96,7 @@ const EditDialog: React.FC<Props> = (props) => {
     classes={{
       paper: classes.dialogPaper
     }}
+    fullScreen={isMobile}
   >
     <DialogTitle>
       <FormattedMessage id='rssFeeds.editFoldersAndFeeds' />
@@ -100,71 +113,102 @@ const EditDialog: React.FC<Props> = (props) => {
                 <FolderIcon />
               </ListItemIcon>
 
-              <ListItemText
+              <ListItemText primary={folder.name} />
+
+              <ListItemSecondaryAction
                 className={clsx({
                   [classes.hidden]: editorsOpen && editorsOpen[folderEditorId]
                 })}
-                primary={folder.name}
-              />
-
-              <div
-                className={clsx({
-                  [classes.hidden]: !editorsOpen || !editorsOpen[folderEditorId]
-                })}
               >
-                <TextField
-                  autoFocus
-                  fullWidth
-                  margin='dense'
-                  value={folder.name}
-                />
-              </div>
-
-              <ListItemSecondaryAction>
-                <span
-                  className={clsx({
-                    [classes.hidden]: !editorsOpen || !editorsOpen[folderEditorId]
-                  })}
-                >
-                  <IconButton onClick={() => handleCloseEditor(folderEditorId)}>
-                    <CloseIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleCloseEditor(folderEditorId)} edge='end'>
-                    <CheckIcon />
-                  </IconButton>
-                </span>
-
-                <span
-                  className={clsx({
-                    [classes.hidden]: editorsOpen && editorsOpen[folderEditorId]
-                  })}
-                >
-                  <IconButton>
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton edge='end' onClick={() => handleOpenEditor(folderEditorId)}>
-                    <CreateIcon />
-                  </IconButton>
-                </span>
+                <IconButton edge='end' onClick={() => handleOpenEditor(folderEditorId)}>
+                  <CreateIcon />
+                </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
 
-            {folder.feeds && folder.feeds.map((feed: Feed) => (
-              <List component='div' disablePadding>
-                <ListItem className={classes.nested}>
-                  <ListItemText primary={feed.name} />
+            <Collapse
+              in={editorsOpen && editorsOpen[folderEditorId]}
+              timeout='auto'
+              unmountOnExit
+              className={classes.nested}
+            >
+              <TextField
+                autoFocus
+                fullWidth
+                margin='dense'
+                value={folder.name}
+                label={messages['rssFeeds.folderName']}
+              />
 
-                  <ListItemSecondaryAction>
-                    <IconButton>
-                      <DeleteIcon />
-                    </IconButton>
-                    <IconButton edge='end'>
-                      <CreateIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              </List>
-            ))}
+              <div className={classes.editorButtons}>
+                <IconButton className={classes.deleteButton} edge='start'>
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton onClick={() => handleCloseEditor(folderEditorId)}>
+                  <CloseIcon />
+                </IconButton>
+                <IconButton onClick={() => handleCloseEditor(folderEditorId)} edge='end'>
+                  <CheckIcon />
+                </IconButton>
+              </div>
+            </Collapse>
+
+            <List component='div' disablePadding>
+              {folder.feeds && folder.feeds.map((feed: Feed) => {
+                const feedEditorId = `feed${feed.id}`;
+
+                return (<div key={feed.id}>
+                  <ListItem className={classes.nested}>
+                    <ListItemText primary={feed.name} />
+
+                    <ListItemSecondaryAction
+                      className={clsx({
+                        [classes.hidden]: editorsOpen && editorsOpen[feedEditorId]
+                      })}
+                    >
+                      <IconButton edge='end' onClick={() => handleOpenEditor(feedEditorId)}>
+                        <CreateIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+
+                  <Collapse
+                    in={editorsOpen && editorsOpen[feedEditorId]}
+                    timeout='auto'
+                    unmountOnExit
+                    className={classes.nested}
+                  >
+                    <TextField
+                      autoFocus
+                      fullWidth
+                      margin='dense'
+                      value={feed.name}
+                      label={messages['rssFeeds.feedName']}
+                    />
+
+                    <TextField
+                      fullWidth
+                      margin='dense'
+                      value={feed.feedUrl}
+                      label={messages['rssFeeds.feedUrl']}
+                    />
+
+                    <div className={classes.editorButtons}>
+                      <IconButton className={classes.deleteButton} edge='start'>
+                        <DeleteIcon />
+                      </IconButton>
+
+                      <IconButton onClick={() => handleCloseEditor(feedEditorId)}>
+                        <CloseIcon />
+                      </IconButton>
+                      <IconButton onClick={() => handleCloseEditor(feedEditorId)} edge='end'>
+                        <CheckIcon />
+                      </IconButton>
+                    </div>
+                  </Collapse>
+                </div>)
+              })}
+            </List>
           </span>
         )})}
       </List>
@@ -172,10 +216,7 @@ const EditDialog: React.FC<Props> = (props) => {
 
     <DialogActions>
       <Button onClick={handleClose}>
-        <FormattedMessage id='cancel' />
-      </Button>
-      <Button onClick={handleClose} variant='contained' color='primary'>
-        <FormattedMessage id='save' />
+        <FormattedMessage id='close' />
       </Button>
     </DialogActions>
   </Dialog>);
