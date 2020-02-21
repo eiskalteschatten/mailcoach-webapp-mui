@@ -9,12 +9,19 @@ import UserSetting from './UserSetting';
 const { data } = fixture;
 
 describe('UserSetting Model', () => {
-  beforeAll((): Promise<void> =>
-    sequelizeFixtures.loadFixtures(
-      [usersFixture, fixture],
-      { User, UserSetting }
-    )
-  );
+  beforeEach(async (done): Promise<void> => {
+    try {
+      await sequelizeFixtures.loadFixtures(
+        [usersFixture, fixture],
+        { User, UserSetting }
+      );
+
+      done();
+    }
+    catch(error) {
+      done(error);
+    }
+  });
 
   test('Exists', () => {
     expect(UserSetting).toBeDefined();

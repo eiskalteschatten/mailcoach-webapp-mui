@@ -7,9 +7,15 @@ import fixture from '../fixtures/users';
 const { data } = fixture;
 
 describe('UserSerializer', () => {
-  beforeEach((): Promise<void> =>
-    sequelizeFixtures.loadFixtures([fixture], { User })
-  );
+  beforeEach(async (done): Promise<void> => {
+    try {
+      await sequelizeFixtures.loadFixtures([fixture], { User });
+      done();
+    }
+    catch(error) {
+      done(error);
+    }
+  });
 
   test('Exists', () => {
     expect(serialize).toBeDefined();
