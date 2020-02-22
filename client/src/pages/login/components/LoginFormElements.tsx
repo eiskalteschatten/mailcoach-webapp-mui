@@ -50,7 +50,7 @@ export const Username = () => {
     name='username'
     label={messages.username}
   />);
-}
+};
 
 export const Password = () => {
   const { messages } = useContext(IntlContext);
@@ -61,4 +61,4 @@ export const Password = () => {
     type='password'
     label={messages.password}
   />);
-}
+};

@@ -29,5 +29,5 @@ export interface ModelCreateUpdate {
   feedUrl?: string;
   link?: string;
   icon?: string;
-  fkFolder: number;
+  fkFolder?: number;
 }
