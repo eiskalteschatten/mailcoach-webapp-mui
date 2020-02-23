@@ -74,9 +74,16 @@ const EditFeedForm: React.FC<Props> = ({ children, initialValues, handleClose, f
   >
     {(formikProps: FormikProps<FormValues>) => (
       <Form>
-        <FeedName />
+        {feedId &&
+          <FeedName />
+        }
+
         <FeedUrl />
-        <FeedLink />
+
+        {feedId &&
+          <FeedLink />
+        }
+
         <FeedFolder folders={folders} />
 
         <div className={classes.footer}>

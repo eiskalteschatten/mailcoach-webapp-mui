@@ -16,10 +16,11 @@ import EditFeedForm from './EditFeedForm';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttons: {
+      marginTop: theme.spacing(4),
       textAlign: 'right'
     },
     button: {
-      marginLeft: 10
+      marginLeft: theme.spacing(1)
     }
   })
 );
@@ -54,7 +55,7 @@ const AddFeed: React.FC<Props> = ({ open, handleClose }) => {
             color='primary'
             variant='contained'
           >
-            <FormattedMessage id='addFolder' />
+            <FormattedMessage id='rssFeeds.addFeed' />
           </Button>
         </div>
       </EditFeedForm>
