@@ -96,7 +96,7 @@ export const folderAddFolder: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while adding a folder.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -124,7 +124,7 @@ export const folderUpdateFolder: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while updating a folder.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -148,7 +148,7 @@ export const folderDeleteFolder: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while updating a folder.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 

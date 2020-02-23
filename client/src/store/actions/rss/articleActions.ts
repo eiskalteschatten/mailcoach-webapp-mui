@@ -54,7 +54,7 @@ export const articleGetAllUnread: ActionCreator<
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while fetching all unread articles.'));
+    dispatch(appSetFormError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -78,7 +78,7 @@ export const articleRefreshAndGetAllUnread: ActionCreator<
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while refreshing fetching all unread articles.'));
+    dispatch(appSetFormError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -101,7 +101,7 @@ export const articleGetAll: ActionCreator<
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while fetching all articles.'));
+    dispatch(appSetFormError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -135,7 +135,7 @@ export const articleMarkReadUnread: ActionCreator<
     dispatch(articleSetAll(articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while marking an article as read or unread.'));
+    dispatch(appSetFormError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -169,7 +169,7 @@ export const articleMarkAllRead: ActionCreator<
     dispatch(articleSetAll(articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while marking all articles as read.'));
+    dispatch(appSetFormError('errors.anErrorOccurred'));
     console.error(error);
   }
 

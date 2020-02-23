@@ -34,7 +34,7 @@ export const feedGetAll: ActionCreator<
     dispatch(feedSetAll(res.data.feeds));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while fetching all feeds.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -65,7 +65,7 @@ export const feedAddFeed: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while adding a feed.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -94,7 +94,7 @@ export const feedUpdateFeed: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while updating a folder.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 
@@ -118,7 +118,7 @@ export const feedDeleteFeed: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('An error occurred while updating a folder.'));
+    dispatch(appSetError('errors.anErrorOccurred'));
     console.error(error);
   }
 
