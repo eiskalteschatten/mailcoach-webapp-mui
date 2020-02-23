@@ -9,6 +9,7 @@ jasmine-runner-api.js
 
 dist
 _docs
+build
 
 package-lock.json
 
