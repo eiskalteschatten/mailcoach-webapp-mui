@@ -246,7 +246,10 @@ const EditDialog: React.FC<Props> = (props) => {
                     <EditFeedForm
                       handleClose={handleClose}
                       feedId={feed.id}
-                      initialValues={feed}
+                      initialValues={{
+                        ...feed,
+                        fkFolder: folder.id
+                      }}
                     >
                       <div className={classes.editorButtons}>
                         <IconButton
