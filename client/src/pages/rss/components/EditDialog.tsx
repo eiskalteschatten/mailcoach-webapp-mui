@@ -143,6 +143,8 @@ const EditDialog: React.FC<Props> = (props) => {
   const getFeedsList = (feed: Feed, folderId?: number) => {
     const feedEditorId = `feed${feed.id}`;
 
+console.log(feed.name, folderId)
+
     return (<div key={feed.id}>
       <ListItem className={clsx({
         [classes.nested]: folderId && folderId !== 0
@@ -280,7 +282,7 @@ const EditDialog: React.FC<Props> = (props) => {
           </span>
         )})}
 
-        {feeds.map(getFeedsList)}
+        {feeds.map((feed: Feed) => getFeedsList(feed))}
       </List>
     </DialogContent>
 
