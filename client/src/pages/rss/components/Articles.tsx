@@ -65,6 +65,7 @@ const Articles: React.FC = () => {
   const allArticles = useSelector((state: State) => state.rss.article.articles) as Article[];
   const initialCheckOccurred = useSelector((state: State) => state.rss.article.initialCheckOccurred) as boolean;
   const selectedFolderId = useSelector((state: State) => state.rss.folder.selectedFolderId) as number;
+  const selectedFeedId = useSelector((state: State) => state.rss.feed.selectedFeedId) as number;
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articleDialogOpen, setArticleDialogOpen] = useState<boolean>(false);
@@ -92,6 +93,16 @@ const Articles: React.FC = () => {
       setArticles(filteredArticles);
     }
   }, [selectedFolderId, allArticles]);
+
+  useEffect(() => {
+    if (selectedFeedId && allArticles) {
+      const filteredArticles = allArticles.filter((article: Article) =>
+        article.feed && selectedFeedId === article.feed.id
+      );
+
+      setArticles(filteredArticles);
+    }
+  }, [selectedFeedId, allArticles]);
 
   const dateOptions = {
     year: 'numeric',

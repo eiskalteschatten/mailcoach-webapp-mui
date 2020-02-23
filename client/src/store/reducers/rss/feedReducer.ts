@@ -5,6 +5,7 @@ import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 export interface FeedState {
   feeds: Feed[];
+  selectedFeedId?: number;
 }
 
 export const initialState: FeedState = {
@@ -20,6 +21,11 @@ const feedReducer: Reducer<FeedState, FeedActions> = (
       return {
         ...state,
         feeds: action.feeds
+      };
+    case 'FEED_SET_SELECTED_FEED_ID':
+      return {
+        ...state,
+        selectedFeedId: action.selectedFeedId
       };
     default:
       return state;

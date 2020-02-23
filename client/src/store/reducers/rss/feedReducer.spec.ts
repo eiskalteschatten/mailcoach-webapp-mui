@@ -17,4 +17,16 @@ describe('RSS Feed Reducer', () => {
       feeds: []
     })
   })
+
+  test('Should handle FEED_SET_SELECTED_FEED_ID', () => {
+    expect(
+      feedReducer(undefined, {
+        type: 'FEED_SET_SELECTED_FEED_ID',
+        selectedFeedId: 1
+      })
+    ).toEqual({
+      ...initialState,
+      selectedFeedId: 1
+    })
+  });
 });

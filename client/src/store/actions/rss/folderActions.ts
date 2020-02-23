@@ -15,7 +15,7 @@ export interface FolderSetCheckedForFolders extends Action<'FOLDER_CHECKED_FOR_F
 }
 
 export interface FolderSetSelectedFolderId extends Action<'FOLDER_SET_SELECTED_FOLDER_ID'> {
-  selectedFolderId: number;
+  selectedFolderId: number | undefined;
 }
 
 export type FolderActions =
@@ -33,7 +33,7 @@ export const folderSetCheckedForFolders = (checkedForFolders: boolean): FolderSe
   checkedForFolders
 });
 
-export const folderSetselectedFolderId = (selectedFolderId: number): FolderSetSelectedFolderId => ({
+export const folderSetselectedFolderId = (selectedFolderId: number | undefined): FolderSetSelectedFolderId => ({
   type: 'FOLDER_SET_SELECTED_FOLDER_ID',
   selectedFolderId
 });

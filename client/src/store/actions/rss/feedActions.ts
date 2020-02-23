@@ -12,11 +12,22 @@ export interface FeedSetAll extends Action<'FEED_SET_ALL'> {
   feeds: Feed[];
 }
 
-export type FeedActions = FeedSetAll;
+export interface FeedSetSelectedFeedId extends Action<'FEED_SET_SELECTED_FEED_ID'> {
+  selectedFeedId: number | undefined;
+}
+
+export type FeedActions =
+  FeedSetAll |
+  FeedSetSelectedFeedId;
 
 export const feedSetAll = (feeds: Feed[]): FeedSetAll => ({
   type: 'FEED_SET_ALL',
   feeds
+});
+
+export const feedSetSelectedFeedId = (selectedFeedId: number | undefined): FeedSetSelectedFeedId => ({
+  type: 'FEED_SET_SELECTED_FEED_ID',
+  selectedFeedId
 });
 
 export const feedGetFeedsAndFolders: ActionCreator<

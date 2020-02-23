@@ -32,7 +32,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ComponentLoader from '../../../components/ComponentLoader';
 
 import { State } from '../../../store';
-import { feedGetFeedsAndFolders } from '../../../store/actions/rss/feedActions';
+import { feedGetFeedsAndFolders, feedSetSelectedFeedId } from '../../../store/actions/rss/feedActions';
 import { folderSetselectedFolderId } from '../../../store/actions/rss/folderActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
@@ -79,6 +79,7 @@ const FolderDrawer: React.FC = () => {
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
   const selectedFolderId = useSelector((state: State) => state.rss.folder.selectedFolderId) as number;
   const feeds = useSelector((state: State) => state.rss.feed.feeds) as Feed[];
+  const selectedFeedId = useSelector((state: State) => state.rss.feed.selectedFeedId) as number;
   const checkedForFolders = useSelector((state: State) => state.rss.folder.checkedForFolders) as boolean;
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
 
@@ -138,8 +139,13 @@ const FolderDrawer: React.FC = () => {
   };
 
   const handleSetSelectedFolder = (id: number) => {
-    // TODO: Unselect feed
+    dispatch(feedSetSelectedFeedId(undefined));
     dispatch(folderSetselectedFolderId(id));
+  };
+
+  const handleSetSelectedFeed = (id: number) => {
+    dispatch(folderSetselectedFolderId(undefined));
+    dispatch(feedSetSelectedFeedId(id));
   };
 
   return (<Drawer
@@ -233,7 +239,12 @@ const FolderDrawer: React.FC = () => {
           {folder.feeds && folder.feeds.map((feed: Feed) => (
             <Collapse in={openFolders[folder.id]} timeout='auto' unmountOnExit key={feed.id}>
               <List dense={isSmallAndUp} component='div' disablePadding>
-                <ListItem button className={classes.nested}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  onClick={() => handleSetSelectedFeed(feed.id)}
+                  selected={selectedFeedId === feed.id}
+                >
                   <ListItemText primary={feed.name} />
                 </ListItem>
               </List>
@@ -243,7 +254,12 @@ const FolderDrawer: React.FC = () => {
       ))}
 
       {feeds.map((feed: Feed) => !feed.folder
-        ? (<ListItem button key={feed.id}>
+        ? (<ListItem
+            button
+            key={feed.id}
+            onClick={() => handleSetSelectedFeed(feed.id)}
+            selected={selectedFeedId === feed.id}
+          >
             <ListItemText primary={feed.name} />
           </ListItem>)
         : (<></>)
