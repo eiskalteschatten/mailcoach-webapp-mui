@@ -3,7 +3,6 @@ import nock from 'nock';
 
 import {
   articleSetAll,
-  articleSetSelectedIndex,
   articleGetAllUnread,
   articleRefreshAndGetAllUnread,
   articleGetAll,
@@ -21,16 +20,6 @@ describe('RSS Article Actions', () => {
     expect(actions[0]).toEqual({
       type: 'ARTICLE_SET_ALL',
       articles: []
-    });
-  });
-
-  test('Getting the selected index works', async () => {
-    const localStore: MockStore = mockStore();
-    await localStore.dispatch(articleSetSelectedIndex(1));
-    const actions = localStore.getActions();
-    expect(actions[0]).toEqual({
-      type: 'ARTICLE_SET_SELECTED_INDEX',
-      selectedArticleIndex: 1
     });
   });
 

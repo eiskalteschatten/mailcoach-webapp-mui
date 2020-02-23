@@ -18,18 +18,6 @@ describe('RSS Article Reducer', () => {
     })
   });
 
-  test('Should handle ARTICLE_SET_SELECTED_INDEX', () => {
-    expect(
-      articleReducer(undefined, {
-        type: 'ARTICLE_SET_SELECTED_INDEX',
-        selectedArticleIndex: 1
-      })
-    ).toEqual({
-      ...initialState,
-      selectedArticleIndex: 1
-    })
-  });
-
   test('Should handle ARTICLE_SET_INITIAL_CHECK_OCCURRED', () => {
     expect(
       articleReducer(undefined, {

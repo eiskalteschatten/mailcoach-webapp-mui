@@ -10,32 +10,17 @@ export interface ArticleSetAll extends Action<'ARTICLE_SET_ALL'> {
   articles: Article[];
 }
 
-export interface ArticleToggleDialog extends Action<'ARTICLE_TOGGLE_DIALOG'> {
-  dialogOpen: boolean;
-}
-
-export interface ArticleSetSelectedIndex extends Action<'ARTICLE_SET_SELECTED_INDEX'> {
-  selectedArticleIndex: number;
-}
-
 export interface ArticleSetInitialCheckOccurred extends Action<'ARTICLE_SET_INITIAL_CHECK_OCCURRED'> {
   initialCheckOccurred: boolean;
 }
 
 export type ArticleActions =
   ArticleSetAll |
-  ArticleToggleDialog |
-  ArticleSetSelectedIndex |
   ArticleSetInitialCheckOccurred;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   type: 'ARTICLE_SET_ALL',
   articles
-});
-
-export const articleSetSelectedIndex = (selectedArticleIndex: number): ArticleSetSelectedIndex => ({
-  type: 'ARTICLE_SET_SELECTED_INDEX',
-  selectedArticleIndex
 });
 
 export const articleSetInitialCheckOccurred = (initialCheckOccurred: boolean): ArticleSetInitialCheckOccurred => ({

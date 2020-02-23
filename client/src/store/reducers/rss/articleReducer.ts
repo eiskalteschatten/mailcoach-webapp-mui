@@ -5,7 +5,6 @@ import { SerializedModel as Article } from '../../../../../interfaces/rss/Articl
 
 export interface ArticleState {
   articles: Article[];
-  selectedArticleIndex?: number;
   initialCheckOccurred: boolean;
 }
 
@@ -23,11 +22,6 @@ const articleReducer: Reducer<ArticleState, ArticleActions> = (
       return {
         ...state,
         articles: action.articles
-      };
-    case 'ARTICLE_SET_SELECTED_INDEX':
-      return {
-        ...state,
-        selectedArticleIndex: action.selectedArticleIndex
       };
     case 'ARTICLE_SET_INITIAL_CHECK_OCCURRED':
       return {
