@@ -50,7 +50,6 @@ const AddFeed: React.FC<Props> = ({ open, handleClose }) => {
           </Button>
           <Button
             className={classes.button}
-            // onClick={handleSave}
             type='submit'
             color='primary'
             variant='contained'
