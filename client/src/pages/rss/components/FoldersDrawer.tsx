@@ -25,9 +25,10 @@ import FolderIcon from '@material-ui/icons/Folder';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-import ArchiveIcon from '@material-ui/icons/Archive';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import { RSS_ALL_ITEMS_FOLDER_ID, RSS_UNREAD_ITEMS_FOLDER_ID } from '../../../constants';
 
 import ComponentLoader from '../../../components/ComponentLoader';
 
@@ -90,24 +91,6 @@ const FolderDrawer: React.FC = () => {
   const [addFolderDialogOpen, setAddFolderDialogOpen] = useState<boolean>(false);
   const [addFeedDialogOpen, setAddFeedDialogOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!checkedForFolders && (!folders || folders.length === 0) && (!feeds || feeds.length === 0)) {
-      setIsLoading(true);
-      dispatch(feedGetFeedsAndFolders());
-    }
-  }, [checkedForFolders, folders, feeds, dispatch]);
-
-  useEffect(() => {
-    if (folders && folders.length > 0) {
-      for (const folder of folders) {
-        setOpenFolders((allOpenFolders: any) => ({
-          ...allOpenFolders,
-          [folder.id]: true
-        }));
-      }
-    }
-  }, [folders]);
-
   const handleToggleFolder = (id: number) => {
     setOpenFolders({
       ...openFolders,
@@ -148,6 +131,24 @@ const FolderDrawer: React.FC = () => {
     dispatch(feedSetSelectedFeedId(id));
   };
 
+  useEffect(() => {
+    if (!checkedForFolders && (!folders || folders.length === 0) && (!feeds || feeds.length === 0)) {
+      setIsLoading(true);
+      dispatch(feedGetFeedsAndFolders());
+    }
+  }, [checkedForFolders, folders, feeds, dispatch]);
+
+  useEffect(() => {
+    if (folders && folders.length > 0) {
+      for (const folder of folders) {
+        setOpenFolders((allOpenFolders: any) => ({
+          ...allOpenFolders,
+          [folder.id]: true
+        }));
+      }
+    }
+  }, [folders]);
+
   return (<Drawer
     className={clsx({
       [classes.root]: leftDrawerOpen
@@ -164,25 +165,26 @@ const FolderDrawer: React.FC = () => {
     <div className={classes.toolbar} />
 
     <List dense={isSmallAndUp}>
-      <ListItem button>
+      <ListItem
+        button
+        onClick={() => handleSetSelectedFolder(RSS_ALL_ITEMS_FOLDER_ID)}
+        selected={selectedFolderId === RSS_ALL_ITEMS_FOLDER_ID}
+      >
         <ListItemIcon>
           <RssFeedIcon />
         </ListItemIcon>
         <ListItemText primary={messages.allItems} />
       </ListItem>
 
-      <ListItem button>
+      <ListItem
+        button
+        onClick={() => handleSetSelectedFolder(RSS_UNREAD_ITEMS_FOLDER_ID)}
+        selected={selectedFolderId === RSS_UNREAD_ITEMS_FOLDER_ID}
+      >
         <ListItemIcon>
           <NewReleasesIcon />
         </ListItemIcon>
         <ListItemText primary={messages.unreadItems} />
-      </ListItem>
-
-      <ListItem button>
-        <ListItemIcon>
-          <ArchiveIcon />
-        </ListItemIcon>
-        <ListItemText primary={messages.archive} />
       </ListItem>
     </List>
 

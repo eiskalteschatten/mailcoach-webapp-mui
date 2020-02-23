@@ -16,6 +16,7 @@ import {
 import ComponentLoader from '../../../components/ComponentLoader';
 import ArticleView from './ArticleView';
 
+import { RSS_ALL_ITEMS_FOLDER_ID, RSS_UNREAD_ITEMS_FOLDER_ID } from '../../../constants';
 import { State } from '../../../store';
 import { articleGetAllUnread } from '../../../store/actions/rss/articleActions';
 import { SerializedModel as Article } from '../../../../../interfaces/rss/Article';
@@ -85,12 +86,24 @@ const Articles: React.FC = () => {
   useEffect(() => setArticles(allArticles), [allArticles]);
 
   useEffect(() => {
-    if (selectedFolderId && allArticles) {
-      const filteredArticles = allArticles.filter((article: Article) =>
+    let filteredArticles: Article[];
+
+    if (selectedFolderId && selectedFolderId > 0 && allArticles) {
+      filteredArticles = allArticles.filter((article: Article) =>
         article.feed && article.feed.fkFolder && selectedFolderId === article.feed.fkFolder
       );
 
       setArticles(filteredArticles);
+    }
+    else if (selectedFolderId && selectedFolderId < 0 && allArticles) {
+      if (selectedFolderId === RSS_ALL_ITEMS_FOLDER_ID) {
+        // TODO: get unread articles too
+        setArticles(allArticles);
+      }
+      else if (selectedFolderId === RSS_UNREAD_ITEMS_FOLDER_ID) {
+        filteredArticles = allArticles.filter((article: Article) => !article.read);
+        setArticles(filteredArticles);
+      }
     }
   }, [selectedFolderId, allArticles]);
 

@@ -1,4 +1,6 @@
 import { Reducer } from 'redux';
+
+import { RSS_UNREAD_ITEMS_FOLDER_ID } from '../../../constants';
 import { FolderActions } from '../../actions/rss/folderActions';
 
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
@@ -11,7 +13,8 @@ export interface FolderState {
 
 export const initialState: FolderState = {
   folders: [],
-  checkedForFolders: false
+  checkedForFolders: false,
+  selectedFolderId: RSS_UNREAD_ITEMS_FOLDER_ID
 };
 
 const folderReducer: Reducer<FolderState, FolderActions> = (
