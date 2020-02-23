@@ -25,7 +25,10 @@ class App {
     await this.configureAuth();
     this.configureModules();
     await this.configureGenericErrorHandling();
-    setupCronjobs();
+
+    if (process.env.NODE_ENV !== 'test') {
+      setupCronjobs();
+    }
 
     logger.info('App started with:');
     logger.info('- Node.js', process.version);
