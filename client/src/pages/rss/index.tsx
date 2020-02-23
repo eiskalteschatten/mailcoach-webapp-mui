@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
@@ -22,7 +22,9 @@ import FoldersDrawer from './components/FoldersDrawer';
 import Articles from './components/Articles';
 import AddFeed from './components/AddFeed';
 
-import { articleRefreshAndGetAllUnread } from '../../store/actions/rss/articleActions';
+import { IntlContext } from '../../intl/IntlContext';
+import { articleRefreshAndGetAllUnread, articleMarkAllRead } from '../../store/actions/rss/articleActions';
+import ConfirmDialog from '../../components/ConfirmDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,7 +56,13 @@ const RssPage: React.FC = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const { messages } = useContext(IntlContext);
   const [addFeedDialogOpen, setAddFeedDialogOpen] = useState<boolean>(false);
+  const [confirmMarkAllReadDialog, setConfirmMarkAllReadDialog] = useState<boolean>(false);
+
+  const handleMarkAllRead = () => {
+    setConfirmMarkAllReadDialog(true);
+  };
 
   const handleRefreshArticles = () => {
     dispatch(articleRefreshAndGetAllUnread());
@@ -72,7 +80,7 @@ const RssPage: React.FC = () => {
         </Grid>
 
         <Grid item xs={12} sm={6} className={classes.toolbar}>
-          <IconButton edge={!isSmallAndUp && 'start'}>
+          <IconButton edge={!isSmallAndUp && 'start'} onClick={handleMarkAllRead}>
             <CheckIcon />
           </IconButton>
 
@@ -96,6 +104,15 @@ const RssPage: React.FC = () => {
     <AddFeed
       open={addFeedDialogOpen}
       handleClose={() => setAddFeedDialogOpen(false)}
+    />
+
+    <ConfirmDialog
+      open={confirmMarkAllReadDialog}
+      title={messages['rssFeeds.areYouSureMarkAllRead']}
+      contentText={messages['rssFeeds.areYouSureMarkAllReadText']}
+      handleClickYes={() => dispatch(articleMarkAllRead())}
+      handleClickNo={() => setConfirmMarkAllReadDialog(false)}
+      handleClose={() => setConfirmMarkAllReadDialog(false)}
     />
   </div>);
 }

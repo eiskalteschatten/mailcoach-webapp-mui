@@ -89,7 +89,7 @@ const Articles: React.FC = () => {
           spacing={isSmallAndUp ? 8 : 0}
           justify='space-evenly'
         >
-          {articles.map((article: Article) => (
+          {articles && articles.map((article: Article) => (
             <Grid item xs={12} sm={6} md={4} key={article.id}>
               <ButtonBase
                 className={clsx({

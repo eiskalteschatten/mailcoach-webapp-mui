@@ -130,7 +130,7 @@ export const articleMarkReadUnread: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.patch(`/api/rss/article/mark-read-unread/${id}`, { read });
+    const res: any = await axios.patch(`/api/rss/articles/mark-read-unread/${id}`, { read });
 
     const state = getState();
     const articles = state.article && Object.create(state.article.articles);
@@ -165,7 +165,7 @@ export const articleMarkAllRead: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    await axios.patch('/api/rss/article/mark-all-read');
+    await axios.patch('/api/rss/articles/mark-all-read');
 
     const state = getState();
     const articles = state.article && Object.create(state.article.articles);

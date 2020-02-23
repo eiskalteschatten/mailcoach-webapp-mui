@@ -49,6 +49,8 @@ export default {
   'rssFeeds.addFeed': 'Add Feed',
   'rssFeed.noFolder': 'No Folder',
   'rssFeed.errors.invalidFeedUrl': 'Could not parse the feed URL! Please check to make sure it is a valid feed URL.',
+  'rssFeeds.areYouSureMarkAllRead': 'Are you sure you want to mark all articles as read?',
+  'rssFeeds.areYouSureMarkAllReadText': 'This action cannot be undone.',
 
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',

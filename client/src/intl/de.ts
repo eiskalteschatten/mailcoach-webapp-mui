@@ -49,6 +49,8 @@ export default {
   'rssFeeds.addFeed': 'Feed hinzufügen',
   'rssFeed.noFolder': 'Kein Ordner',
   'rssFeed.errors.invalidFeedUrl': 'Die Feed-URL konnte nicht geparst werden! Bitte prüfen Sie, ob sie eine gültige Feed-URL ist.',
+  'rssFeeds.areYouSureMarkAllRead': 'Sind Sie sicher, dass sie alle Artikel als gelesen markieren wollen?',
+  'rssFeeds.areYouSureMarkAllReadText': 'Dieser Vorgang kann nicht rückgängig gemacht werden.',
 
   'account.manageAccount': 'Konto verwalten',
   'account.accountInformation': 'Konto-Informationen',

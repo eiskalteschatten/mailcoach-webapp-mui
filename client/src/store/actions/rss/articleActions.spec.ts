@@ -121,7 +121,7 @@ describe('RSS Article Actions', () => {
 
   test('Marking an article as read or unread works', async () => {
     nock('http://localhost')
-      .patch('/api/rss/article/mark-read-unread/1')
+      .patch('/api/rss/articles/mark-read-unread/1')
       .reply(200, {
         articles: []
       });
@@ -142,7 +142,7 @@ describe('RSS Article Actions', () => {
 
   test('Marking all articles as read works', async () => {
     nock('http://localhost')
-      .patch('/api/rss/article/mark-all-read')
+      .patch('/api/rss/articles/mark-all-read')
       .reply(200, {
         articles: []
       });
