@@ -143,8 +143,6 @@ const EditDialog: React.FC<Props> = (props) => {
   const getFeedsList = (feed: Feed, folderId?: number) => {
     const feedEditorId = `feed${feed.id}`;
 
-console.log(feed.name, folderId)
-
     return (<div key={feed.id}>
       <ListItem className={clsx({
         [classes.nested]: folderId && folderId !== 0
