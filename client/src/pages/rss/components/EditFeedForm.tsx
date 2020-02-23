@@ -11,9 +11,9 @@ import {
 
 import { ModelCreateUpdate } from '../../../../../interfaces/rss/Feed';
 
-import { FeedName, FeedUrl, FeedLink, FeedFolder } from './AddFeedFormElements';
+import { FeedName, FeedUrl, FeedLink, FeedFolder } from './EditFeedFormElements';
 
-import { feedAddFeed } from '../../../store/actions/rss/feedActions';
+import { feedAddFeed, feedUpdateFeed } from '../../../store/actions/rss/feedActions';
 import { State } from '../../../store';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
@@ -32,9 +32,10 @@ interface Props {
   children: any;
   initialValues?: FormValues;
   handleClose?: any;
+  feedId?: number;
 }
 
-const AddFeedForm: React.FC<Props> = ({ children, initialValues, handleClose }) => {
+const EditFeedForm: React.FC<Props> = ({ children, initialValues, handleClose, feedId }) => {
   const dispatch = useDispatch();
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
   const classes = useStyles();
@@ -60,7 +61,13 @@ const AddFeedForm: React.FC<Props> = ({ children, initialValues, handleClose }) 
     initialValues={initialValues}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
       handleClose();
-      dispatch(feedAddFeed(values));
+
+      if (feedId) {
+        dispatch(feedUpdateFeed(feedId, values));
+      }
+      else {
+        dispatch(feedAddFeed(values));
+      }
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}
@@ -79,5 +86,5 @@ const AddFeedForm: React.FC<Props> = ({ children, initialValues, handleClose }) 
   )}</Formik>);
 }
 
-export default AddFeedForm;
+export default EditFeedForm;
 

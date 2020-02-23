@@ -22,11 +22,6 @@ import {
   ListItemSecondaryAction,
   TextField,
   Collapse,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Divider
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -37,12 +32,13 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { State } from '../../../store';
 import { folderUpdateFolder, folderDeleteFolder } from '../../../store/actions/rss/folderActions';
-import { feedUpdateFeed, feedDeleteFeed } from '../../../store/actions/rss/feedActions';
+import { feedDeleteFeed } from '../../../store/actions/rss/feedActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 import ConfirmDialog from '../../../components/ConfirmDialog';
+import EditFeedForm from './EditFeedForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -114,11 +110,6 @@ const EditDialog: React.FC<Props> = (props) => {
   const handleUpdateFolder = (id: number, editorId: string) => {
     handleCloseEditor(editorId);
     dispatch(folderUpdateFolder(id, editorForm));
-  };
-
-  const handleUpdateFeed = (id: number, editorId: string) => {
-    handleCloseEditor(editorId);
-    dispatch(feedUpdateFeed(id, editorForm));
   };
 
   const handleOnFieldChange = (field: string, value: string) => {
@@ -252,57 +243,28 @@ const EditDialog: React.FC<Props> = (props) => {
                     unmountOnExit
                     className={classes.nested}
                   >
-                    <TextField
-                      autoFocus
-                      fullWidth
-                      margin='dense'
-                      label={messages['rssFeeds.feedName']}
-                      value={editorForm.name}
-                      onChange={(event) => handleOnFieldChange('name', event.currentTarget.value)}
-                      className={classes.formMargin}
-                    />
+                    <EditFeedForm
+                      handleClose={handleClose}
+                      feedId={feed.id}
+                      initialValues={feed}
+                    >
+                      <div className={classes.editorButtons}>
+                        <IconButton
+                          className={classes.deleteButton}
+                          edge='start'
+                          onClick={() => handleConfirmDeleteFeed(feed.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
 
-                    <TextField
-                      fullWidth
-                      margin='dense'
-                      label={messages['rssFeeds.feedUrl']}
-                      value={editorForm.feedUrl}
-                      onChange={(event) => handleOnFieldChange('feedUrl', event.currentTarget.value)}
-                      className={classes.formMargin}
-                    />
-
-                    <FormControl className={clsx(classes.formMargin, classes.select)}>
-                      <InputLabel>
-                        <FormattedMessage id='folder' />
-                      </InputLabel>
-                      <Select
-                        value={folder.id}
-                        onChange={(event) => handleOnFieldChange('fkFolder', event.target.value as string)}
-                      >
-                        <MenuItem value=''>{messages['rssFeed.noFolder']}</MenuItem>
-                        <Divider />
-                        {folders.map((selectFolder: Folder) => (
-                          <MenuItem value={selectFolder.id} key={selectFolder.id}>{selectFolder.name}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <div className={classes.editorButtons}>
-                      <IconButton
-                        className={classes.deleteButton}
-                        edge='start'
-                        onClick={() => handleConfirmDeleteFeed(feed.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-
-                      <IconButton onClick={() => handleCloseEditor(feedEditorId)}>
-                        <CloseIcon />
-                      </IconButton>
-                      <IconButton onClick={() => handleUpdateFeed(feed.id, feedEditorId)} edge='end'>
-                        <CheckIcon />
-                      </IconButton>
-                    </div>
+                        <IconButton onClick={() => handleCloseEditor(feedEditorId)}>
+                          <CloseIcon />
+                        </IconButton>
+                        <IconButton type='submit' edge='end'>
+                          <CheckIcon />
+                        </IconButton>
+                      </div>
+                    </EditFeedForm>
                   </Collapse>
                 </div>)
               })}

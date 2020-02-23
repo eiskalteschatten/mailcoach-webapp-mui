@@ -11,7 +11,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import AddFeedForm from './AddFeedForm';
+import EditFeedForm from './EditFeedForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +42,7 @@ const AddFeed: React.FC<Props> = ({ open, handleClose }) => {
       <FormattedMessage id='rssFeeds.addFeed' />
     </DialogTitle>
     <DialogContent>
-      <AddFeedForm handleClose={handleClose}>
+      <EditFeedForm handleClose={handleClose}>
         <div className={classes.buttons}>
           <Button onClick={handleClose}>
             <FormattedMessage id='cancel' />
@@ -57,7 +57,7 @@ const AddFeed: React.FC<Props> = ({ open, handleClose }) => {
             <FormattedMessage id='addFolder' />
           </Button>
         </div>
-      </AddFeedForm>
+      </EditFeedForm>
     </DialogContent>
   </Dialog>);
 };
