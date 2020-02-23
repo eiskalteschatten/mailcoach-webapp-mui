@@ -53,7 +53,7 @@ export default {
   'rssFeeds.areYouSureMarkAllReadText': 'This action cannot be undone.',
   'rssFeeds.openArticle': 'Open Article',
   'rssFeeds.markAsRead': 'Mark as Read',
-  'rssFeeds.markAsUnRead': 'Mark as Unread',
+  'rssFeeds.markAsUnread': 'Mark as Unread',
 
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',

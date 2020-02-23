@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -18,6 +18,7 @@ import {
 
 import CloseIcon from '@material-ui/icons/Close';
 
+import { State } from '../../../store';
 import { SerializedModel as Article } from '../../../../../interfaces/rss/Article';
 import { articleMarkReadUnread } from '../../../store/actions/rss/articleActions';
 
@@ -52,20 +53,21 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   open: boolean;
   handleClose: any;
-  article: Article;
+  articleIndex: number;
 }
 
 const ArticleView: React.FC<Props> = (props) => {
   const {
     open,
     handleClose,
-    article
+    articleIndex
   } = props;
 
   const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const article = useSelector((state: State) => state.rss.article.articles && state.rss.article.articles[articleIndex]) as Article;
 
   const dateOptions = {
     year: 'numeric',
@@ -81,7 +83,7 @@ const ArticleView: React.FC<Props> = (props) => {
   };
 
   const handleMarkAsReadOrUnread = (read: boolean) => {
-    dispatch(articleMarkReadUnread(article.id, read));
+    dispatch(articleMarkReadUnread(article.id, read, articleIndex));
   };
 
   return (<Dialog

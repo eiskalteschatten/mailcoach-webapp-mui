@@ -53,7 +53,7 @@ export default {
   'rssFeeds.areYouSureMarkAllReadText': 'Dieser Vorgang kann nicht rückgängig gemacht werden.',
   'rssFeeds.openArticle': 'Artikel öffnen',
   'rssFeeds.markAsRead': 'Als gelesen markieren',
-  'rssFeeds.markAsUnRead': 'Als ungelesen markieren',
+  'rssFeeds.markAsUnread': 'Als ungelesen markieren',
 
   'account.manageAccount': 'Konto verwalten',
   'account.accountInformation': 'Konto-Informationen',

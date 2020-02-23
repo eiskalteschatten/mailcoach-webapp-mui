@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: '1.5em'
     },
     markedRead: {
-      opacity: '.7'
+      opacity: '.5'
     },
     articleTitle: {
       fontWeight: 'bold',
@@ -59,7 +59,7 @@ const Articles: React.FC = () => {
   const initialCheckOccurred = useSelector((state: State) => state.rss.article.initialCheckOccurred) as boolean;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articleDialogOpen, setArticleDialogOpen] = useState<boolean>(false);
-  const [openArticle, setOpenArticle] = useState<Article | undefined>();
+  const [openArticleIndex, setOpenArticleIndex] = useState<number | undefined>();
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -82,8 +82,8 @@ const Articles: React.FC = () => {
     second: 'numeric'
   };
 
-  const handleOpenArticle = (article: Article) => {
-    setOpenArticle(article);
+  const handleOpenArticle = (index: number) => {
+    setOpenArticleIndex(index);
     setArticleDialogOpen(true);
   };
 
@@ -97,14 +97,14 @@ const Articles: React.FC = () => {
           spacing={isSmallAndUp ? 8 : 0}
           justify='flex-start'
         >
-          {articles && articles.map((article: Article) => (
+          {articles && articles.map((article: Article, index: number) => (
             <Grid item xs={12} sm={6} md={4} key={article.id}>
               <ButtonBase
                 className={clsx({
                   [classes.button]: true,
                   [classes.markedRead]: article.read
                 })}
-                onClick={() => handleOpenArticle(article)}
+                onClick={() => handleOpenArticle(index)}
               >
                 <div className={classes.articleTitle}>{article.title}</div>
 
@@ -124,11 +124,11 @@ const Articles: React.FC = () => {
       </Container>
     }
 
-    {openArticle && (
+    {openArticleIndex !== undefined && (
       <ArticleView
         open={articleDialogOpen}
         handleClose={() => setArticleDialogOpen(false)}
-        article={openArticle}
+        articleIndex={openArticleIndex}
       />
     )}
   </>);

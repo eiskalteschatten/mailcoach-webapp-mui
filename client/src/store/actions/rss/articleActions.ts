@@ -108,7 +108,7 @@ export const articleMarkReadUnread: ActionCreator<
     null,
     AppStopLoadingAction
   >
-> = (id: number, read: boolean): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (id: number, read: boolean, index?: number): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   let loadingTimer: NodeJS.Timer;
   loadingTimer = setTimeout(() => dispatch(appStartLoading()), 1000);
 
@@ -118,14 +118,13 @@ export const articleMarkReadUnread: ActionCreator<
     const res: any = await axios.patch(`/api/rss/articles/mark-read-unread/${id}`, { read });
 
     const state = getState();
-    const articles = state.article && Object.create(state.article.articles);
-    const selectedArticleIndex = state.article && state.article.selectedArticleIndex;
+    const articles = state.rss && state.rss.article && Object.create(state.rss.article.articles);
 
-    if (selectedArticleIndex !== undefined && selectedArticleIndex !== null) {
-      articles[selectedArticleIndex] = res.data.article;
+
+    if (articles && index !== undefined && index !== null) {
+      articles[index] = res.data.article;
+      dispatch(articleSetAll(articles));
     }
-
-    dispatch(articleSetAll(articles));
   }
   catch (error) {
     dispatch(appSetFormError('errors.anErrorOccurred'));
