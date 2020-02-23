@@ -24,7 +24,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-  
     - run: npm run install:all
-    - run: npm run lint
-    - run: npm run -C ./server test:ci && npm run -C ./client test:ci
+    - run: npm test
       env:
         CI: true
+        JWT_ACCESS_TOKEN_SECRET: 'secret1'
+        JWT_REFRESH_TOKEN_SECRET: 'secret2
