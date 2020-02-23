@@ -108,7 +108,7 @@ export const articleMarkReadUnread: ActionCreator<
     null,
     AppStopLoadingAction
   >
-> = (id: number, read: boolean, index?: number): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (id: number, read: boolean): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   let loadingTimer: NodeJS.Timer;
   loadingTimer = setTimeout(() => dispatch(appStartLoading()), 1000);
 
@@ -120,9 +120,16 @@ export const articleMarkReadUnread: ActionCreator<
     const state = getState();
     const articles = state.rss && state.rss.article && Object.create(state.rss.article.articles);
 
-    if (articles && index !== undefined && index !== null) {
-      articles[index] = res.data.article;
-      dispatch(articleSetAll(articles));
+    if (articles) {
+      for (const index in articles) {
+        const article = articles[index];
+
+        if (article.id === id) {
+          articles[index] = res.data.article;
+          dispatch(articleSetAll(articles));
+          break;
+        }
+      }
     }
   }
   catch (error) {

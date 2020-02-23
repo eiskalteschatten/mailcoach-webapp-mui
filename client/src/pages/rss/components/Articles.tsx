@@ -70,7 +70,7 @@ const Articles: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articleDialogOpen, setArticleDialogOpen] = useState<boolean>(false);
-  const [openArticleIndex, setOpenArticleIndex] = useState<number | undefined>();
+  const [openArticleId, setOpenArticleId] = useState<number | undefined>();
   const [articles, setArticles] = useState<Article[]>();
   const [fetchedAllArticles, setFetchedAllArticles] = useState<boolean>(false);
 
@@ -131,14 +131,14 @@ const Articles: React.FC = () => {
     second: 'numeric'
   };
 
-  const handleOpenArticle = (index: number) => {
-    setOpenArticleIndex(index);
+  const handleOpenArticle = (id: number) => {
+    setOpenArticleId(id);
     setArticleDialogOpen(true);
   };
 
   const handleArticleDialogClose = () => {
     setArticleDialogOpen(false);
-    setOpenArticleIndex(undefined);
+    setOpenArticleId(undefined);
   };
 
   return (<>
@@ -151,14 +151,14 @@ const Articles: React.FC = () => {
           spacing={isSmallAndUp ? 8 : 0}
           justify='flex-start'
         >
-          {articles && articles.map((article: Article, index: number) => (
+          {articles && articles.map((article: Article) => (
             <Grid item xs={12} sm={6} md={4} key={article.id}>
               <ButtonBase
                 className={clsx({
                   [classes.button]: true,
                   [classes.markedRead]: article.read
                 })}
-                onClick={() => handleOpenArticle(index)}
+                onClick={() => handleOpenArticle(article.id)}
               >
                 <div className={classes.articleTitle}>{article.title}</div>
 
@@ -178,11 +178,11 @@ const Articles: React.FC = () => {
       </Container>
     }
 
-    {openArticleIndex !== undefined && (
+    {openArticleId !== undefined && (
       <ArticleView
         open={articleDialogOpen}
         handleClose={handleArticleDialogClose}
-        articleIndex={openArticleIndex}
+        articleId={openArticleId}
       />
     )}
   </>);

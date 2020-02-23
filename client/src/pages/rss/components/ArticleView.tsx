@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -53,22 +53,23 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   open: boolean;
   handleClose: any;
-  articleIndex: number;
+  articleId: number;
 }
 
 const ArticleView: React.FC<Props> = (props) => {
   const {
     open,
     handleClose,
-    articleIndex
+    articleId
   } = props;
 
   const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const article = useSelector((state: State) => state.rss.article.articles && state.rss.article.articles[articleIndex]) as Article;
+  const articles = useSelector((state: State) => state.rss.article.articles) as Article[];
   const [manuallyMarked, setManuallyMarked] = useState<boolean>(false);
+  const [article, setArticle] = useState<Article>();
 
   const dateOptions = {
     year: 'numeric',
@@ -84,20 +85,26 @@ const ArticleView: React.FC<Props> = (props) => {
   };
 
   const handleMarkAsReadOrUnread = (read: boolean) => {
-    dispatch(articleMarkReadUnread(article.id, read, articleIndex));
-    setManuallyMarked(true);
+    if (article) {
+      dispatch(articleMarkReadUnread(article.id, read));
+      setManuallyMarked(true);
+    }
   };
 
-  const memoizedMarkAsReadOrUnread = useCallback(
-    () => dispatch(articleMarkReadUnread(article.id, true, articleIndex)),
-    [article, articleIndex, dispatch]
-  );
+  useEffect(() => {
+    const selectedArticle = articles.find((article: Article): boolean => article.id === articleId);
+    setArticle(selectedArticle);
+  }, [articles, articleId]);
 
   useEffect(() => {
-    if (!article.read && !manuallyMarked) {
-      setTimeout(() => memoizedMarkAsReadOrUnread, 750);
+    if (article && !article.read && !manuallyMarked) {
+      setTimeout(() => dispatch(articleMarkReadUnread(article.id, true)), 750);
     }
-  }, [article, memoizedMarkAsReadOrUnread, manuallyMarked]);
+  }, [article, manuallyMarked, dispatch]);
+
+  if (!article) {
+    return (<></>);
+  }
 
   return (<Dialog
     open={open}
