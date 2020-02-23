@@ -33,11 +33,6 @@ export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   articles
 });
 
-export const articleToggleDialog = (dialogOpen: boolean): ArticleToggleDialog => ({
-  type: 'ARTICLE_TOGGLE_DIALOG',
-  dialogOpen
-});
-
 export const articleSetSelectedIndex = (selectedArticleIndex: number): ArticleSetSelectedIndex => ({
   type: 'ARTICLE_SET_SELECTED_INDEX',
   selectedArticleIndex

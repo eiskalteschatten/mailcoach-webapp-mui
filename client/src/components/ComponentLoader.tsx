@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       width: '100%',
       height: '100%',
-      backgroundColor: theme.palette.type === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.4)',
       top: 0,
       left: 0,
       zIndex: 10000,
@@ -22,6 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
       animation: '$fadein 800ms'
+    },
+    hasBackground: {
+      backgroundColor: theme.palette.type === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.4)',
     },
     '@keyframes fadein': {
       from: { opacity: 0 },
@@ -35,9 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   isLoading: boolean;
+  noBackground?: boolean;
 }
 
-const ComponentLoader: React.FC<Props> = ({ isLoading }: Props) => {
+const ComponentLoader: React.FC<Props> = ({ isLoading, noBackground }: Props) => {
   const classes = useStyles();
   const [localIsLoading, setLocalIsLoading] = useState<boolean>(false);
 
@@ -52,6 +55,7 @@ const ComponentLoader: React.FC<Props> = ({ isLoading }: Props) => {
 
   return (<div className={clsx({
       [classes.root]: true,
+      [classes.hasBackground]: !noBackground,
       [classes.hidden]: !localIsLoading
     })}>
     <CircularProgress size={40} />

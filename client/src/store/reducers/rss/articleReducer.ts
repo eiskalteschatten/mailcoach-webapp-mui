@@ -6,13 +6,11 @@ import { SerializedModel as Article } from '../../../../../interfaces/rss/Articl
 export interface ArticleState {
   articles: Article[];
   selectedArticleIndex?: number;
-  dialogOpen: boolean;
   initialCheckOccurred: boolean;
 }
 
 export const initialState: ArticleState = {
   articles: [],
-  dialogOpen: false,
   initialCheckOccurred: false
 };
 
@@ -25,11 +23,6 @@ const articleReducer: Reducer<ArticleState, ArticleActions> = (
       return {
         ...state,
         articles: action.articles
-      };
-    case 'ARTICLE_TOGGLE_DIALOG':
-      return {
-        ...state,
-        dialogOpen: action.dialogOpen
       };
     case 'ARTICLE_SET_SELECTED_INDEX':
       return {

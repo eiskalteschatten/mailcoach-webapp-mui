@@ -72,7 +72,7 @@ const AppMenu: React.FC<Props> = (props: Props) => {
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      <Grid container spacing={0}>
+      <Grid container spacing={0} justify='space-evenly'>
         <Grid item xs={6}>
           <ButtonBase className={classes.button} onClick={() => handleButtonClick('/')}>
             <DashboardIcon className={classes.buttonIcon} />

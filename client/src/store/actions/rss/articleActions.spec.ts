@@ -3,7 +3,6 @@ import nock from 'nock';
 
 import {
   articleSetAll,
-  articleToggleDialog,
   articleSetSelectedIndex,
   articleGetAllUnread,
   articleRefreshAndGetAllUnread,
@@ -22,16 +21,6 @@ describe('RSS Article Actions', () => {
     expect(actions[0]).toEqual({
       type: 'ARTICLE_SET_ALL',
       articles: []
-    });
-  });
-
-  test('Toggling the dialog works', async () => {
-    const localStore: MockStore = mockStore();
-    await localStore.dispatch(articleToggleDialog(true));
-    const actions = localStore.getActions();
-    expect(actions[0]).toEqual({
-      type: 'ARTICLE_TOGGLE_DIALOG',
-      dialogOpen: true
     });
   });
 

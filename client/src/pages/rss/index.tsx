@@ -18,6 +18,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 
 import FoldersDrawer from './components/FoldersDrawer';
+import Articles from './components/Articles';
 import AddFeed from './components/AddFeed';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     fab: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: theme.spacing(2),
       right: theme.spacing(2)
     }
@@ -53,25 +54,27 @@ const RssPage: React.FC = () => {
 
   return (<div className={classes.root}>
     <FoldersDrawer />
+
     <div className={classes.content}>
       <Grid container>
-      <Grid item xs={12} sm={6}>
-        <Typography variant='h4' noWrap>
-          <FormattedMessage id='rssFeeds.feeds' />
-        </Typography>
+        <Grid item xs={12} sm={6}>
+          <Typography variant='h4' noWrap>
+            <FormattedMessage id='rssFeeds.feeds' />
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={6} className={classes.toolbar}>
+          <IconButton edge={!isSmallAndUp && 'start'}>
+            <CheckIcon />
+          </IconButton>
+
+          <IconButton edge={isSmallAndUp && 'end'}>
+            <RefreshIcon />
+          </IconButton>
+        </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={6} className={classes.toolbar}>
-        <IconButton edge={!isSmallAndUp && 'start'}>
-          <CheckIcon />
-        </IconButton>
-
-        <IconButton edge={isSmallAndUp && 'end'}>
-          <RefreshIcon />
-        </IconButton>
-      </Grid>
-    </Grid>
-
+      <Articles />
     </div>
 
     <Fab
