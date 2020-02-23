@@ -84,6 +84,7 @@ const EditDialog: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
+  const feeds = useSelector((state: State) => state.rss.feed.feeds) as Feed[];
   const [editorsOpen, setEditorsOpen] = useState<any>();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -137,6 +138,67 @@ const EditDialog: React.FC<Props> = (props) => {
   const handleDeleteFolder = (id: number) => {
     dispatch(folderDeleteFolder(id));
     setConfirmFolderDialogOpen(false);
+  };
+
+  const getFeedsList = (feed: Feed, folderId?: number) => {
+    const feedEditorId = `feed${feed.id}`;
+
+    return (<div key={feed.id}>
+      <ListItem className={clsx({
+        [classes.nested]: folderId && folderId !== 0
+      })}>
+        <ListItemText primary={feed.name} />
+
+        <ListItemSecondaryAction
+          className={clsx({
+            [classes.hidden]: editorsOpen && editorsOpen[feedEditorId]
+          })}
+        >
+          <IconButton
+            edge='end'
+            onClick={() => handleOpenEditor(feedEditorId, {
+              name: feed.name,
+              feedUrl: feed.feedUrl
+            })}
+          >
+            <CreateIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+
+      <Collapse
+        in={editorsOpen && editorsOpen[feedEditorId]}
+        timeout='auto'
+        unmountOnExit
+        className={classes.nested}
+      >
+        <EditFeedForm
+          handleClose={handleCloseEditor}
+          feedId={feed.id}
+          initialValues={{
+            ...feed,
+            fkFolder: folderId
+          }}
+        >
+          <div className={classes.editorButtons}>
+            <IconButton
+              className={classes.deleteButton}
+              edge='start'
+              onClick={() => handleConfirmDeleteFeed(feed.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+
+            <IconButton onClick={() => handleCloseEditor(feedEditorId)}>
+              <CloseIcon />
+            </IconButton>
+            <IconButton type='submit' edge='end'>
+              <CheckIcon />
+            </IconButton>
+          </div>
+        </EditFeedForm>
+      </Collapse>
+    </div>);
   };
 
   return (<Dialog
@@ -213,67 +275,12 @@ const EditDialog: React.FC<Props> = (props) => {
             </Collapse>
 
             <List component='div' disablePadding>
-              {folder.feeds && folder.feeds.map((feed: Feed) => {
-                const feedEditorId = `feed${feed.id}`;
-
-                return (<div key={feed.id}>
-                  <ListItem className={classes.nested}>
-                    <ListItemText primary={feed.name} />
-
-                    <ListItemSecondaryAction
-                      className={clsx({
-                        [classes.hidden]: editorsOpen && editorsOpen[feedEditorId]
-                      })}
-                    >
-                      <IconButton
-                        edge='end'
-                        onClick={() => handleOpenEditor(feedEditorId, {
-                          name: feed.name,
-                          feedUrl: feed.feedUrl
-                        })}
-                      >
-                        <CreateIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-
-                  <Collapse
-                    in={editorsOpen && editorsOpen[feedEditorId]}
-                    timeout='auto'
-                    unmountOnExit
-                    className={classes.nested}
-                  >
-                    <EditFeedForm
-                      handleClose={handleCloseEditor}
-                      feedId={feed.id}
-                      initialValues={{
-                        ...feed,
-                        fkFolder: folder.id
-                      }}
-                    >
-                      <div className={classes.editorButtons}>
-                        <IconButton
-                          className={classes.deleteButton}
-                          edge='start'
-                          onClick={() => handleConfirmDeleteFeed(feed.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-
-                        <IconButton onClick={() => handleCloseEditor(feedEditorId)}>
-                          <CloseIcon />
-                        </IconButton>
-                        <IconButton type='submit' edge='end'>
-                          <CheckIcon />
-                        </IconButton>
-                      </div>
-                    </EditFeedForm>
-                  </Collapse>
-                </div>)
-              })}
+              {folder.feeds && folder.feeds.map((feed: Feed) => getFeedsList(feed, folder.id))}
             </List>
           </span>
         )})}
+
+        {feeds.map(getFeedsList)}
       </List>
     </DialogContent>
 

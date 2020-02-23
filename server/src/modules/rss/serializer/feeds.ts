@@ -20,5 +20,7 @@ export const deserializeModelCreateUpdate = (serializedData: ModelCreateUpdate):
   feedUrl: serializedData.feedUrl,
   link: serializedData.link,
   icon: serializedData.icon,
-  fkFolder: serializedData.fkFolder
+  fkFolder: typeof serializedData.fkFolder !== 'string' && serializedData.fkFolder !== 0
+    ? serializedData.fkFolder
+    : null
 });

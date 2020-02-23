@@ -56,23 +56,23 @@ const RssPage: React.FC = () => {
     <div className={classes.content}>
       <Grid container>
       <Grid item xs={12} sm={6}>
-          <Typography variant='h4' noWrap>
-            <FormattedMessage id='rssFeeds.feeds' />
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12} sm={6} className={classes.toolbar}>
-          <IconButton edge={!isSmallAndUp && 'start'}>
-            <CheckIcon />
-          </IconButton>
-
-          <IconButton
-            edge={isSmallAndUp && 'end'}
-          >
-            <RefreshIcon />
-          </IconButton>
-        </Grid>
+        <Typography variant='h4' noWrap>
+          <FormattedMessage id='rssFeeds.feeds' />
+        </Typography>
       </Grid>
+
+      <Grid item xs={12} sm={6} className={classes.toolbar}>
+        <IconButton edge={!isSmallAndUp && 'start'}>
+          <CheckIcon />
+        </IconButton>
+
+        <IconButton
+          edge={isSmallAndUp && 'end'}
+        >
+          <RefreshIcon />
+        </IconButton>
+      </Grid>
+    </Grid>
 
     </div>
 

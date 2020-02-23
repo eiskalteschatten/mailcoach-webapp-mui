@@ -72,6 +72,31 @@ describe('Feeds Controller', () => {
     expect(feeds[0].folder).toBeDefined();
   });
 
+  test('Getting all feeds and folders works', async () => {
+    const response: request.Response = await request(app)
+      .get('/folders')
+      .send();
+
+    expect(response.status).toEqual(200);
+
+    const feeds = response.body.feeds;
+
+    expect(feeds).toBeDefined();
+    expect(feeds[0].id).toBeDefined();
+    expect(feeds[0].name).toBeDefined();
+    expect(feeds[0].feedUrl).toBeDefined();
+    expect(feeds[0].link).toBeDefined();
+    expect(feeds[0].icon).toBeDefined();
+    expect(feeds[0].folder).toBeUndefined();
+
+    const folders = response.body.folders;
+
+    expect(folders).toBeDefined();
+    expect(folders[0].id).toBeDefined();
+    expect(folders[0].name).toBeDefined();
+    expect(folders[0].feeds).toBeDefined();
+  });
+
   test('Creating a feed works', async () => {
     nock('https://www.historyrhymes.info/')
       .get('/feed')

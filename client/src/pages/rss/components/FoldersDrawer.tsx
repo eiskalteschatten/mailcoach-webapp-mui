@@ -32,7 +32,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ComponentLoader from '../../../components/ComponentLoader';
 
 import { State } from '../../../store';
-import { folderGetAllWithFeeds } from '../../../store/actions/rss/folderActions';
+import { feedGetFeedsAndFolders } from '../../../store/actions/rss/feedActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
@@ -71,6 +71,7 @@ const FolderDrawer: React.FC = () => {
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
+  const feeds = useSelector((state: State) => state.rss.feed.feeds) as Feed[];
   const checkedForFolders = useSelector((state: State) => state.rss.folder.checkedForFolders) as boolean;
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -84,11 +85,11 @@ const FolderDrawer: React.FC = () => {
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
-    if (!checkedForFolders && (!folders || folders.length === 0)) {
+    if (!checkedForFolders && (!folders || folders.length === 0) && (!feeds || feeds.length === 0)) {
       setIsLoading(true);
-      dispatch(folderGetAllWithFeeds());
+      dispatch(feedGetFeedsAndFolders());
     }
-  }, [checkedForFolders, folders, dispatch]);
+  }, [checkedForFolders, folders, feeds, dispatch]);
 
   useEffect(() => {
     if (folders && folders.length > 0) {
@@ -226,6 +227,13 @@ const FolderDrawer: React.FC = () => {
           ))}
         </span>
       ))}
+
+      {feeds.map((feed: Feed) => !feed.folder
+        ? (<ListItem button key={feed.id}>
+            <ListItemText primary={feed.name} />
+          </ListItem>)
+        : (<></>)
+      )}
     </List>
 
     <AddFolder

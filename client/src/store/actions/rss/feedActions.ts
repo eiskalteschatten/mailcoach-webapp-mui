@@ -5,7 +5,7 @@ import { ThunkAction } from 'redux-thunk';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetError } from '../appActions';
-import { folderSetAll } from './folderActions';
+import { folderSetAll, folderSetCheckedForFolders } from './folderActions';
 
 export interface FeedSetAll extends Action<'FEED_SET_ALL'> {
   feeds: Feed[];
@@ -41,6 +41,31 @@ export const feedGetAll: ActionCreator<
   return dispatch(appStopLoading());
 };
 
+export const feedGetFeedsAndFolders: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetError(''));
+
+  try {
+    const res: any = await axios.get('/api/rss/feeds/folders');
+    dispatch(feedSetAll(res.data.feeds));
+    dispatch(folderSetAll(res.data.folders));
+    dispatch(folderSetCheckedForFolders(true));
+  }
+  catch (error) {
+    dispatch(appSetError('errors.anErrorOccurred'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
+
 interface AddFeed {
   name: string;
   feedUrl: string;
@@ -61,7 +86,8 @@ export const feedAddFeed: ActionCreator<
 
   try {
     await axios.post('/api/rss/feeds', data);
-    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    const res: any = await axios.get('/api/rss/feeds/folders');
+    dispatch(feedSetAll(res.data.feeds));
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
@@ -95,7 +121,8 @@ export const feedUpdateFeed: ActionCreator<
 
   try {
     await axios.put(`/api/rss/feeds/${id}`, data);
-    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    const res: any = await axios.get('/api/rss/feeds/folders');
+    dispatch(feedSetAll(res.data.feeds));
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {

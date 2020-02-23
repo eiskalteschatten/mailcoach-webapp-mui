@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Op } from 'sequelize';
 
 import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
@@ -10,6 +11,7 @@ import Feed from '../models/Feed';
 import Folder from '../models/Folder';
 
 import { serialize, deserializeModelCreateUpdate } from '../serializer/feeds';
+import { serialize as serializeFolder } from '../serializer/folders';
 import { serialize as serializeArticle } from '../serializer/articles';
 
 class FeedsController extends AbstractController {
@@ -20,6 +22,7 @@ class FeedsController extends AbstractController {
 
   private initilizeRoutes(): void {
     this.router.get('/', this.getAllFeeds);
+    this.router.get('/folders', this.getAllFeedsAndFolders);
     this.router.post('/', this.createFeed);
     this.router.put('/:id', this.updateFeed);
     this.router.delete('/:id', this.deleteFeed);
@@ -72,6 +75,85 @@ class FeedsController extends AbstractController {
 
       res.json({
         feeds: feeds.map(serialize)
+      });
+    }
+    catch(error) {
+      returnError(error as HttpError, req, res);
+    }
+  }
+
+  /**
+   * @api {get} /api/rss/feeds/folders Get All Feeds and Folders
+   * @apiName GetAllFeedsFolders
+   * @apiGroup RSS
+   * @apiVersion 1.0.0
+   *
+   * @apiHeaderExample {json} Header-Example:
+   *  {
+   *    "Authorization": "Bearer accessToken"
+   *  }
+   *
+   * @apiSuccessExample {json} Success-Response:
+   *  HTTP/1.1 200 OK
+   *  {
+   *    "feeds": [
+   *      {
+   *        "id": 1,
+   *        "name": "",
+   *        "feedUrl": "",
+   *        "link": "",
+   *        "icon": "",
+   *        "folder": {
+   *          "id": 1,
+   *          "name": ""
+   *        }
+   *      }
+   *    ],
+   *    "folders": [
+   *      {
+   *        "id": 1,
+   *        "name": "",
+   *        "feeds": [{
+   *          "id": 1,
+   *          "name": "",
+   *          "feedUrl": "",
+   *          "link": "",
+   *          "icon": ""
+   *        }]
+   *      }
+   *    ]
+   *  }
+   */
+
+  private async getAllFeedsAndFolders(req: Request, res: Response): Promise<void> {
+    try {
+      const folders = await Folder.findAll({
+        order: [
+          ['name', 'DESC']
+        ],
+        include: [{
+          model: Feed,
+          as: 'feeds',
+          order: [
+            ['name', 'DESC']
+          ]
+        }]
+      });
+
+      const feeds = await Feed.findAll({
+        order: [
+          ['name', 'DESC']
+        ],
+        where: {
+          fkFolder: {
+            [Op.eq]: null
+          }
+        }
+      });
+
+      res.json({
+        feeds: feeds.map(serialize),
+        folders: folders.map(serializeFolder)
       });
     }
     catch(error) {
