@@ -29,7 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1em',
       textAlign: 'left',
       display: 'block',
-      lineHeight: '1.5em'
+      lineHeight: '1.5em',
+      '&:hover': {
+        backgroundColor: theme.palette.type === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)',
+      }
     },
     markedRead: {
       opacity: '.5'
