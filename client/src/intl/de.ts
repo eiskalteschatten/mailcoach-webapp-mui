@@ -48,6 +48,7 @@ export default {
   'rssFeeds.editFoldersAndFeeds': 'Ordner und Feeds verwalten',
   'rssFeeds.addFeed': 'Feed hinzufügen',
   'rssFeed.noFolder': 'Kein Ordner',
+  'rssFeed.errors.invalidFeedUrl': 'Die Feed-URL konnte nicht geparst werden! Bitte prüfen Sie, ob sie eine gültige Feed-URL ist.',
 
   'account.manageAccount': 'Konto verwalten',
   'account.accountInformation': 'Konto-Informationen',

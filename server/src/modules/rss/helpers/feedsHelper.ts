@@ -2,6 +2,7 @@ import { Op } from 'sequelize';
 import RssParser from 'rss-parser';
 
 import { HttpError } from '@mc/lib/Error';
+import logger from '@mc/logger';
 
 import { DeserializedModel as ArticleInterface } from '../interfaces/Article';
 
@@ -114,4 +115,16 @@ export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingl
     articles,
     parsedFeed
   };
+}
+
+export async function validateRssUrl(feedUrl: string): Promise<RssParser.Output> {
+  try {
+    const rssParser = new RssParser();
+    const parsedFeed = await rssParser.parseURL(feedUrl);
+    return parsedFeed;
+  }
+  catch(error) {
+    logger.error(error);
+    throw new HttpError('The given feed URL is not a valid RSS feed url!', 406);
+  }
 }

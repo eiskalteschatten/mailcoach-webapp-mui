@@ -4,7 +4,7 @@ import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 
-import { refreshForSingleFeed } from '../helpers/feedsHelper';
+import { validateRssUrl, refreshForSingleFeed } from '../helpers/feedsHelper';
 
 import Feed from '../models/Feed';
 import Folder from '../models/Folder';
@@ -121,24 +121,32 @@ class FeedsController extends AbstractController {
    *    },
    *    "articles": [{ ... }]
    *  }
+   *
+   * @apiErrorExample {json} Error-Response:
+   *  HTTP/1.1 406 Not Acceptable
+   *  {
+   *    "message": "The given feed URL is not a valid RSS feed url!"
+   *  }
    */
 
   private async createFeed(req: Request, res: Response): Promise<void> {
     try {
       const deserialized = deserializeModelCreateUpdate(req.body);
+      const parsedFeed = await validateRssUrl(deserialized.feedUrl);
+
+      if (!parsedFeed || !parsedFeed.title || !parsedFeed.link) {
+        throw new HttpError('The given feed URL is not a valid RSS feed url!', 406);
+      }
 
       const feed = await Feed.create({
         feedUrl: deserialized.feedUrl,
-        icon: deserialized.icon
+        icon: deserialized.icon,
+        name: parsedFeed.title,
+        link: parsedFeed.link,
+        fkFolder: deserialized.fkFolder
       });
 
       const refreshed = await refreshForSingleFeed(feed.id);
-
-      await feed.update({
-        name: refreshed.parsedFeed.title,
-        link: refreshed.parsedFeed.link,
-        fkFolder: deserialized.fkFolder
-      });
 
       res.json({
         feed: serialize(feed),
@@ -192,11 +200,23 @@ class FeedsController extends AbstractController {
    *      }
    *    }
    *  }
+   *
+   * @apiErrorExample {json} Error-Response:
+   *  HTTP/1.1 406 Not Acceptable
+   *  {
+   *    "message": "The given feed URL is not a valid RSS feed url!"
+   *  }
    */
 
   private async updateFeed(req: Request, res: Response): Promise<void> {
     try {
       const deserialized = deserializeModelCreateUpdate(req.body);
+      const parsedFeed = await validateRssUrl(deserialized.feedUrl);
+
+      if (!parsedFeed || !parsedFeed.title || !parsedFeed.link) {
+        throw new HttpError('The given feed URL is not a valid RSS feed url!', 406);
+      }
+
       const feed = await Feed.findByPk(req.params.id);
 
       await feed.update(deserialized);

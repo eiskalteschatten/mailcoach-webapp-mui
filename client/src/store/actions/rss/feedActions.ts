@@ -65,8 +65,13 @@ export const feedAddFeed: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('errors.anErrorOccurred'));
-    console.error(error);
+    if (error.response.status === 406) {
+      dispatch(appSetError('rssFeed.errors.invalidFeedUrl'));
+    }
+    else {
+      dispatch(appSetError('errors.anErrorOccurred'));
+      console.error(error);
+    }
   }
 
   return dispatch(appStopLoading());
@@ -94,8 +99,13 @@ export const feedUpdateFeed: ActionCreator<
     dispatch(folderSetAll(res.data.folders));
   }
   catch (error) {
-    dispatch(appSetError('errors.anErrorOccurred'));
-    console.error(error);
+    if (error.response.status === 406) {
+      dispatch(appSetError('rssFeed.errors.invalidFeedUrl'));
+    }
+    else {
+      dispatch(appSetError('errors.anErrorOccurred'));
+      console.error(error);
+    }
   }
 
   return dispatch(appStopLoading());
