@@ -123,10 +123,7 @@ describe('RSS Article Actions', () => {
       type: 'APP_SET_FORM_ERROR',
       error: ''
     });
-    expect(actions[1]).toEqual({
-      type: 'ARTICLE_SET_ALL'
-    });
-    expect(actions[2]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[1]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Marking all articles as read works', async () => {
