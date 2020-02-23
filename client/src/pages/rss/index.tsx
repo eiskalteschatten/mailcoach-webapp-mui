@@ -66,9 +66,7 @@ const RssPage: React.FC = () => {
           <CheckIcon />
         </IconButton>
 
-        <IconButton
-          edge={isSmallAndUp && 'end'}
-        >
+        <IconButton edge={isSmallAndUp && 'end'}>
           <RefreshIcon />
         </IconButton>
       </Grid>

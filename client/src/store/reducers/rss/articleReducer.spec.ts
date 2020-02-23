@@ -41,4 +41,16 @@ describe('RSS Article Reducer', () => {
       selectedArticleIndex: 1
     })
   })
+
+  test('Should handle ARTICLE_SET_INITIAL_CHECK_OCCURRED', () => {
+    expect(
+      articleReducer(undefined, {
+        type: 'ARTICLE_SET_INITIAL_CHECK_OCCURRED',
+        initialCheckOccurred: true
+      })
+    ).toEqual({
+      ...initialState,
+      initialCheckOccurred: true
+    })
+  })
 });

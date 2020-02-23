@@ -7,11 +7,13 @@ export interface ArticleState {
   articles: Article[];
   selectedArticleIndex?: number;
   dialogOpen: boolean;
+  initialCheckOccurred: boolean;
 }
 
 export const initialState: ArticleState = {
   articles: [],
-  dialogOpen: false
+  dialogOpen: false,
+  initialCheckOccurred: false
 };
 
 const articleReducer: Reducer<ArticleState, ArticleActions> = (
@@ -33,6 +35,11 @@ const articleReducer: Reducer<ArticleState, ArticleActions> = (
       return {
         ...state,
         selectedArticleIndex: action.selectedArticleIndex
+      };
+    case 'ARTICLE_SET_INITIAL_CHECK_OCCURRED':
+      return {
+        ...state,
+        initialCheckOccurred: action.initialCheckOccurred
       };
     default:
       return state;

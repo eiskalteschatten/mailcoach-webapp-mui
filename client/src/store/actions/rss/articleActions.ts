@@ -18,10 +18,15 @@ export interface ArticleSetSelectedIndex extends Action<'ARTICLE_SET_SELECTED_IN
   selectedArticleIndex: number;
 }
 
+export interface ArticleSetInitialCheckOccurred extends Action<'ARTICLE_SET_INITIAL_CHECK_OCCURRED'> {
+  initialCheckOccurred: boolean;
+}
+
 export type ArticleActions =
   ArticleSetAll |
   ArticleToggleDialog |
-  ArticleSetSelectedIndex;
+  ArticleSetSelectedIndex |
+  ArticleSetInitialCheckOccurred;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   type: 'ARTICLE_SET_ALL',
@@ -38,6 +43,11 @@ export const articleSetSelectedIndex = (selectedArticleIndex: number): ArticleSe
   selectedArticleIndex
 });
 
+export const articleSetInitialCheckOccurred = (initialCheckOccurred: boolean): ArticleSetInitialCheckOccurred => ({
+  type: 'ARTICLE_SET_INITIAL_CHECK_OCCURRED',
+  initialCheckOccurred
+});
+
 export const articleGetAllUnread: ActionCreator<
   ThunkAction<
     Promise<AppStopLoadingAction>,
@@ -52,6 +62,7 @@ export const articleGetAllUnread: ActionCreator<
   try {
     const res: any = await axios.get('/api/rss/articles/unread');
     dispatch(articleSetAll(res.data.articles));
+    dispatch(articleSetInitialCheckOccurred(true));
   }
   catch (error) {
     dispatch(appSetFormError('errors.anErrorOccurred'));
@@ -76,6 +87,7 @@ export const articleRefreshAndGetAllUnread: ActionCreator<
     await axios.post('/api/rss/refresh');
     const res: any = await axios.get('/api/rss/articles/unread');
     dispatch(articleSetAll(res.data.articles));
+    dispatch(articleSetInitialCheckOccurred(true));
   }
   catch (error) {
     dispatch(appSetFormError('errors.anErrorOccurred'));
@@ -99,6 +111,7 @@ export const articleGetAll: ActionCreator<
   try {
     const res: any = await axios.get('/api/rss/articles');
     dispatch(articleSetAll(res.data.articles));
+    dispatch(articleSetInitialCheckOccurred(true));
   }
   catch (error) {
     dispatch(appSetFormError('errors.anErrorOccurred'));

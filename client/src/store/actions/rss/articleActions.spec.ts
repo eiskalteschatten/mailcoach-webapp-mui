@@ -65,7 +65,11 @@ describe('RSS Article Actions', () => {
       type: 'ARTICLE_SET_ALL',
       articles: []
     });
-    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[3]).toEqual({
+      type: 'ARTICLE_SET_INITIAL_CHECK_OCCURRED',
+      initialCheckOccurred: true
+    });
+    expect(actions[4]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Refreshing all feeds and getting all unread articles works', async () => {
@@ -92,7 +96,11 @@ describe('RSS Article Actions', () => {
       type: 'ARTICLE_SET_ALL',
       articles: []
     });
-    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[3]).toEqual({
+      type: 'ARTICLE_SET_INITIAL_CHECK_OCCURRED',
+      initialCheckOccurred: true
+    });
+    expect(actions[4]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Getting all articles works', async () => {
@@ -115,7 +123,11 @@ describe('RSS Article Actions', () => {
       type: 'ARTICLE_SET_ALL',
       articles: []
     });
-    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[3]).toEqual({
+      type: 'ARTICLE_SET_INITIAL_CHECK_OCCURRED',
+      initialCheckOccurred: true
+    });
+    expect(actions[4]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Marking an article as read or unread works', async () => {
