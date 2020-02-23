@@ -24,6 +24,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-  
     - run: npm run install:all
-    - run: npm test
+    - run: npm run lint
+    - run: npm run -C ./server test:ci && npm run -C ./client test:ci
       env:
         CI: true
