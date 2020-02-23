@@ -148,9 +148,16 @@ describe('RSS Feed Actions', () => {
       });
 
     nock('http://localhost')
-      .get('/api/rss/folders/with-feeds')
+      .get('/api/rss/feeds/folders')
       .reply(200, {
-        folders: []
+        folders: [],
+        feeds: []
+      });
+
+    nock('http://localhost')
+      .get('/api/rss/articles/unread')
+      .reply(200, {
+        articles: []
       });
 
     const localStore: MockStore = mockStore();
@@ -163,9 +170,17 @@ describe('RSS Feed Actions', () => {
       error: ''
     });
     expect(actions[2]).toEqual({
+      type: 'FEED_SET_ALL',
+      feeds: []
+    });
+    expect(actions[3]).toEqual({
       type: 'FOLDER_SET_ALL',
       folders: []
     });
-    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[4]).toEqual({
+      type: 'ARTICLE_SET_ALL',
+      articles: []
+    });
+    expect(actions[5]).toEqual({type: 'APP_STOP_LOADING'});
   });
 });

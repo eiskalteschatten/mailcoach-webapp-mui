@@ -132,8 +132,12 @@ export const feedDeleteFeed: ActionCreator<
 
   try {
     await axios.delete(`/api/rss/feeds/${id}`);
-    const res: any = await axios.get('/api/rss/folders/with-feeds');
+    const res: any = await axios.get('/api/rss/feeds/folders');
+    dispatch(feedSetAll(res.data.feeds));
     dispatch(folderSetAll(res.data.folders));
+
+    const articleRes: any = await axios.get('/api/rss/articles/unread');
+    dispatch(articleSetAll(articleRes.data.articles));
   }
   catch (error) {
     dispatch(appSetError('errors.anErrorOccurred'));
