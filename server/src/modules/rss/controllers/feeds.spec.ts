@@ -73,6 +73,10 @@ describe('Feeds Controller', () => {
   });
 
   test('Creating a feed works', async () => {
+    nock('https://www.historyrhymes.info/')
+      .get('/feed')
+      .reply(200, testRss);
+
     const response: request.Response = await request(app)
       .post('/')
       .send({
@@ -109,6 +113,24 @@ describe('Feeds Controller', () => {
     expect(articles[0].markedAsReadAt).toBeDefined();
   });
 
+  test('Creating a feed with an invalid URL doesn\'t work', async () => {
+    nock('https://www.historyrhymes.info/')
+      .get('/')
+      .reply(200, {});
+
+    const response: request.Response = await request(app)
+      .post('/')
+      .send({
+        name: 'History Rhymes',
+        feedUrl: 'https://www.historyrhymes.info/',
+        link: 'https://www.historyrhymes.info',
+        icon: 'test',
+        fkFolder: 1
+      });
+
+    expect(response.status).toEqual(406);
+  });
+
   test('Updating a feed works', async () => {
     const newName = 'New Name';
 
@@ -128,6 +150,20 @@ describe('Feeds Controller', () => {
     expect(feed.feedUrl).toBeDefined();
     expect(feed.link).toBeDefined();
     expect(feed.icon).toBeDefined();
+  });
+
+  test('Updating a feed with an invalid URL doesn\'t work', async () => {
+    nock('https://www.historyrhymes.info/')
+      .get('/')
+      .reply(200, {});
+
+    const response: request.Response = await request(app)
+      .put('/1')
+      .send({
+        feedUrl: 'https://www.historyrhymes.info/'
+      });
+
+    expect(response.status).toEqual(406);
   });
 
   test('Deleting a feed works', async () => {

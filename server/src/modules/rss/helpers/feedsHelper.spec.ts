@@ -6,7 +6,8 @@ import Feed from '../models/Feed';
 
 import {
   refreshAllFeeds,
-  refreshForSingleFeed
+  refreshForSingleFeed,
+  validateRssUrl
 } from './feedsHelper';
 
 describe('Feeds Helper', () => {
@@ -80,6 +81,26 @@ describe('Feeds Helper', () => {
 
     expect(articles).toBeDefined();
     expect(articles[0]).toBeUndefined();  // Undefined because the article has already been "read" by the test above
+
+    done();
+  });
+
+  test('Validating a feed works', async (done) => {
+    nock('https://www.historyrhymes.info/')
+      .get('/feed')
+      .reply(200, testRss);
+
+    const parsedFeed = await validateRssUrl('https://www.historyrhymes.info/feed');
+
+    expect(parsedFeed).toBeDefined();
+    expect(parsedFeed.items).toBeDefined();
+    expect(parsedFeed.feedUrl).toBeDefined();
+    expect(parsedFeed.title).toBeDefined();
+    expect(parsedFeed.description).toBeDefined();
+    expect(parsedFeed.generator).toBeDefined();
+    expect(parsedFeed.link).toBeDefined();
+    expect(parsedFeed.language).toBeDefined();
+    expect(parsedFeed.lastBuildDate).toBeDefined();
 
     done();
   });

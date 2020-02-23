@@ -211,14 +211,16 @@ class FeedsController extends AbstractController {
   private async updateFeed(req: Request, res: Response): Promise<void> {
     try {
       const deserialized = deserializeModelCreateUpdate(req.body);
-      const parsedFeed = await validateRssUrl(deserialized.feedUrl);
 
-      if (!parsedFeed || !parsedFeed.title || !parsedFeed.link) {
-        throw new HttpError('The given feed URL is not a valid RSS feed url!', 406);
+      if (deserialized.feedUrl) {
+        const parsedFeed = await validateRssUrl(deserialized.feedUrl);
+
+        if (!parsedFeed || !parsedFeed.title || !parsedFeed.link) {
+          throw new HttpError('The given feed URL is not a valid RSS feed url!', 406);
+        }
       }
 
       const feed = await Feed.findByPk(req.params.id);
-
       await feed.update(deserialized);
 
       res.json({
