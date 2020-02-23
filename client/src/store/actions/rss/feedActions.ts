@@ -18,29 +18,6 @@ export const feedSetAll = (feeds: Feed[]): FeedSetAll => ({
   feeds
 });
 
-export const feedGetAll: ActionCreator<
-  ThunkAction<
-    Promise<AppStopLoadingAction>,
-    null,
-    null,
-    AppStopLoadingAction
-  >
-> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
-  dispatch(appStartLoading());
-  dispatch(appSetError(''));
-
-  try {
-    const res: any = await axios.get('/api/rss/feeds');
-    dispatch(feedSetAll(res.data.feeds));
-  }
-  catch (error) {
-    dispatch(appSetError('errors.anErrorOccurred'));
-    console.error(error);
-  }
-
-  return dispatch(appStopLoading());
-};
-
 export const feedGetFeedsAndFolders: ActionCreator<
   ThunkAction<
     Promise<AppStopLoadingAction>,

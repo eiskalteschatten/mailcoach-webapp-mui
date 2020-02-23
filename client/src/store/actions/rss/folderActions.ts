@@ -18,62 +18,15 @@ export type FolderActions =
   FolderSetAll |
   FolderSetCheckedForFolders;
 
-  export const folderSetAll = (folders: Folder[]): FolderSetAll => ({
-    type: 'FOLDER_SET_ALL',
-    folders
-  });
+export const folderSetAll = (folders: Folder[]): FolderSetAll => ({
+  type: 'FOLDER_SET_ALL',
+  folders
+});
 
-  export const folderSetCheckedForFolders = (checkedForFolders: boolean): FolderSetCheckedForFolders => ({
-    type: 'FOLDER_CHECKED_FOR_FOLDERS',
-    checkedForFolders
-  });
-
-export const folderGetAll: ActionCreator<
-  ThunkAction<
-    Promise<AppStopLoadingAction>,
-    null,
-    null,
-    AppStopLoadingAction
-  >
-> = (folders: Folder[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
-  dispatch(appStartLoading());
-  dispatch(appSetError(''));
-
-  try {
-    const res: any = await axios.get('/api/rss/folders');
-    dispatch(folderSetAll(res.data.folders));
-  }
-  catch (error) {
-    dispatch(appSetError('An error occurred while fetching all folders.'));
-    console.error(error);
-  }
-
-  return dispatch(appStopLoading());
-};
-
-export const folderGetAllWithFeeds: ActionCreator<
-  ThunkAction<
-    Promise<AppStopLoadingAction>,
-    null,
-    null,
-    AppStopLoadingAction
-  >
-> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
-  dispatch(appStartLoading());
-  dispatch(appSetError(''));
-
-  try {
-    const res: any = await axios.get('/api/rss/folders/with-feeds');
-    dispatch(folderSetAll(res.data.folders));
-    dispatch(folderSetCheckedForFolders(true));
-  }
-  catch (error) {
-    dispatch(appSetError('An error occurred while fetching all folders.'));
-    console.error(error);
-  }
-
-  return dispatch(appStopLoading());
-};
+export const folderSetCheckedForFolders = (checkedForFolders: boolean): FolderSetCheckedForFolders => ({
+  type: 'FOLDER_CHECKED_FOR_FOLDERS',
+  checkedForFolders
+});
 
 interface AddFolder {
   name: string;
