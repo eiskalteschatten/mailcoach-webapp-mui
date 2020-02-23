@@ -10,8 +10,7 @@ import {
   useMediaQuery,
   Container,
   Grid,
-  ButtonBase,
-  IconButton
+  ButtonBase
 } from '@material-ui/core';
 
 import ComponentLoader from '../../../components/ComponentLoader';
