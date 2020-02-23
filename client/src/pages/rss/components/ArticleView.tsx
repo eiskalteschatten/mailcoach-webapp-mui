@@ -77,6 +77,10 @@ const ArticleView: React.FC<Props> = (props) => {
     second: 'numeric'
   };
 
+  const handleOpenArticle = (link: string) => {
+    window.open(link, '_blank');
+  };
+
   if (!article) {
     return (<></>);
   }
@@ -89,7 +93,7 @@ const ArticleView: React.FC<Props> = (props) => {
     }}
     fullScreen={isMobile}
     fullWidth
-    maxWidth='lg'
+    maxWidth='md'
   >
     <DialogTitle>
       {article.title}
@@ -120,8 +124,8 @@ const ArticleView: React.FC<Props> = (props) => {
 
       <div className={classes.grow} />
 
-      <Button onClick={handleClose}>
-        <FormattedMessage id='close' />
+      <Button onClick={() => handleOpenArticle(article.link)} color='primary'>
+        <FormattedMessage id='rssFeeds.openArticle' />
       </Button>
     </DialogActions>
   </Dialog>);
