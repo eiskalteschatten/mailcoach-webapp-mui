@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
       width: '100%',
+      height: '100%',
       padding: theme.spacing(2),
       fontSize: '1em',
       textAlign: 'left',
