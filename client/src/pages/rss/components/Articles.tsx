@@ -124,11 +124,13 @@ const Articles: React.FC = () => {
       </Container>
     }
 
-    <ArticleView
-      open={articleDialogOpen}
-      handleClose={() => setArticleDialogOpen(false)}
-      article={openArticle}
-    />
+    {openArticle && (
+      <ArticleView
+        open={articleDialogOpen}
+        handleClose={() => setArticleDialogOpen(false)}
+        article={openArticle}
+      />
+    )}
   </>);
 }
 

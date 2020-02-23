@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -20,7 +20,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { SerializedModel as Article } from '../../../../../interfaces/rss/Article';
-import { IntlContext } from '../../../intl/IntlContext';
+import { articleMarkReadUnread } from '../../../store/actions/rss/articleActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   open: boolean;
   handleClose: any;
-  article: Article | undefined;
+  article: Article;
 }
 
 const ArticleView: React.FC<Props> = (props) => {
@@ -64,7 +64,7 @@ const ArticleView: React.FC<Props> = (props) => {
   } = props;
 
   const classes = useStyles();
-  const { messages } = useContext(IntlContext);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -81,9 +81,9 @@ const ArticleView: React.FC<Props> = (props) => {
     window.open(link, '_blank');
   };
 
-  if (!article) {
-    return (<></>);
-  }
+  const handleMarkAsRead = () => {
+    dispatch(articleMarkReadUnread(article.id, true));
+  };
 
   return (<Dialog
     open={open}
@@ -118,7 +118,7 @@ const ArticleView: React.FC<Props> = (props) => {
     </DialogContent>
 
     <DialogActions>
-      <IconButton>
+      <IconButton onClick={handleMarkAsRead}>
         <CheckIcon />
       </IconButton>
 
