@@ -68,7 +68,7 @@ const ArticleView: React.FC<Props> = (props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const article = useSelector((state: State) => state.rss.article.articles && state.rss.article.articles[articleIndex]) as Article;
-  const [autoMarkedAsRead, setAutoMarkedAsRead] = useState<boolean>(false);
+  const [manuallyMarked, setManuallyMarked] = useState<boolean>(false);
 
   const dateOptions = {
     year: 'numeric',
@@ -85,6 +85,7 @@ const ArticleView: React.FC<Props> = (props) => {
 
   const handleMarkAsReadOrUnread = (read: boolean) => {
     dispatch(articleMarkReadUnread(article.id, read, articleIndex));
+    setManuallyMarked(true);
   };
 
   const memoizedMarkAsReadOrUnread = useCallback(
@@ -93,13 +94,10 @@ const ArticleView: React.FC<Props> = (props) => {
   );
 
   useEffect(() => {
-    if (!article.read && !autoMarkedAsRead) {
-      setTimeout(() => {
-        memoizedMarkAsReadOrUnread();
-        setAutoMarkedAsRead(true);
-      }, 750);
+    if (!article.read && !manuallyMarked) {
+      setTimeout(() => memoizedMarkAsReadOrUnread, 750);
     }
-  }, [article, memoizedMarkAsReadOrUnread, autoMarkedAsRead]);
+  }, [article, memoizedMarkAsReadOrUnread, manuallyMarked]);
 
   return (<Dialog
     open={open}
