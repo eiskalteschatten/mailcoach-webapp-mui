@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 
 import ComponentLoader from '../../../components/ComponentLoader';
+import ArticleView from './ArticleView';
 
 import { State } from '../../../store';
 import { articleGetAllUnread } from '../../../store/actions/rss/articleActions';
@@ -57,6 +58,8 @@ const Articles: React.FC = () => {
   const articles = useSelector((state: State) => state.rss.article.articles) as Article[];
   const initialCheckOccurred = useSelector((state: State) => state.rss.article.initialCheckOccurred) as boolean;
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [articleDialogOpen, setArticleDialogOpen] = useState<boolean>(false);
+  const [openArticle, setOpenArticle] = useState<Article | undefined>();
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -79,6 +82,11 @@ const Articles: React.FC = () => {
     second: 'numeric'
   };
 
+  const handleOpenArticle = (article: Article) => {
+    setOpenArticle(article);
+    setArticleDialogOpen(true);
+  };
+
   return (<>
     <ComponentLoader isLoading={isLoading} />
 
@@ -96,6 +104,7 @@ const Articles: React.FC = () => {
                   [classes.button]: true,
                   [classes.markedRead]: article.read
                 })}
+                onClick={() => handleOpenArticle(article)}
               >
                 <div className={classes.articleTitle}>{article.title}</div>
 
@@ -114,6 +123,12 @@ const Articles: React.FC = () => {
         </Grid>
       </Container>
     }
+
+    <ArticleView
+      open={articleDialogOpen}
+      handleClose={() => setArticleDialogOpen(false)}
+      article={openArticle}
+    />
   </>);
 }
 
