@@ -22,8 +22,8 @@ interface FormValues extends ModelCreateUpdate {}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      margin: 25
+    footer: {
+      marginTop: 10
     }
   })
 );
@@ -66,13 +66,15 @@ const AddFeedForm: React.FC<Props> = ({ children, initialValues, handleClose }) 
     validationSchema={validationSchema}
   >
     {(formikProps: FormikProps<FormValues>) => (
-      <Form className={classes.root}>
+      <Form>
         <FeedName />
         <FeedUrl />
         <FeedLink />
         <FeedFolder folders={folders} />
 
-        {children}
+        <div className={classes.footer}>
+          {children}
+        </div>
       </Form>
   )}</Formik>);
 }
