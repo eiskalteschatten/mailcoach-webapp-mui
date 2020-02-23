@@ -28,4 +28,4 @@ jobs:
       env:
         CI: true
         JWT_ACCESS_TOKEN_SECRET: 'secret1'
-        JWT_REFRESH_TOKEN_SECRET: 'secret2
+        JWT_REFRESH_TOKEN_SECRET: 'secret2'
