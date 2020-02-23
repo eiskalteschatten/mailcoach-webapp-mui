@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -68,6 +68,7 @@ const ArticleView: React.FC<Props> = (props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const article = useSelector((state: State) => state.rss.article.articles && state.rss.article.articles[articleIndex]) as Article;
+  const [autoMarkedAsRead, setAutoMarkedAsRead] = useState<boolean>(false);
 
   const dateOptions = {
     year: 'numeric',
@@ -92,10 +93,13 @@ const ArticleView: React.FC<Props> = (props) => {
   );
 
   useEffect(() => {
-    if (!article.read) {
-      setTimeout(memoizedMarkAsReadOrUnread, 750);
+    if (!article.read && !autoMarkedAsRead) {
+      setTimeout(() => {
+        memoizedMarkAsReadOrUnread();
+        setAutoMarkedAsRead(true);
+      }, 750);
     }
-  }, [article, memoizedMarkAsReadOrUnread]);
+  }, [article, memoizedMarkAsReadOrUnread, autoMarkedAsRead]);
 
   return (<Dialog
     open={open}

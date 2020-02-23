@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
       width: '100%',
-      height: '100%',
       padding: theme.spacing(2),
       fontSize: '1em',
       textAlign: 'left',
@@ -91,6 +90,11 @@ const Articles: React.FC = () => {
     setArticleDialogOpen(true);
   };
 
+  const handleArticleDialogClose = () => {
+    setArticleDialogOpen(false);
+    setOpenArticleIndex(undefined);
+  };
+
   return (<>
     <ComponentLoader isLoading={isLoading} />
 
@@ -131,7 +135,7 @@ const Articles: React.FC = () => {
     {openArticleIndex !== undefined && (
       <ArticleView
         open={articleDialogOpen}
-        handleClose={() => setArticleDialogOpen(false)}
+        handleClose={handleArticleDialogClose}
         articleIndex={openArticleIndex}
       />
     )}

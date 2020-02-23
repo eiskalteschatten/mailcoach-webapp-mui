@@ -120,7 +120,6 @@ export const articleMarkReadUnread: ActionCreator<
     const state = getState();
     const articles = state.rss && state.rss.article && Object.create(state.rss.article.articles);
 
-
     if (articles && index !== undefined && index !== null) {
       articles[index] = res.data.article;
       dispatch(articleSetAll(articles));
