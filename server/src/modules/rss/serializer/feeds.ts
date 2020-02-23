@@ -10,6 +10,7 @@ export const serialize = (feed: DeserializedModel): SerializedModel => ({
   feedUrl: feed.feedUrl,
   link: feed.link,
   icon: feed.icon,
+  fkFolder: feed.fkFolder,
   folder: feed.folder
 });
 

@@ -6,6 +6,7 @@ import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder'
 export interface FolderState {
   folders: Folder[];
   checkedForFolders: boolean;
+  selectedFolderId?: number;
 }
 
 export const initialState: FolderState = {
@@ -24,10 +25,15 @@ const folderReducer: Reducer<FolderState, FolderActions> = (
         folders: action.folders
       };
     case 'FOLDER_CHECKED_FOR_FOLDERS':
-        return {
-          ...state,
-          checkedForFolders: action.checkedForFolders
-        };
+      return {
+        ...state,
+        checkedForFolders: action.checkedForFolders
+      };
+    case 'FOLDER_SET_SELECTED_FOLDER_ID':
+      return {
+        ...state,
+        selectedFolderId: action.selectedFolderId
+      };
     default:
       return state;
   }

@@ -21,6 +21,7 @@ export interface SerializedModel {
   feedUrl: string;
   link: string;
   icon: string;
+  fkFolder?: number;
   folder: SerializedFeedFolder;
 }
 

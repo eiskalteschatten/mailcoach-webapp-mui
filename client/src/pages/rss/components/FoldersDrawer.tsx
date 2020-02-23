@@ -33,6 +33,7 @@ import ComponentLoader from '../../../components/ComponentLoader';
 
 import { State } from '../../../store';
 import { feedGetFeedsAndFolders } from '../../../store/actions/rss/feedActions';
+import { folderSetselectedFolderId } from '../../../store/actions/rss/folderActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
@@ -70,19 +71,23 @@ const useStyles = makeStyles((theme: Theme) =>
 const FolderDrawer: React.FC = () => {
   const classes = useStyles();
   const { messages } = useContext(IntlContext);
+  const dispatch = useDispatch();
+  const theme = useTheme();
+
+  const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
   const folders = useSelector((state: State) => state.rss.folder.folders) as Folder[];
+  const selectedFolderId = useSelector((state: State) => state.rss.folder.selectedFolderId) as number;
   const feeds = useSelector((state: State) => state.rss.feed.feeds) as Feed[];
   const checkedForFolders = useSelector((state: State) => state.rss.folder.checkedForFolders) as boolean;
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const [openFolders, setOpenFolders] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [addFolderDialogOpen, setAddFolderDialogOpen] = useState<boolean>(false);
   const [addFeedDialogOpen, setAddFeedDialogOpen] = useState<boolean>(false);
-  const theme = useTheme();
-  const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     if (!checkedForFolders && (!folders || folders.length === 0) && (!feeds || feeds.length === 0)) {
@@ -130,6 +135,11 @@ const FolderDrawer: React.FC = () => {
   const handleOpenAddFeedDialog = () => {
     handleMenuClose();
     setAddFeedDialogOpen(true);
+  };
+
+  const handleSetSelectedFolder = (id: number) => {
+    // TODO: Unselect feed
+    dispatch(folderSetselectedFolderId(id));
   };
 
   return (<Drawer
@@ -205,7 +215,11 @@ const FolderDrawer: React.FC = () => {
     >
       {folders.map((folder: Folder) => (
         <span key={folder.id}>
-          <ListItem button>
+          <ListItem
+            button
+            onClick={() => handleSetSelectedFolder(folder.id)}
+            selected={selectedFolderId === folder.id}
+          >
             <ListItemIcon>
               <FolderIcon />
             </ListItemIcon>

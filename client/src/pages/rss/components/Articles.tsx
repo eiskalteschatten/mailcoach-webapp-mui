@@ -58,23 +58,40 @@ const useStyles = makeStyles((theme: Theme) =>
 const Articles: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const articles = useSelector((state: State) => state.rss.article.articles) as Article[];
+  const theme = useTheme();
+
+  const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const allArticles = useSelector((state: State) => state.rss.article.articles) as Article[];
   const initialCheckOccurred = useSelector((state: State) => state.rss.article.initialCheckOccurred) as boolean;
+  const selectedFolderId = useSelector((state: State) => state.rss.folder.selectedFolderId) as number;
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articleDialogOpen, setArticleDialogOpen] = useState<boolean>(false);
   const [openArticleIndex, setOpenArticleIndex] = useState<number | undefined>();
-  const theme = useTheme();
-  const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const [articles, setArticles] = useState<Article[]>();
 
   useEffect(() => {
-    if (!initialCheckOccurred && (!articles || articles.length === 0)) {
+    if (!initialCheckOccurred && (!allArticles || allArticles.length === 0)) {
       setIsLoading(true);
       dispatch(articleGetAllUnread());
     }
     else {
       setIsLoading(false);
     }
-  }, [initialCheckOccurred, articles, dispatch]);
+  }, [initialCheckOccurred, allArticles, dispatch]);
+
+  useEffect(() => setArticles(allArticles), [allArticles]);
+
+  useEffect(() => {
+    if (selectedFolderId && allArticles) {
+      const filteredArticles = allArticles.filter((article: Article) =>
+        article.feed && article.feed.fkFolder && selectedFolderId === article.feed.fkFolder
+      );
+
+      setArticles(filteredArticles);
+    }
+  }, [selectedFolderId, allArticles]);
 
   const dateOptions = {
     year: 'numeric',
