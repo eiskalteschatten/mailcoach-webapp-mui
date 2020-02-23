@@ -47,6 +47,11 @@ const useStyles = makeStyles((theme: Theme) =>
         minWidth: 550
       }
     },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1)
+    },
     nested: {
       paddingLeft: theme.spacing(5)
     },
@@ -211,6 +216,10 @@ const EditDialog: React.FC<Props> = (props) => {
   >
     <DialogTitle>
       <FormattedMessage id='rssFeeds.editFoldersAndFeeds' />
+
+      <IconButton className={classes.closeButton} onClick={handleClose}>
+        <CloseIcon />
+      </IconButton>
     </DialogTitle>
 
     <DialogContent>
