@@ -95,7 +95,7 @@ const Articles: React.FC = () => {
         <Grid
           container
           spacing={isSmallAndUp ? 8 : 0}
-          justify='space-evenly'
+          justify='flex-start'
         >
           {articles && articles.map((article: Article) => (
             <Grid item xs={12} sm={6} md={4} key={article.id}>
