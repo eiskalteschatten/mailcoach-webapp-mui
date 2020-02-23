@@ -52,6 +52,8 @@ export default {
   'rssFeeds.areYouSureMarkAllRead': 'Are you sure you want to mark all articles as read?',
   'rssFeeds.areYouSureMarkAllReadText': 'This action cannot be undone.',
   'rssFeeds.openArticle': 'Open Article',
+  'rssFeeds.markAsRead': 'Mark as Read',
+  'rssFeeds.markAsUnRead': 'Mark as Unread',
 
   'account.manageAccount': 'Manage Account',
   'account.accountInformation': 'Account Information',

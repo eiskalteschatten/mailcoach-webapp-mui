@@ -52,6 +52,8 @@ export default {
   'rssFeeds.areYouSureMarkAllRead': 'Sind Sie sicher, dass sie alle Artikel als gelesen markieren wollen?',
   'rssFeeds.areYouSureMarkAllReadText': 'Dieser Vorgang kann nicht rückgängig gemacht werden.',
   'rssFeeds.openArticle': 'Artikel öffnen',
+  'rssFeeds.markAsRead': 'Als gelesen markieren',
+  'rssFeeds.markAsUnRead': 'Als ungelesen markieren',
 
   'account.manageAccount': 'Konto verwalten',
   'account.accountInformation': 'Konto-Informationen',

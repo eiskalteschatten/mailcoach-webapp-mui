@@ -16,7 +16,6 @@ import {
   IconButton
 } from '@material-ui/core';
 
-import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { SerializedModel as Article } from '../../../../../interfaces/rss/Article';
@@ -81,8 +80,8 @@ const ArticleView: React.FC<Props> = (props) => {
     window.open(link, '_blank');
   };
 
-  const handleMarkAsRead = () => {
-    dispatch(articleMarkReadUnread(article.id, true));
+  const handleMarkAsReadOrUnread = (read: boolean) => {
+    dispatch(articleMarkReadUnread(article.id, read));
   };
 
   return (<Dialog
@@ -118,9 +117,15 @@ const ArticleView: React.FC<Props> = (props) => {
     </DialogContent>
 
     <DialogActions>
-      <IconButton onClick={handleMarkAsRead}>
-        <CheckIcon />
-      </IconButton>
+      {article.read ? (
+        <Button onClick={() => handleMarkAsReadOrUnread(false)}>
+          <FormattedMessage id='rssFeeds.markAsUnread' />
+        </Button>
+      ) : (
+        <Button onClick={() => handleMarkAsReadOrUnread(true)}>
+          <FormattedMessage id='rssFeeds.markAsRead' />
+        </Button>
+      )}
 
       <div className={classes.grow} />
 
