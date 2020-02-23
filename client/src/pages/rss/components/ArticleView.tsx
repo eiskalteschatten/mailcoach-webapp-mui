@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -85,6 +85,17 @@ const ArticleView: React.FC<Props> = (props) => {
   const handleMarkAsReadOrUnread = (read: boolean) => {
     dispatch(articleMarkReadUnread(article.id, read, articleIndex));
   };
+
+  const memoizedMarkAsReadOrUnread = useCallback(
+    () => dispatch(articleMarkReadUnread(article.id, true, articleIndex)),
+    [article, articleIndex, dispatch]
+  );
+
+  useEffect(() => {
+    if (!article.read) {
+      setTimeout(memoizedMarkAsReadOrUnread, 750);
+    }
+  }, [article, memoizedMarkAsReadOrUnread]);
 
   return (<Dialog
     open={open}
