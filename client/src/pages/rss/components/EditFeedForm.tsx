@@ -48,8 +48,7 @@ const EditFeedForm: React.FC<Props> = ({ children, initialValues, handleClose, f
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required(messages.required),
+    name: Yup.string(),
     feedUrl: Yup.string()
       .url()
       .required(messages.required),
