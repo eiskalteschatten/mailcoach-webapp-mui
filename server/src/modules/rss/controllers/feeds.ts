@@ -9,6 +9,7 @@ import { validateRssUrl, refreshForSingleFeed } from '../helpers/feedsHelper';
 
 import Feed from '../models/Feed';
 import Folder from '../models/Folder';
+import Article from '../models/Article';
 
 import { serialize, deserializeModelCreateUpdate } from '../serializer/feeds';
 import { serialize as serializeFolder } from '../serializer/folders';
@@ -333,11 +334,15 @@ class FeedsController extends AbstractController {
 
   private async deleteFeed(req: Request, res: Response): Promise<void> {
     try {
-      await Feed.destroy({
+      const id = req.params.id;
+
+      await Article.destroy({
         where: {
-          id: req.params.id
+          fkFeed: id
         }
       });
+
+      await Feed.destroy({ where: { id } });
 
       res.status(204).send('');
     }
