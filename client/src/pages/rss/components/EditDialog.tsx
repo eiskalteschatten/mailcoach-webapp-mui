@@ -12,8 +12,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
   IconButton,
   List,
   ListItem,
@@ -292,12 +290,6 @@ const EditDialog: React.FC<Props> = (props) => {
         {feeds.map((feed: Feed) => getFeedsList(feed))}
       </List>
     </DialogContent>
-
-    <DialogActions>
-      <Button onClick={handleClose}>
-        <FormattedMessage id='close' />
-      </Button>
-    </DialogActions>
 
     <ConfirmDialog
       open={confirmFeedDialogOpen}
