@@ -11,7 +11,7 @@ import GeneralWrapper from './GeneralWrapper';
 import GeneralError from './components/messages/GeneralError';
 import { IntlProviderWrapper } from './intl/IntlContext';
 
-import themeOptions from './theme';
+import getThemeOptions from './theme';
 import bootstrap from './bootstrap';
 
 import './App.css';
@@ -30,6 +30,8 @@ const App: React.FC = () => {
     : userSettings && userSettings.theme
       ? userSettings.theme
       : 'light';
+
+  const themeOptions = getThemeOptions(type);
 
   const muiTheme = createMuiTheme({
     ...themeOptions,

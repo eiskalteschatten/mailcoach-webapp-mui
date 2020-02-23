@@ -1,9 +1,9 @@
 import { blue, red, blueGrey } from '@material-ui/core/colors';
 
-export default {
+export default (type: string) => ({
   palette: {
     primary: {
-      main: blue[800]
+      main: type === 'dark' ? blue[300] : blue[800]
     },
     secondary: {
       main: blueGrey[100]
@@ -13,4 +13,4 @@ export default {
       light: red[600]
     }
   }
-};
+});
