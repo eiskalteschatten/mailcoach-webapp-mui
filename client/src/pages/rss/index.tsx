@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 
 import {
   createStyles,
@@ -20,6 +21,8 @@ import AddIcon from '@material-ui/icons/Add';
 import FoldersDrawer from './components/FoldersDrawer';
 import Articles from './components/Articles';
 import AddFeed from './components/AddFeed';
+
+import { articleRefreshAndGetAllUnread } from '../../store/actions/rss/articleActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,9 +51,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RssPage: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallAndUp = useMediaQuery(theme.breakpoints.up('sm'));
   const [addFeedDialogOpen, setAddFeedDialogOpen] = useState<boolean>(false);
+
+  const handleRefreshArticles = () => {
+    dispatch(articleRefreshAndGetAllUnread());
+  };
 
   return (<div className={classes.root}>
     <FoldersDrawer />
@@ -68,7 +76,7 @@ const RssPage: React.FC = () => {
             <CheckIcon />
           </IconButton>
 
-          <IconButton edge={isSmallAndUp && 'end'}>
+          <IconButton edge={isSmallAndUp && 'end'} onClick={handleRefreshArticles}>
             <RefreshIcon />
           </IconButton>
         </Grid>
