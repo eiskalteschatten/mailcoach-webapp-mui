@@ -9,6 +9,7 @@ import logger from '@mc/logger';
 import { HttpError } from '@mc/lib/Error';
 import setupPassport from '@mc/lib/setupPassport';
 import setupInitialUser from '@mc/lib/setupInitialUser';
+import setupCronjobs from '@mc/lib/cronjobs';
 import modules from '@mc/modules';
 
 class App {
@@ -24,6 +25,7 @@ class App {
     await this.configureAuth();
     this.configureModules();
     await this.configureGenericErrorHandling();
+    setupCronjobs();
 
     logger.info('App started with:');
     logger.info('- Node.js', process.version);
