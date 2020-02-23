@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     appbarWrapper: {
       flex: 0
     },
+    offset: theme.mixins.toolbar,
     main: {
       flex: 1,
       display: 'flex',
@@ -39,6 +40,7 @@ const MainLayout: React.FC<Props> = ({ children }) => {
     <div className={classes.appbarWrapper}>
       <AppBar />
     </div>
+    <div className={classes.offset} />
     <main className={classes.main}>
       {children}
     </main>
