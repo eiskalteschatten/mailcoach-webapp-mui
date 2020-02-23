@@ -60,14 +60,14 @@ const EditFeedForm: React.FC<Props> = ({ children, initialValues, handleClose, f
   return (<Formik
     initialValues={initialValues}
     onSubmit={async (values: FormValues, actions: any): Promise<void> => {
-      handleClose();
-
       if (feedId) {
-        dispatch(feedUpdateFeed(feedId, values));
+        await dispatch(feedUpdateFeed(feedId, values));
       }
       else {
-        dispatch(feedAddFeed(values));
+        await dispatch(feedAddFeed(values));
       }
+
+      handleClose();
       actions.setSubmitting(false);
     }}
     validationSchema={validationSchema}

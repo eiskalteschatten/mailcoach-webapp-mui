@@ -244,7 +244,7 @@ const EditDialog: React.FC<Props> = (props) => {
                     className={classes.nested}
                   >
                     <EditFeedForm
-                      handleClose={handleClose}
+                      handleClose={handleCloseEditor}
                       feedId={feed.id}
                       initialValues={{
                         ...feed,
