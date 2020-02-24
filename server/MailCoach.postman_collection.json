@@ -1097,7 +1097,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"\",\n    \"feedUrl\": \"\",\n    \"link\": \"\",\n    \"icon\": \"\",\n    \"fkFolder\": 1\n}",
+									"raw": "{\n    \"name\": \"Alex's Notebook\",\n    \"feedUrl\": \"https://blog.alexseifert.com/feed/\",\n    \"link\": \"\",\n    \"icon\": \"\",\n    \"fkFolder\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1559,6 +1559,49 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Stats",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f05bd4ec-236e-41c2-9b6d-f35346712a80",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3025/api/rss/stats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3025",
+							"path": [
+								"api",
+								"rss",
+								"stats"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
