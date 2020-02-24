@@ -8,6 +8,7 @@ import articlesController from './controllers/articles';
 import feedsController from './controllers/feeds';
 import foldersController from './controllers/folders';
 import refreshController from './controllers/refresh';
+import statsController from './controllers/stats';
 
 export class RssModule extends AbstractModule implements Module {
   protected modulePath: string = path.resolve(__dirname);
@@ -20,6 +21,7 @@ export class RssModule extends AbstractModule implements Module {
     router.use(`${this.entryRoute}/feeds`, feedsController.router);
     router.use(`${this.entryRoute}/folders`, foldersController.router);
     router.use(`${this.entryRoute}/refresh`, refreshController.router);
+    router.use(`${this.entryRoute}/stats`, statsController.router);
 
     return router;
   }
