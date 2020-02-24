@@ -35,9 +35,11 @@ import ComponentLoader from '../../../components/ComponentLoader';
 import { State } from '../../../store';
 import { feedGetFeedsAndFolders, feedSetSelectedFeedId } from '../../../store/actions/rss/feedActions';
 import { folderSetselectedFolderId } from '../../../store/actions/rss/folderActions';
+import { articleGetStats } from '../../../store/actions/rss/articleActions';
 import { IntlContext } from '../../../intl/IntlContext';
 import { SerializedModel as Folder } from '../../../../../interfaces/rss/Folder';
 import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
+import { ArticleStats } from '../../../../../interfaces/rss/Article';
 
 import EditDialog from './EditDialog';
 import AddFolder from './AddFolder';
@@ -65,6 +67,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     editButtonWrapper: {
       float: 'right'
+    },
+    unreadStats: {
+      opacity: '.5',
+      fontSize: '.9em'
+    },
+    folderStats: {
+      marginLeft: theme.spacing(1)
     }
   })
 );
@@ -82,6 +91,7 @@ const FolderDrawer: React.FC = () => {
   const feeds = useSelector((state: State) => state.rss.feed.feeds) as Feed[];
   const selectedFeedId = useSelector((state: State) => state.rss.feed.selectedFeedId) as number;
   const checkedForFolders = useSelector((state: State) => state.rss.folder.checkedForFolders) as boolean;
+  const articleStats = useSelector((state: State) => state.rss.article.stats) as ArticleStats;
   const leftDrawerOpen = useSelector((state: State) => state.app.leftDrawerOpen);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -149,6 +159,13 @@ const FolderDrawer: React.FC = () => {
     }
   }, [folders]);
 
+  useEffect(() => {
+    if (!articleStats) {
+      setIsLoading(true);
+      dispatch(articleGetStats());
+    }
+  }, [articleStats, dispatch]);
+
   return (<Drawer
     className={clsx({
       [classes.root]: leftDrawerOpen
@@ -185,6 +202,10 @@ const FolderDrawer: React.FC = () => {
           <NewReleasesIcon />
         </ListItemIcon>
         <ListItemText primary={messages.unreadItems} />
+
+        <span className={classes.unreadStats}>
+          {articleStats && articleStats.unreadTotal}
+        </span>
       </ListItem>
     </List>
 
@@ -231,11 +252,17 @@ const FolderDrawer: React.FC = () => {
             <ListItemIcon>
               <FolderIcon />
             </ListItemIcon>
+
             <ListItemText primary={folder.name} />
+
             {openFolders[folder.id]
               ? <ExpandLessIcon onClick={() => handleToggleFolder(folder.id)} />
               : <ExpandMoreIcon onClick={() => handleToggleFolder(folder.id)} />
             }
+
+            <div className={clsx(classes.folderStats, classes.unreadStats)}>
+              {articleStats && articleStats.unreadPerFolder && articleStats.unreadPerFolder[folder.id]}
+            </div>
           </ListItem>
 
           {folder.feeds && folder.feeds.map((feed: Feed) => (
@@ -248,6 +275,10 @@ const FolderDrawer: React.FC = () => {
                   selected={selectedFeedId === feed.id}
                 >
                   <ListItemText primary={feed.name} />
+
+                  <span className={classes.unreadStats}>
+                    {articleStats && articleStats.unreadPerFeed && articleStats.unreadPerFeed[feed.id]}
+                  </span>
                 </ListItem>
               </List>
             </Collapse>
@@ -263,6 +294,7 @@ const FolderDrawer: React.FC = () => {
             selected={selectedFeedId === feed.id}
           >
             <ListItemText primary={feed.name} />
+            {articleStats && articleStats.unreadPerFeed && articleStats.unreadPerFeed[feed.id]}
           </ListItem>)
         : (<></>)
       )}

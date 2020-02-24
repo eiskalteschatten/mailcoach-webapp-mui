@@ -141,6 +141,9 @@ export const articleMarkReadUnread: ActionCreator<
         }
       }
     }
+
+    const statsRes: any = await axios.get('/api/rss/stats');
+    dispatch(articleSetStats(statsRes.data));
   }
   catch (error) {
     dispatch(appSetFormError('errors.anErrorOccurred'));
@@ -175,6 +178,9 @@ export const articleMarkAllRead: ActionCreator<
     }
 
     dispatch(articleSetAll(articles));
+
+    const statsRes: any = await axios.get('/api/rss/stats');
+    dispatch(articleSetStats(statsRes.data));
   }
   catch (error) {
     dispatch(appSetFormError('errors.anErrorOccurred'));
@@ -182,5 +188,28 @@ export const articleMarkAllRead: ActionCreator<
   }
 
   clearTimeout(loadingTimer);
+  return dispatch(appStopLoading());
+};
+
+export const articleGetStats: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetFormError(''));
+
+  try {
+    const res: any = await axios.get('/api/rss/stats');
+    dispatch(articleSetStats(res.data));
+  }
+  catch (error) {
+    dispatch(appSetFormError('errors.anErrorOccurred'));
+    console.error(error);
+  }
+
   return dispatch(appStopLoading());
 };

@@ -7,12 +7,23 @@ import {
   articleRefreshAndGetAllUnread,
   articleGetAll,
   articleMarkReadUnread,
-  articleMarkAllRead
+  articleMarkAllRead,
+  articleGetStats
 } from './articleActions';
 
 import mockStore from '../../../lib/tests/mockStore';
 
 describe('RSS Article Actions', () => {
+  const stats = {
+    unreadTotal: 1,
+    unreadPerFeed: {
+      '1': 2
+    },
+    unreadPerFolder: {
+      '3': 4
+    }
+  };
+
   test('Setting all articles works', async () => {
     const localStore: MockStore = mockStore();
     await localStore.dispatch(articleSetAll([]));
@@ -115,6 +126,10 @@ describe('RSS Article Actions', () => {
         articles: []
       });
 
+    nock('http://localhost')
+      .get('/api/rss/stats')
+      .reply(200, stats);
+
     const localStore: MockStore = mockStore();
     await localStore.dispatch(articleMarkReadUnread(1, true) as any);
     const actions = localStore.getActions();
@@ -123,7 +138,11 @@ describe('RSS Article Actions', () => {
       type: 'APP_SET_FORM_ERROR',
       error: ''
     });
-    expect(actions[1]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[1]).toEqual({
+      type: 'ARTICLE_SET_STATS',
+      stats
+    });
+    expect(actions[2]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Marking all articles as read works', async () => {
@@ -132,6 +151,10 @@ describe('RSS Article Actions', () => {
       .reply(200, {
         articles: []
       });
+
+    nock('http://localhost')
+      .get('/api/rss/stats')
+      .reply(200, stats);
 
     const localStore: MockStore = mockStore();
     await localStore.dispatch(articleMarkAllRead() as any);
@@ -144,6 +167,31 @@ describe('RSS Article Actions', () => {
     expect(actions[1]).toEqual({
       type: 'ARTICLE_SET_ALL'
     });
-    expect(actions[2]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[2]).toEqual({
+      type: 'ARTICLE_SET_STATS',
+      stats
+    });
+    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
+  });
+
+  test('Getting article stats', async () => {
+    nock('http://localhost')
+      .get('/api/rss/stats')
+      .reply(200, stats);
+
+    const localStore: MockStore = mockStore();
+    await localStore.dispatch(articleGetStats() as any);
+    const actions = localStore.getActions();
+
+    expect(actions[0]).toEqual({type: 'APP_START_LOADING'});
+    expect(actions[1]).toEqual({
+      type: 'APP_SET_FORM_ERROR',
+      error: ''
+    });
+    expect(actions[2]).toEqual({
+      type: 'ARTICLE_SET_STATS',
+      stats
+    });
+    expect(actions[3]).toEqual({type: 'APP_STOP_LOADING'});
   });
 });
