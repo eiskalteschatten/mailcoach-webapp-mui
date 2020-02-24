@@ -46,3 +46,13 @@ export interface ModelCreateUpdate {
   markedAsReadAt?: Date;
   fkFeed: number;
 }
+
+export interface ArticleStats {
+  unreadTotal: number;
+  unreadPerFeed: {
+    [feedId: string]: number;
+  };
+  unreadPerFolder: {
+    [folderId: string]: number;
+  };
+}

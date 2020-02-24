@@ -1,11 +1,12 @@
 import { Reducer } from 'redux';
 import { ArticleActions } from '../../actions/rss/articleActions';
 
-import { SerializedModel as Article } from '../../../../../interfaces/rss/Article';
+import { SerializedModel as Article, ArticleStats } from '../../../../../interfaces/rss/Article';
 
 export interface ArticleState {
   articles: Article[];
   initialCheckOccurred: boolean;
+  stats?: ArticleStats;
 }
 
 export const initialState: ArticleState = {
@@ -28,6 +29,11 @@ const articleReducer: Reducer<ArticleState, ArticleActions> = (
         ...state,
         initialCheckOccurred: action.initialCheckOccurred
       };
+    case 'ARTICLE_SET_STATS':
+        return {
+          ...state,
+          stats: action.stats
+        };
     default:
       return state;
   }

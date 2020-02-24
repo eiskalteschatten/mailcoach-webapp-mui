@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch, ActionCreator, Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import { SerializedModel as Article } from '../../../../../interfaces/rss/Article';
+import { SerializedModel as Article, ArticleStats } from '../../../../../interfaces/rss/Article';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError } from '../appActions';
 
@@ -14,9 +14,14 @@ export interface ArticleSetInitialCheckOccurred extends Action<'ARTICLE_SET_INIT
   initialCheckOccurred: boolean;
 }
 
+export interface ArticleSetStats extends Action<'ARTICLE_SET_STATS'> {
+  stats: ArticleStats;
+}
+
 export type ArticleActions =
   ArticleSetAll |
-  ArticleSetInitialCheckOccurred;
+  ArticleSetInitialCheckOccurred |
+  ArticleSetStats;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   type: 'ARTICLE_SET_ALL',
@@ -26,6 +31,11 @@ export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
 export const articleSetInitialCheckOccurred = (initialCheckOccurred: boolean): ArticleSetInitialCheckOccurred => ({
   type: 'ARTICLE_SET_INITIAL_CHECK_OCCURRED',
   initialCheckOccurred
+});
+
+export const articleSetStats = ( stats: ArticleStats): ArticleSetStats => ({
+  type: 'ARTICLE_SET_STATS',
+  stats
 });
 
 export const articleGetAllUnread: ActionCreator<

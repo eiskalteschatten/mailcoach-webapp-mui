@@ -29,4 +29,26 @@ describe('RSS Article Reducer', () => {
       initialCheckOccurred: true
     })
   });
+
+  test('Should handle ARTICLE_SET_STATS', () => {
+    const stats = {
+      unreadTotal: 1,
+      unreadPerFeed: {
+        '1': 2
+      },
+      unreadPerFolder: {
+        '3': 4
+      }
+    };
+
+    expect(
+      articleReducer(undefined, {
+        type: 'ARTICLE_SET_STATS',
+        stats
+      })
+    ).toEqual({
+      ...initialState,
+      stats
+    })
+  });
 });
