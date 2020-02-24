@@ -294,7 +294,10 @@ const FolderDrawer: React.FC = () => {
             selected={selectedFeedId === feed.id}
           >
             <ListItemText primary={feed.name} />
-            {articleStats && articleStats.unreadPerFeed && articleStats.unreadPerFeed[feed.id]}
+
+            <span className={classes.unreadStats}>
+              {articleStats && articleStats.unreadPerFeed && articleStats.unreadPerFeed[feed.id]}
+            </span>
           </ListItem>)
         : (<></>)
       )}
