@@ -23,10 +23,10 @@ describe('Feeds Controller', () => {
 
   beforeAll(async (done) => {
     try {
-      // await sequelizeFixtures.loadFixtures(
-      //   [usersFixture, folderFixture, fixture],
-      //   { User, Folder, Feed }
-      // );
+      await sequelizeFixtures.loadFixtures(
+        [usersFixture, folderFixture, fixture],
+        { User, Folder, Feed }
+      );
 
       app = await testApp.setupApp();
       app.use(feedsController.router);
@@ -46,171 +46,169 @@ describe('Feeds Controller', () => {
     }
   });
 
-  test.todo('Re-add tests');
+  beforeEach(() => {
+    nock('https://www.historyrhymes.info/')
+      .get('/feed')
+      .reply(200, testRss);
+  });
 
-  // beforeEach(() => {
-  //   nock('https://www.historyrhymes.info/')
-  //     .get('/feed')
-  //     .reply(200, testRss);
-  // });
+  afterEach(() => {
+    nock.cleanAll();
+  });
 
-  // afterEach(() => {
-  //   nock.cleanAll();
-  // });
+  test('Exists', () => {
+    expect(feedsController).toBeDefined();
+  });
 
-  // test('Exists', () => {
-  //   expect(feedsController).toBeDefined();
-  // });
+  test('Getting all feeds works', async () => {
+    const response: request.Response = await request(app)
+      .get('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Getting all feeds works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .get('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const feeds = response.body.feeds;
 
-  //   const feeds = response.body.feeds;
+    expect(feeds).toBeDefined();
+    expect(feeds[0].id).toBeDefined();
+    expect(feeds[0].name).toBeDefined();
+    expect(feeds[0].feedUrl).toBeDefined();
+    expect(feeds[0].link).toBeDefined();
+    expect(feeds[0].icon).toBeDefined();
+    expect(feeds[0].folder).toBeDefined();
+  });
 
-  //   expect(feeds).toBeDefined();
-  //   expect(feeds[0].id).toBeDefined();
-  //   expect(feeds[0].name).toBeDefined();
-  //   expect(feeds[0].feedUrl).toBeDefined();
-  //   expect(feeds[0].link).toBeDefined();
-  //   expect(feeds[0].icon).toBeDefined();
-  //   expect(feeds[0].folder).toBeDefined();
-  // });
+  test('Getting all feeds and folders works', async () => {
+    const response: request.Response = await request(app)
+      .get('/folders')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Getting all feeds and folders works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .get('/folders')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const feeds = response.body.feeds;
 
-  //   const feeds = response.body.feeds;
+    expect(feeds).toBeDefined();
+    expect(feeds[0].id).toBeDefined();
+    expect(feeds[0].name).toBeDefined();
+    expect(feeds[0].feedUrl).toBeDefined();
+    expect(feeds[0].link).toBeDefined();
+    expect(feeds[0].icon).toBeDefined();
+    expect(feeds[0].folder).toBeUndefined();
 
-  //   expect(feeds).toBeDefined();
-  //   expect(feeds[0].id).toBeDefined();
-  //   expect(feeds[0].name).toBeDefined();
-  //   expect(feeds[0].feedUrl).toBeDefined();
-  //   expect(feeds[0].link).toBeDefined();
-  //   expect(feeds[0].icon).toBeDefined();
-  //   expect(feeds[0].folder).toBeUndefined();
+    const folders = response.body.folders;
 
-  //   const folders = response.body.folders;
+    expect(folders).toBeDefined();
+    expect(folders[0].id).toBeDefined();
+    expect(folders[0].name).toBeDefined();
+    expect(folders[0].feeds).toBeDefined();
+  });
 
-  //   expect(folders).toBeDefined();
-  //   expect(folders[0].id).toBeDefined();
-  //   expect(folders[0].name).toBeDefined();
-  //   expect(folders[0].feeds).toBeDefined();
-  // });
+  test('Creating a feed works', async () => {
+    nock('https://www.historyrhymes.info/')
+      .get('/feed')
+      .reply(200, testRss);
 
-  // test('Creating a feed works', async () => {
-  //   nock('https://www.historyrhymes.info/')
-  //     .get('/feed')
-  //     .reply(200, testRss);
+    const response: request.Response = await request(app)
+      .post('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'History Rhymes',
+        feedUrl: 'https://www.historyrhymes.info/feed',
+        link: 'https://www.historyrhymes.info',
+        icon: 'test',
+        fkFolder: 1
+      });
 
-  //   const response: request.Response = await request(app)
-  //     .post('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       name: 'History Rhymes',
-  //       feedUrl: 'https://www.historyrhymes.info/feed',
-  //       link: 'https://www.historyrhymes.info',
-  //       icon: 'test',
-  //       fkFolder: 1
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const feed = response.body.feed;
 
-  //   const feed = response.body.feed;
+    expect(feed).toBeDefined();
+    expect(feed.id).toBeDefined();
+    expect(feed.name).toBeDefined();
+    expect(feed.feedUrl).toBeDefined();
+    expect(feed.link).toBeDefined();
+    expect(feed.icon).toBeDefined();
 
-  //   expect(feed).toBeDefined();
-  //   expect(feed.id).toBeDefined();
-  //   expect(feed.name).toBeDefined();
-  //   expect(feed.feedUrl).toBeDefined();
-  //   expect(feed.link).toBeDefined();
-  //   expect(feed.icon).toBeDefined();
+    const articles = response.body.articles;
 
-  //   const articles = response.body.articles;
+    expect(articles).toBeDefined();
+    expect(articles[0].id).toBeDefined();
+    expect(articles[0].title).toBeDefined();
+    expect(articles[0].link).toBeDefined();
+    expect(articles[0].pubDate).toBeDefined();
+    expect(articles[0].creator).toBeDefined();
+    expect(articles[0].contentSnippet).toBeDefined();
+    expect(articles[0].content).toBeDefined();
+    expect(articles[0].guid).toBeDefined();
+    expect(articles[0].read).toBeDefined();
+    expect(articles[0].markedAsReadAt).toBeDefined();
+  });
 
-  //   expect(articles).toBeDefined();
-  //   expect(articles[0].id).toBeDefined();
-  //   expect(articles[0].title).toBeDefined();
-  //   expect(articles[0].link).toBeDefined();
-  //   expect(articles[0].pubDate).toBeDefined();
-  //   expect(articles[0].creator).toBeDefined();
-  //   expect(articles[0].contentSnippet).toBeDefined();
-  //   expect(articles[0].content).toBeDefined();
-  //   expect(articles[0].guid).toBeDefined();
-  //   expect(articles[0].read).toBeDefined();
-  //   expect(articles[0].markedAsReadAt).toBeDefined();
-  // });
+  test('Creating a feed with an invalid URL doesn\'t work', async () => {
+    nock('https://www.historyrhymes.info/')
+      .get('/')
+      .reply(200, {});
 
-  // test('Creating a feed with an invalid URL doesn\'t work', async () => {
-  //   nock('https://www.historyrhymes.info/')
-  //     .get('/')
-  //     .reply(200, {});
+    const response: request.Response = await request(app)
+      .post('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'History Rhymes',
+        feedUrl: 'https://www.historyrhymes.info/',
+        link: 'https://www.historyrhymes.info',
+        icon: 'test',
+        fkFolder: 1
+      });
 
-  //   const response: request.Response = await request(app)
-  //     .post('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       name: 'History Rhymes',
-  //       feedUrl: 'https://www.historyrhymes.info/',
-  //       link: 'https://www.historyrhymes.info',
-  //       icon: 'test',
-  //       fkFolder: 1
-  //     });
+    expect(response.status).toEqual(406);
+  });
 
-  //   expect(response.status).toEqual(406);
-  // });
+  test('Updating a feed works', async () => {
+    const newName = 'New Name';
 
-  // test('Updating a feed works', async () => {
-  //   const newName = 'New Name';
+    const response: request.Response = await request(app)
+      .put('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: newName
+      });
 
-  //   const response: request.Response = await request(app)
-  //     .put('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       name: newName
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const feed = response.body.feed;
 
-  //   const feed = response.body.feed;
+    expect(feed).toBeDefined();
+    expect(feed.id).toBeDefined();
+    expect(feed.name).toEqual(newName);
+    expect(feed.feedUrl).toBeDefined();
+    expect(feed.link).toBeDefined();
+    expect(feed.icon).toBeDefined();
+  });
 
-  //   expect(feed).toBeDefined();
-  //   expect(feed.id).toBeDefined();
-  //   expect(feed.name).toEqual(newName);
-  //   expect(feed.feedUrl).toBeDefined();
-  //   expect(feed.link).toBeDefined();
-  //   expect(feed.icon).toBeDefined();
-  // });
+  test('Updating a feed with an invalid URL doesn\'t work', async () => {
+    nock('https://www.historyrhymes.info/')
+      .get('/')
+      .reply(200, {});
 
-  // test('Updating a feed with an invalid URL doesn\'t work', async () => {
-  //   nock('https://www.historyrhymes.info/')
-  //     .get('/')
-  //     .reply(200, {});
+    const response: request.Response = await request(app)
+      .put('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        feedUrl: 'https://www.historyrhymes.info/'
+      });
 
-  //   const response: request.Response = await request(app)
-  //     .put('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       feedUrl: 'https://www.historyrhymes.info/'
-  //     });
+    expect(response.status).toEqual(406);
+  });
 
-  //   expect(response.status).toEqual(406);
-  // });
+  test('Deleting a feed works', async () => {
+    const response: request.Response = await request(app)
+      .delete('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Deleting a feed works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .delete('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
-
-  //   expect(response.status).toEqual(204);
-  // });
+    expect(response.status).toEqual(204);
+  });
 });

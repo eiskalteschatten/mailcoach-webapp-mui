@@ -19,10 +19,10 @@ describe('Articles Controller', () => {
 
   beforeAll(async (done) => {
     try {
-      // await sequelizeFixtures.loadFixtures(
-      //   [usersFixture, fixture],
-      //   { User, Article }
-      // );
+      await sequelizeFixtures.loadFixtures(
+        [usersFixture, fixture],
+        { User, Article }
+      );
 
       app = await testApp.setupApp();
       app.use(articlesController.router);
@@ -36,168 +36,166 @@ describe('Articles Controller', () => {
     }
   });
 
-  test.todo('Re-add tests');
+  test('Exists', () => {
+    expect(articlesController).toBeDefined();
+  });
 
-  // test('Exists', () => {
-  //   expect(articlesController).toBeDefined();
-  // });
+  test('Getting all articles works', async () => {
+    const response: request.Response = await request(app)
+      .get('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Getting all articles works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .get('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const articles = response.body.articles;
 
-  //   const articles = response.body.articles;
+    expect(articles).toBeDefined();
+    expect(articles[0].id).toBeDefined();
+    expect(articles[0].title).toBeDefined();
+    expect(articles[0].link).toBeDefined();
+    expect(articles[0].pubDate).toBeDefined();
+    expect(articles[0].creator).toBeDefined();
+    expect(articles[0].contentSnippet).toBeDefined();
+    expect(articles[0].content).toBeDefined();
+    expect(articles[0].guid).toBeDefined();
+    expect(articles[0].read).toBeDefined();
+    expect(articles[0].markedAsReadAt).toBeDefined();
+    expect(articles[0].feed).toBeDefined();
+  });
 
-  //   expect(articles).toBeDefined();
-  //   expect(articles[0].id).toBeDefined();
-  //   expect(articles[0].title).toBeDefined();
-  //   expect(articles[0].link).toBeDefined();
-  //   expect(articles[0].pubDate).toBeDefined();
-  //   expect(articles[0].creator).toBeDefined();
-  //   expect(articles[0].contentSnippet).toBeDefined();
-  //   expect(articles[0].content).toBeDefined();
-  //   expect(articles[0].guid).toBeDefined();
-  //   expect(articles[0].read).toBeDefined();
-  //   expect(articles[0].markedAsReadAt).toBeDefined();
-  //   expect(articles[0].feed).toBeDefined();
-  // });
+  test('Getting all unread articles works', async () => {
+    const response: request.Response = await request(app)
+      .get('/unread')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Getting all unread articles works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .get('/unread')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const articles = response.body.articles;
 
-  //   const articles = response.body.articles;
+    expect(articles).toBeDefined();
+    expect(articles[0].id).toBeDefined();
+    expect(articles[0].title).toBeDefined();
+    expect(articles[0].link).toBeDefined();
+    expect(articles[0].pubDate).toBeDefined();
+    expect(articles[0].creator).toBeDefined();
+    expect(articles[0].contentSnippet).toBeDefined();
+    expect(articles[0].content).toBeDefined();
+    expect(articles[0].guid).toBeDefined();
+    expect(articles[0].read).toBeDefined();
+    expect(articles[0].markedAsReadAt).toBeDefined();
+    expect(articles[0].feed).toBeDefined();
+  });
 
-  //   expect(articles).toBeDefined();
-  //   expect(articles[0].id).toBeDefined();
-  //   expect(articles[0].title).toBeDefined();
-  //   expect(articles[0].link).toBeDefined();
-  //   expect(articles[0].pubDate).toBeDefined();
-  //   expect(articles[0].creator).toBeDefined();
-  //   expect(articles[0].contentSnippet).toBeDefined();
-  //   expect(articles[0].content).toBeDefined();
-  //   expect(articles[0].guid).toBeDefined();
-  //   expect(articles[0].read).toBeDefined();
-  //   expect(articles[0].markedAsReadAt).toBeDefined();
-  //   expect(articles[0].feed).toBeDefined();
-  // });
+  test('Marking all articles as read works', async () => {
+    const response: request.Response = await request(app)
+      .patch('/mark-all-read')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Marking all articles as read works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .patch('/mark-all-read')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const articles = response.body.articles;
 
-  //   const articles = response.body.articles;
+    expect(articles).toBeDefined();
+    expect(articles[0].id).toBeDefined();
+    expect(articles[0].title).toBeDefined();
+    expect(articles[0].link).toBeDefined();
+    expect(articles[0].pubDate).toBeDefined();
+    expect(articles[0].creator).toBeDefined();
+    expect(articles[0].contentSnippet).toBeDefined();
+    expect(articles[0].content).toBeDefined();
+    expect(articles[0].guid).toBeDefined();
+    expect(articles[0].read).toBeDefined();
+    expect(articles[0].markedAsReadAt).toBeDefined();
+    expect(articles[0].feed).toBeDefined();
+  });
 
-  //   expect(articles).toBeDefined();
-  //   expect(articles[0].id).toBeDefined();
-  //   expect(articles[0].title).toBeDefined();
-  //   expect(articles[0].link).toBeDefined();
-  //   expect(articles[0].pubDate).toBeDefined();
-  //   expect(articles[0].creator).toBeDefined();
-  //   expect(articles[0].contentSnippet).toBeDefined();
-  //   expect(articles[0].content).toBeDefined();
-  //   expect(articles[0].guid).toBeDefined();
-  //   expect(articles[0].read).toBeDefined();
-  //   expect(articles[0].markedAsReadAt).toBeDefined();
-  //   expect(articles[0].feed).toBeDefined();
-  // });
+  test('Marking an article as read works', async () => {
+    const response: request.Response = await request(app)
+      .patch('/mark-read-unread/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        read: true
+      });
 
-  // test('Marking an article as read works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .patch('/mark-read-unread/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       read: true
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const article = response.body.article;
 
-  //   const article = response.body.article;
+    expect(article).toBeDefined();
+    expect(article.id).toBeDefined();
+    expect(article.title).toBeDefined();
+    expect(article.link).toBeDefined();
+    expect(article.pubDate).toBeDefined();
+    expect(article.creator).toBeDefined();
+    expect(article.contentSnippet).toBeDefined();
+    expect(article.content).toBeDefined();
+    expect(article.guid).toBeDefined();
+    expect(article.read).toBeDefined();
+    expect(article.markedAsReadAt).toBeDefined();
+    expect(article.feed).toBeDefined();
+  });
 
-  //   expect(article).toBeDefined();
-  //   expect(article.id).toBeDefined();
-  //   expect(article.title).toBeDefined();
-  //   expect(article.link).toBeDefined();
-  //   expect(article.pubDate).toBeDefined();
-  //   expect(article.creator).toBeDefined();
-  //   expect(article.contentSnippet).toBeDefined();
-  //   expect(article.content).toBeDefined();
-  //   expect(article.guid).toBeDefined();
-  //   expect(article.read).toBeDefined();
-  //   expect(article.markedAsReadAt).toBeDefined();
-  //   expect(article.feed).toBeDefined();
-  // });
+  test('Marking an unarticle as unread works', async () => {
+    const response: request.Response = await request(app)
+      .patch('/mark-read-unread/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        read: false
+      });
 
-  // test('Marking an unarticle as unread works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .patch('/mark-read-unread/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       read: false
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const article = response.body.article;
 
-  //   const article = response.body.article;
+    expect(article).toBeDefined();
+    expect(article.id).toBeDefined();
+    expect(article.title).toBeDefined();
+    expect(article.link).toBeDefined();
+    expect(article.pubDate).toBeDefined();
+    expect(article.creator).toBeDefined();
+    expect(article.contentSnippet).toBeDefined();
+    expect(article.content).toBeDefined();
+    expect(article.guid).toBeDefined();
+    expect(article.read).toBeDefined();
+    expect(article.markedAsReadAt).toBeDefined();
+    expect(article.feed).toBeDefined();
+  });
 
-  //   expect(article).toBeDefined();
-  //   expect(article.id).toBeDefined();
-  //   expect(article.title).toBeDefined();
-  //   expect(article.link).toBeDefined();
-  //   expect(article.pubDate).toBeDefined();
-  //   expect(article.creator).toBeDefined();
-  //   expect(article.contentSnippet).toBeDefined();
-  //   expect(article.content).toBeDefined();
-  //   expect(article.guid).toBeDefined();
-  //   expect(article.read).toBeDefined();
-  //   expect(article.markedAsReadAt).toBeDefined();
-  //   expect(article.feed).toBeDefined();
-  // });
+  test('Updating an article works', async () => {
+    const response: request.Response = await request(app)
+      .put('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        markedAsReadAt: new Date()
+      });
 
-  // test('Updating an article works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .put('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       markedAsReadAt: new Date()
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const article = response.body.article;
 
-  //   const article = response.body.article;
+    expect(article).toBeDefined();
+    expect(article.id).toBeDefined();
+    expect(article.title).toBeDefined();
+    expect(article.link).toBeDefined();
+    expect(article.pubDate).toBeDefined();
+    expect(article.creator).toBeDefined();
+    expect(article.contentSnippet).toBeDefined();
+    expect(article.content).toBeDefined();
+    expect(article.guid).toBeDefined();
+    expect(article.read).toBeDefined();
+    expect(article.markedAsReadAt).toBeDefined();
+    expect(article.feed).toBeDefined();
+  });
 
-  //   expect(article).toBeDefined();
-  //   expect(article.id).toBeDefined();
-  //   expect(article.title).toBeDefined();
-  //   expect(article.link).toBeDefined();
-  //   expect(article.pubDate).toBeDefined();
-  //   expect(article.creator).toBeDefined();
-  //   expect(article.contentSnippet).toBeDefined();
-  //   expect(article.content).toBeDefined();
-  //   expect(article.guid).toBeDefined();
-  //   expect(article.read).toBeDefined();
-  //   expect(article.markedAsReadAt).toBeDefined();
-  //   expect(article.feed).toBeDefined();
-  // });
+  test('Deleting an article works', async () => {
+    const response: request.Response = await request(app)
+      .delete('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Deleting an article works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .delete('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
-
-  //   expect(response.status).toEqual(204);
-  // });
+    expect(response.status).toEqual(204);
+  });
 });

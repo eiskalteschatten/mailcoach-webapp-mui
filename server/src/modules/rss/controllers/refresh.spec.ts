@@ -23,10 +23,10 @@ describe('Feeds Refresh Controller', () => {
 
   beforeAll(async (done) => {
     try {
-      // await sequelizeFixtures.loadFixtures(
-      //   [usersFixture, articlesFixture, feedsFixture],
-      //   { User, Article, Feed }
-      // );
+      await sequelizeFixtures.loadFixtures(
+        [usersFixture, articlesFixture, feedsFixture],
+        { User, Article, Feed }
+      );
 
       app = await testApp.setupApp();
       app.use(refreshController.router);
@@ -46,69 +46,67 @@ describe('Feeds Refresh Controller', () => {
     }
   });
 
-  test.todo('Re-add tests');
+  beforeEach(() => {
+    nock('https://www.historyrhymes.info/')
+      .get('/feed')
+      .reply(200, testRss);
+  });
 
-  // beforeEach(() => {
-  //   nock('https://www.historyrhymes.info/')
-  //     .get('/feed')
-  //     .reply(200, testRss);
-  // });
+  afterEach(() => {
+    nock.cleanAll();
+  });
 
-  // afterEach(() => {
-  //   nock.cleanAll();
-  // });
+  test('Exists', () => {
+    expect(refreshController).toBeDefined();
+  });
 
-  // test('Exists', () => {
-  //   expect(refreshController).toBeDefined();
-  // });
+  test('Refreshing all feeds works', async () => {
+    const response: request.Response = await request(app)
+      .post('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Refreshing all feeds works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .post('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const articles = response.body.articles;
 
-  //   const articles = response.body.articles;
+    expect(articles).toBeDefined();
+    expect(articles[0].id).toBeDefined();
+    expect(articles[0].title).toBeDefined();
+    expect(articles[0].link).toBeDefined();
+    expect(articles[0].pubDate).toBeDefined();
+    expect(articles[0].creator).toBeDefined();
+    expect(articles[0].contentSnippet).toBeDefined();
+    expect(articles[0].content).toBeDefined();
+    expect(articles[0].guid).toBeDefined();
+    expect(articles[0].read).toBeDefined();
+    expect(articles[0].markedAsReadAt).toBeDefined();
+  });
 
-  //   expect(articles).toBeDefined();
-  //   expect(articles[0].id).toBeDefined();
-  //   expect(articles[0].title).toBeDefined();
-  //   expect(articles[0].link).toBeDefined();
-  //   expect(articles[0].pubDate).toBeDefined();
-  //   expect(articles[0].creator).toBeDefined();
-  //   expect(articles[0].contentSnippet).toBeDefined();
-  //   expect(articles[0].content).toBeDefined();
-  //   expect(articles[0].guid).toBeDefined();
-  //   expect(articles[0].read).toBeDefined();
-  //   expect(articles[0].markedAsReadAt).toBeDefined();
-  // });
+  test('Refreshing a feed works', async () => {
+    await Article.destroy({
+      truncate: true
+    });
 
-  // test('Refreshing a feed works', async () => {
-  //   await Article.destroy({
-  //     truncate: true
-  //   });
+    const response: request.Response = await request(app)
+      .post('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  //   const response: request.Response = await request(app)
-  //     .post('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const articles = response.body.articles;
 
-  //   const articles = response.body.articles;
-
-  //   expect(articles).toBeDefined();
-  //   expect(articles[0].id).toBeDefined();
-  //   expect(articles[0].title).toBeDefined();
-  //   expect(articles[0].link).toBeDefined();
-  //   expect(articles[0].pubDate).toBeDefined();
-  //   expect(articles[0].creator).toBeDefined();
-  //   expect(articles[0].contentSnippet).toBeDefined();
-  //   expect(articles[0].content).toBeDefined();
-  //   expect(articles[0].guid).toBeDefined();
-  //   expect(articles[0].read).toBeDefined();
-  //   expect(articles[0].markedAsReadAt).toBeDefined();
-  // });
+    expect(articles).toBeDefined();
+    expect(articles[0].id).toBeDefined();
+    expect(articles[0].title).toBeDefined();
+    expect(articles[0].link).toBeDefined();
+    expect(articles[0].pubDate).toBeDefined();
+    expect(articles[0].creator).toBeDefined();
+    expect(articles[0].contentSnippet).toBeDefined();
+    expect(articles[0].content).toBeDefined();
+    expect(articles[0].guid).toBeDefined();
+    expect(articles[0].read).toBeDefined();
+    expect(articles[0].markedAsReadAt).toBeDefined();
+  });
 });

@@ -17,10 +17,10 @@ describe('Folders Controller', () => {
 
   beforeAll(async (done) => {
     try {
-      // await sequelizeFixtures.loadFixtures(
-      //   [usersFixture, fixture],
-      //   { User, Folder }
-      // );
+      await sequelizeFixtures.loadFixtures(
+        [usersFixture, fixture],
+        { User, Folder }
+      );
 
       app = await testApp.setupApp();
       app.use(foldersController.router);
@@ -34,69 +34,67 @@ describe('Folders Controller', () => {
     }
   });
 
-  test.todo('Re-add tests');
+  test('Exists', () => {
+    expect(foldersController).toBeDefined();
+  });
 
-  // test('Exists', () => {
-  //   expect(foldersController).toBeDefined();
-  // });
+  test('Getting all folders works', async () => {
+    const response: request.Response = await request(app)
+      .get('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Getting all folders works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .get('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const folders = response.body.folders;
 
-  //   const folders = response.body.folders;
+    expect(folders).toBeDefined();
+    expect(folders[0].id).toBeDefined();
+    expect(folders[0].name).toBeDefined();
+  });
 
-  //   expect(folders).toBeDefined();
-  //   expect(folders[0].id).toBeDefined();
-  //   expect(folders[0].name).toBeDefined();
-  // });
+  test('Creating a folder works', async () => {
+    const response: request.Response = await request(app)
+      .post('/')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'New Folder'
+      });
 
-  // test('Creating a folder works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .post('/')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       name: 'New Folder'
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const folder = response.body.folder;
 
-  //   const folder = response.body.folder;
+    expect(folder).toBeDefined();
+    expect(folder.id).toBeDefined();
+    expect(folder.name).toBeDefined();
+  });
 
-  //   expect(folder).toBeDefined();
-  //   expect(folder.id).toBeDefined();
-  //   expect(folder.name).toBeDefined();
-  // });
+  test('Updating a folder works', async () => {
+    const newName = 'New Name';
 
-  // test('Updating a folder works', async () => {
-  //   const newName = 'New Name';
+    const response: request.Response = await request(app)
+      .put('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: newName
+      });
 
-  //   const response: request.Response = await request(app)
-  //     .put('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       name: newName
-  //     });
+    expect(response.status).toEqual(200);
 
-  //   expect(response.status).toEqual(200);
+    const folder = response.body.folder;
 
-  //   const folder = response.body.folder;
+    expect(folder).toBeDefined();
+    expect(folder.id).toBeDefined();
+    expect(folder.name).toEqual(newName);
+  });
 
-  //   expect(folder).toBeDefined();
-  //   expect(folder.id).toBeDefined();
-  //   expect(folder.name).toEqual(newName);
-  // });
+  test('Deleting a folder works', async () => {
+    const response: request.Response = await request(app)
+      .delete('/1')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
-  // test('Deleting a folder works', async () => {
-  //   const response: request.Response = await request(app)
-  //     .delete('/1')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send();
-
-  //   expect(response.status).toEqual(204);
-  // });
+    expect(response.status).toEqual(204);
+  });
 });
