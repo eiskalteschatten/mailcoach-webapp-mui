@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
+import authPassport from '@mc/lib/middleware/authPassport';
 
 import Folder from '../models/Folder';
 import Feed from '../models/Feed';
@@ -15,7 +16,7 @@ class StatsController extends AbstractController {
   }
 
   private initilizeRoutes(): void {
-    this.router.get('/', this.getStats);
+    this.router.get('/', authPassport, this.getStats);
   }
 
   /**

@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
+import authPassport from '@mc/lib/middleware/authPassport';
 
 import Folder from '../models/Folder';
 import Feed from '../models/Feed';
@@ -16,11 +17,11 @@ class FoldersController extends AbstractController {
   }
 
   private initilizeRoutes(): void {
-    this.router.get('/', this.getAllFolders);
-    this.router.get('/with-feeds', this.getAllFoldersWithFeeds);
-    this.router.post('/', this.createFolder);
-    this.router.put('/:id', this.updateFolder);
-    this.router.delete('/:id', this.deleteFolder);
+    this.router.get('/', authPassport, this.getAllFolders);
+    this.router.get('/with-feeds', authPassport, this.getAllFoldersWithFeeds);
+    this.router.post('/', authPassport, this.createFolder);
+    this.router.put('/:id', authPassport, this.updateFolder);
+    this.router.delete('/:id', authPassport, this.deleteFolder);
   }
 
   /**

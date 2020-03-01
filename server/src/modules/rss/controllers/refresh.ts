@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
+import authPassport from '@mc/lib/middleware/authPassport';
 
 import { refreshAllFeeds, refreshForSingleFeed } from '../helpers/feedsHelper';
 import { serialize as serializeArticles } from '../serializer/articles';
@@ -14,8 +15,8 @@ class RefreshController extends AbstractController {
   }
 
   private initilizeRoutes(): void {
-    this.router.post('/', this.refreshAllFeeds);
-    this.router.post('/:feedId', this.refreshSingleFeed);
+    this.router.post('/', authPassport, this.refreshAllFeeds);
+    this.router.post('/:feedId', authPassport, this.refreshSingleFeed);
   }
 
   /**

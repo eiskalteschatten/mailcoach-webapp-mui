@@ -4,6 +4,7 @@ import { Op } from 'sequelize';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
+import authPassport from '@mc/lib/middleware/authPassport';
 
 import { validateRssUrl, refreshForSingleFeed } from '../helpers/feedsHelper';
 
@@ -22,11 +23,11 @@ class FeedsController extends AbstractController {
   }
 
   private initilizeRoutes(): void {
-    this.router.get('/', this.getAllFeeds);
-    this.router.get('/folders', this.getAllFeedsAndFolders);
-    this.router.post('/', this.createFeed);
-    this.router.put('/:id', this.updateFeed);
-    this.router.delete('/:id', this.deleteFeed);
+    this.router.get('/', authPassport, this.getAllFeeds);
+    this.router.get('/folders', authPassport, this.getAllFeedsAndFolders);
+    this.router.post('/', authPassport, this.createFeed);
+    this.router.put('/:id', authPassport, this.updateFeed);
+    this.router.delete('/:id', authPassport, this.deleteFeed);
   }
 
   /**

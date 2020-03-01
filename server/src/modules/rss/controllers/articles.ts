@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
+import authPassport from '@mc/lib/middleware/authPassport';
 
 import Article from '../models/Article';
 import Feed from '../models/Feed';
@@ -16,12 +17,12 @@ class ArticlesController extends AbstractController {
   }
 
   private initilizeRoutes(): void {
-    this.router.get('/', this.getAllArticles);
-    this.router.get('/unread', this.getAllUnreadArticles);
-    this.router.patch('/mark-all-read', this.markAllAsRead);
-    this.router.patch('/mark-read-unread/:id', this.markArticleReadUnread);
-    this.router.put('/:id', this.updateArticle);
-    this.router.delete('/:id', this.deleteArticle);
+    this.router.get('/', authPassport, this.getAllArticles);
+    this.router.get('/unread', authPassport, this.getAllUnreadArticles);
+    this.router.patch('/mark-all-read', authPassport, this.markAllAsRead);
+    this.router.patch('/mark-read-unread/:id', authPassport, this.markArticleReadUnread);
+    this.router.put('/:id', authPassport, this.updateArticle);
+    this.router.delete('/:id', authPassport, this.deleteArticle);
   }
 
   /**

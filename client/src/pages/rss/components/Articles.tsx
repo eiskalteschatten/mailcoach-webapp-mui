@@ -127,7 +127,6 @@ const Articles: React.FC = () => {
           article.feed && selectedFeedId === article.feed.id && !article.read
         );
 
-
       setArticles(filteredArticles);
     }
   }, [selectedFeedId, allArticles, showUnread]);
