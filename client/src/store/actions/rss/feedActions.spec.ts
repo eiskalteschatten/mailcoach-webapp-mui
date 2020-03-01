@@ -74,6 +74,10 @@ describe('RSS Feed Actions', () => {
         articles: []
       });
 
+    nock('http://localhost')
+      .get('/api/rss/stats')
+      .reply(200, {});
+
     const localStore: MockStore = mockStore();
     await localStore.dispatch(feedAddFeed({
       name: 'test',
@@ -100,7 +104,11 @@ describe('RSS Feed Actions', () => {
       type: 'ARTICLE_SET_ALL',
       articles: []
     });
-    expect(actions[5]).toEqual({type: 'APP_STOP_LOADING'});
+    expect(actions[5]).toEqual({
+      type: 'ARTICLE_SET_STATS',
+      stats: {}
+    });
+    expect(actions[6]).toEqual({type: 'APP_STOP_LOADING'});
   });
 
   test('Updating a feed works', async () => {

@@ -6,7 +6,7 @@ import { SerializedModel as Feed } from '../../../../../interfaces/rss/Feed';
 
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetError } from '../appActions';
 import { folderSetAll, folderSetCheckedForFolders } from './folderActions';
-import { articleSetAll } from './articleActions';
+import { articleSetAll, articleSetStats } from './articleActions';
 
 export interface FeedSetAll extends Action<'FEED_SET_ALL'> {
   feeds: Feed[];
@@ -81,6 +81,9 @@ export const feedAddFeed: ActionCreator<
 
     const articleRes: any = await axios.get('/api/rss/articles/unread');
     dispatch(articleSetAll(articleRes.data.articles));
+
+    const statsRes: any = await axios.get('/api/rss/stats');
+    dispatch(articleSetStats(statsRes.data));
   }
   catch (error) {
     if (error.response.status === 406) {
