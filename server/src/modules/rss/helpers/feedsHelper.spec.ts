@@ -1,6 +1,10 @@
+import sequelizeFixtures from 'sequelize-fixtures';
 import fs from 'fs';
 import path from 'path';
 import nock from 'nock';
+
+import usersFixture from '@mc/modules/auth/fixtures/users';
+import User from '@mc/modules/auth/models/User';
 
 import Feed from '../models/Feed';
 
@@ -15,11 +19,17 @@ describe('Feeds Helper', () => {
   let testRss: string;
 
   beforeAll(async (done): Promise<void> => {
+    await sequelizeFixtures.loadFixtures(
+      [usersFixture],
+      { User }
+    );
+
     feed = await Feed.create({
       name: 'History Rhymes',
       feedUrl: 'https://www.historyrhymes.info/feed',
       link: 'https://www.historyrhymes.info',
-      icon: ''
+      icon: '',
+      fkUser: 1
     });
 
     fs.readFile(path.resolve(__dirname, '../../../../tests/rss.xml'), 'utf8', (error: Error, data: any): void => {
@@ -40,7 +50,7 @@ describe('Feeds Helper', () => {
       .get('/feed')
       .reply(200, testRss);
 
-    const articles = await refreshAllFeeds();
+    const articles = await refreshAllFeeds(1);
 
     expect(articles).toBeDefined();
     expect(articles[0].title).toBeDefined();
@@ -62,7 +72,7 @@ describe('Feeds Helper', () => {
       .get('/feed')
       .reply(200, testRss);
 
-    const result = await refreshForSingleFeed(feed.id);
+    const result = await refreshForSingleFeed(feed.id, 1);
 
     const parsedFeed = result.parsedFeed;
 

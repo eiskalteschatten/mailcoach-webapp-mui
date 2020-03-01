@@ -1,6 +1,7 @@
 export default {
   model: 'Folder',
   data: {
-    name: 'test'
+    name: 'test',
+    fkUser: 1
   }
 };

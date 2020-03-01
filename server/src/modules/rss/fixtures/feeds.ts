@@ -5,5 +5,6 @@ export default {
     feedUrl: 'https://www.historyrhymes.info/feed',
     link: 'https://www.historyrhymes.info',
     icon: 'test',
+    fkUser: 1
   }
 };

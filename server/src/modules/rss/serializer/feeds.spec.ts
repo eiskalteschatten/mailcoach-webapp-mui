@@ -1,5 +1,8 @@
 import sequelizeFixtures from 'sequelize-fixtures';
 
+import usersFixture from '@mc/modules/auth/fixtures/users';
+import User from '@mc/modules/auth/models/User';
+
 import Feed from '../models/Feed';
 import { serialize, deserializeModelCreateUpdate } from './feeds';
 import fixture from '../fixtures/feeds';
@@ -8,7 +11,10 @@ const { data } = fixture;
 
 describe('FeedSerializer', () => {
   beforeAll((): Promise<void> =>
-    sequelizeFixtures.loadFixtures([fixture], { Feed })
+    sequelizeFixtures.loadFixtures(
+      [usersFixture, fixture],
+      { User, Feed }
+    )
   );
 
   test('Exists', () => {
@@ -35,6 +41,8 @@ describe('FeedSerializer', () => {
       id: testModel.id,
       folder
     };
+
+    delete expectedData.fkUser;
 
     const serializedData = serialize(createData);
     expect(serializedData).toEqual(expectedData);

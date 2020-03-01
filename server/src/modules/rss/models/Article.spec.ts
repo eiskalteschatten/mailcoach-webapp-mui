@@ -1,5 +1,8 @@
 import sequelizeFixtures from 'sequelize-fixtures';
 
+import usersFixture from '@mc/modules/auth/fixtures/users';
+import User from '@mc/modules/auth/models/User';
+
 import fixture from '../fixtures/articles';
 
 import Article from './Article';
@@ -9,8 +12,8 @@ const { data } = fixture;
 describe('Article Model', () => {
   beforeAll((): Promise<void> =>
     sequelizeFixtures.loadFixtures(
-      [fixture],
-      { Article }
+      [usersFixture, fixture],
+      { User, Article }
     )
   );
 

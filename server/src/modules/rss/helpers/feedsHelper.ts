@@ -9,7 +9,7 @@ import { DeserializedModel as ArticleInterface } from '../interfaces/Article';
 import Article from '../models/Article';
 import Feed from '../models/Feed';
 
-export async function refreshAllFeeds(fkUser: number): Promise<ArticleInterface[]> {
+export async function refreshAllFeeds(fkUser?: number): Promise<ArticleInterface[]> {
   const rssParser = new RssParser();
 
   const feeds = await Feed.findAll({
