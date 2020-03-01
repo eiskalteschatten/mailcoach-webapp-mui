@@ -20,6 +20,7 @@ export default {
 
   'allItems': 'Alle',
   'unreadItems': 'Ungelesen',
+  'showUnread': 'Ungelesene anzeigen',
   'archive': 'Archiv',
   'folder': 'Ordner',
   'addFolder': 'Ordner hinzufügen',

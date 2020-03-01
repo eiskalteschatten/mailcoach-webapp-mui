@@ -67,6 +67,7 @@ const Articles: React.FC = () => {
   const initialCheckOccurred = useSelector((state: State) => state.rss.article.initialCheckOccurred) as boolean;
   const selectedFolderId = useSelector((state: State) => state.rss.folder.selectedFolderId) as number;
   const selectedFeedId = useSelector((state: State) => state.rss.feed.selectedFeedId) as number;
+  const showUnread = useSelector((state: State) => state.rss.article.showUnreadItems) as boolean;
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articleDialogOpen, setArticleDialogOpen] = useState<boolean>(false);
@@ -90,9 +91,13 @@ const Articles: React.FC = () => {
     let filteredArticles: Article[];
 
     if (selectedFolderId && selectedFolderId > 0 && allArticles) {
-      filteredArticles = allArticles.filter((article: Article) =>
-        article.feed && article.feed.fkFolder && selectedFolderId === article.feed.fkFolder
-      );
+      filteredArticles = showUnread
+        ? allArticles.filter((article: Article) =>
+            article.feed && article.feed.fkFolder && selectedFolderId === article.feed.fkFolder
+          )
+        : allArticles.filter((article: Article) =>
+            article.feed && article.feed.fkFolder && selectedFolderId === article.feed.fkFolder && !article.read
+          );
 
       setArticles(filteredArticles);
     }
@@ -110,17 +115,22 @@ const Articles: React.FC = () => {
         setArticles(filteredArticles);
       }
     }
-  }, [selectedFolderId, allArticles, dispatch, fetchedAllArticles]);
+  }, [selectedFolderId, allArticles, dispatch, fetchedAllArticles, showUnread]);
 
   useEffect(() => {
     if (selectedFeedId && allArticles) {
-      const filteredArticles = allArticles.filter((article: Article) =>
-        article.feed && selectedFeedId === article.feed.id
-      );
+      const filteredArticles = showUnread
+      ? allArticles.filter((article: Article) =>
+          article.feed && selectedFeedId === article.feed.id
+        )
+      : allArticles.filter((article: Article) =>
+          article.feed && selectedFeedId === article.feed.id && !article.read
+        );
+
 
       setArticles(filteredArticles);
     }
-  }, [selectedFeedId, allArticles]);
+  }, [selectedFeedId, allArticles, showUnread]);
 
   const dateOptions = {
     year: 'numeric',

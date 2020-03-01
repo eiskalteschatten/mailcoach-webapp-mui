@@ -7,11 +7,13 @@ export interface ArticleState {
   articles: Article[];
   initialCheckOccurred: boolean;
   stats?: ArticleStats;
+  showUnreadItems: boolean;
 }
 
 export const initialState: ArticleState = {
   articles: [],
-  initialCheckOccurred: false
+  initialCheckOccurred: false,
+  showUnreadItems: false
 };
 
 const articleReducer: Reducer<ArticleState, ArticleActions> = (
@@ -30,10 +32,15 @@ const articleReducer: Reducer<ArticleState, ArticleActions> = (
         initialCheckOccurred: action.initialCheckOccurred
       };
     case 'ARTICLE_SET_STATS':
-        return {
-          ...state,
-          stats: action.stats
-        };
+      return {
+        ...state,
+        stats: action.stats
+      };
+    case 'ARTICLE_SET_SHOW_UNREAD':
+      return {
+        ...state,
+        showUnreadItems: action.showUnreadItems
+      };
     default:
       return state;
   }

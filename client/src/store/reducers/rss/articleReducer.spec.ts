@@ -51,4 +51,16 @@ describe('RSS Article Reducer', () => {
       stats
     })
   });
+
+  test('Should handle ARTICLE_SET_SHOW_UNREAD', () => {
+    expect(
+      articleReducer(undefined, {
+        type: 'ARTICLE_SET_SHOW_UNREAD',
+        showUnreadItems: true
+      })
+    ).toEqual({
+      ...initialState,
+      showUnreadItems: true
+    })
+  });
 });

@@ -18,10 +18,15 @@ export interface ArticleSetStats extends Action<'ARTICLE_SET_STATS'> {
   stats: ArticleStats;
 }
 
+export interface ArticleSetShowUnread extends Action<'ARTICLE_SET_SHOW_UNREAD'> {
+  showUnreadItems: boolean;
+}
+
 export type ArticleActions =
   ArticleSetAll |
   ArticleSetInitialCheckOccurred |
-  ArticleSetStats;
+  ArticleSetStats |
+  ArticleSetShowUnread;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   type: 'ARTICLE_SET_ALL',
@@ -33,9 +38,14 @@ export const articleSetInitialCheckOccurred = (initialCheckOccurred: boolean): A
   initialCheckOccurred
 });
 
-export const articleSetStats = ( stats: ArticleStats): ArticleSetStats => ({
+export const articleSetStats = (stats: ArticleStats): ArticleSetStats => ({
   type: 'ARTICLE_SET_STATS',
   stats
+});
+
+export const articleSetShowUnread = (showUnreadItems: boolean): ArticleSetShowUnread => ({
+  type: 'ARTICLE_SET_SHOW_UNREAD',
+  showUnreadItems
 });
 
 export const articleGetAllUnread: ActionCreator<
