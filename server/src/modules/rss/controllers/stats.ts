@@ -4,6 +4,7 @@ import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 import authPassport from '@mc/lib/middleware/authPassport';
+import User from '@mc/modules/auth/models/User';
 
 import Folder from '../models/Folder';
 import Feed from '../models/Feed';
@@ -47,9 +48,12 @@ class StatsController extends AbstractController {
 
   private async getStats(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const unreadArticles = await Article.findAll({
         where: {
-          read: false
+          read: false,
+          fkUser: user.id
         },
         include: [{
           model: Feed,

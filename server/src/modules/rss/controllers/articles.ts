@@ -4,11 +4,13 @@ import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 import authPassport from '@mc/lib/middleware/authPassport';
+import User from '@mc/modules/auth/models/User';
 
 import Article from '../models/Article';
 import Feed from '../models/Feed';
 
 import { serialize, deserializeModelCreateUpdate } from '../serializer/articles';
+import user from '@mc/modules/auth/controllers/user';
 
 class ArticlesController extends AbstractController {
   constructor() {
@@ -66,10 +68,15 @@ class ArticlesController extends AbstractController {
 
   private async getAllArticles(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const articles = await Article.findAll({
         order: [
           ['pubDate', 'DESC']
         ],
+        where: {
+          fkUser: user.id
+        },
         include: [{
           model: Feed,
           as: 'feed'
@@ -126,9 +133,12 @@ class ArticlesController extends AbstractController {
 
   private async getAllUnreadArticles(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const articles = await Article.findAll({
         where: {
-          read: false
+          read: false,
+          fkUser: user.id
         },
         order: [
           ['pubDate', 'DESC']
@@ -189,12 +199,15 @@ class ArticlesController extends AbstractController {
 
   private async markAllAsRead(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       await Article.update({
         read: true,
         markedAsReadAt: new Date()
       }, {
         where: {
-          read: false
+          read: false,
+          fkUser: user.id
         }
       });
 
@@ -202,6 +215,9 @@ class ArticlesController extends AbstractController {
         order: [
           ['pubDate', 'DESC']
         ],
+        where: {
+          fkUser: user.id
+        },
         include: [{
           model: Feed,
           as: 'feed'
@@ -401,9 +417,12 @@ class ArticlesController extends AbstractController {
 
   private async deleteArticle(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       await Article.destroy({
         where: {
-          id: req.params.id
+          id: req.params.id,
+          fkUser: user.id
         }
       });
 

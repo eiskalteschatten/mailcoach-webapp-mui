@@ -9,11 +9,14 @@ import { DeserializedModel as ArticleInterface } from '../interfaces/Article';
 import Article from '../models/Article';
 import Feed from '../models/Feed';
 
-export async function refreshAllFeeds(): Promise<ArticleInterface[]> {
+export async function refreshAllFeeds(fkUser: number): Promise<ArticleInterface[]> {
   const rssParser = new RssParser();
 
   const feeds = await Feed.findAll({
-    attributes: ['id', 'feedUrl']
+    attributes: ['id', 'feedUrl'],
+    where: {
+      fkUser
+    }
   });
 
   const newArticles = [];
@@ -25,7 +28,8 @@ export async function refreshAllFeeds(): Promise<ArticleInterface[]> {
     for (const article of parsedFeed.items) {
       const articleExists = await Article.findOne({
         where: {
-          guid: article.guid
+          guid: article.guid,
+          fkUser
         }
       });
 
@@ -35,7 +39,8 @@ export async function refreshAllFeeds(): Promise<ArticleInterface[]> {
         newArticles.push({
           ...article,
           read: false,
-          fkFeed: feed.id
+          fkFeed: feed.id,
+          fkUser
         });
       }
     }
@@ -48,7 +53,8 @@ export async function refreshAllFeeds(): Promise<ArticleInterface[]> {
       read: false,
       guid: {
         [Op.in]: guids
-      }
+      },
+      fkUser
     },
     order: [
       ['pubDate', 'DESC']
@@ -63,7 +69,7 @@ interface RefreshSingleFeed {
   parsedFeed: any;
 }
 
-export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingleFeed> {
+export async function refreshForSingleFeed(feedId: number, fkUser: number): Promise<RefreshSingleFeed> {
   const rssParser = new RssParser();
 
   const feed = await Feed.findByPk(feedId, {
@@ -81,7 +87,8 @@ export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingl
   for (const article of parsedFeed.items) {
     const articleExists = await Article.findOne({
       where: {
-        guid: article.guid
+        guid: article.guid,
+        fkUser
       }
     });
 
@@ -91,7 +98,8 @@ export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingl
       newArticles.push({
         ...article,
         read: false,
-        fkFeed: feed.id
+        fkFeed: feed.id,
+        fkUser
       });
     }
   }
@@ -104,7 +112,8 @@ export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingl
       fkFeed: feedId,
       guid: {
         [Op.in]: guids
-      }
+      },
+      fkUser
     },
     order: [
       ['pubDate', 'DESC']

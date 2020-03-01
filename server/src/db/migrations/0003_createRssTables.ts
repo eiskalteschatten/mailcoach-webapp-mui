@@ -66,6 +66,10 @@ export default {
         type: DataTypes.INTEGER,
         field: 'fk_feed'
       },
+      fkUser: {
+        type: DataTypes.INTEGER,
+        field: 'fk_user'
+      },
       createdAt: {
         type: DataTypes.DATE,
         field: 'created_at'
@@ -103,6 +107,10 @@ export default {
         type: DataTypes.INTEGER,
         field: 'fk_folder'
       },
+      fkUser: {
+        type: DataTypes.INTEGER,
+        field: 'fk_user'
+      },
       createdAt: {
         type: DataTypes.DATE,
         field: 'created_at'
@@ -123,6 +131,10 @@ export default {
       name: {
         type: DataTypes.STRING,
         field: 'name'
+      },
+      fkUser: {
+        type: DataTypes.INTEGER,
+        field: 'fk_user'
       },
       createdAt: {
         type: DataTypes.DATE,

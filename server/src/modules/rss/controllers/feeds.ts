@@ -5,6 +5,7 @@ import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 import authPassport from '@mc/lib/middleware/authPassport';
+import User from '@mc/modules/auth/models/User';
 
 import { validateRssUrl, refreshForSingleFeed } from '../helpers/feedsHelper';
 
@@ -62,10 +63,15 @@ class FeedsController extends AbstractController {
 
   private async getAllFeeds(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const feeds = await Feed.findAll({
         order: [
           ['name', 'DESC']
         ],
+        where: {
+          fkUser: user.id
+        },
         include: [
           {
             model: Folder,
@@ -129,10 +135,15 @@ class FeedsController extends AbstractController {
 
   private async getAllFeedsAndFolders(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const folders = await Folder.findAll({
         order: [
           ['name', 'DESC']
         ],
+        where: {
+          fkUser: user.id
+        },
         include: [{
           model: Feed,
           as: 'feeds',
@@ -149,7 +160,8 @@ class FeedsController extends AbstractController {
         where: {
           fkFolder: {
             [Op.eq]: null
-          }
+          },
+          fkUser: user.id
         }
       });
 
@@ -215,6 +227,7 @@ class FeedsController extends AbstractController {
 
   private async createFeed(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
       const deserialized = deserializeModelCreateUpdate(req.body);
       const parsedFeed = await validateRssUrl(deserialized.feedUrl);
 
@@ -227,10 +240,11 @@ class FeedsController extends AbstractController {
         icon: deserialized.icon,
         name: parsedFeed.title,
         link: parsedFeed.link,
-        fkFolder: deserialized.fkFolder
+        fkFolder: deserialized.fkFolder,
+        fkUser: user.id
       });
 
-      const refreshed = await refreshForSingleFeed(feed.id);
+      const refreshed = await refreshForSingleFeed(feed.id, user.id);
 
       res.json({
         feed: serialize(feed),
@@ -294,6 +308,7 @@ class FeedsController extends AbstractController {
 
   private async updateFeed(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
       const deserialized = deserializeModelCreateUpdate(req.body);
 
       if (deserialized.feedUrl) {
@@ -335,15 +350,22 @@ class FeedsController extends AbstractController {
 
   private async deleteFeed(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
       const id = req.params.id;
 
       await Article.destroy({
         where: {
-          fkFeed: id
+          fkFeed: id,
+          fkUser: user.id
         }
       });
 
-      await Feed.destroy({ where: { id } });
+      await Feed.destroy({
+        where: {
+          id,
+          fkUser: user.id
+        }
+      });
 
       res.status(204).send('');
     }

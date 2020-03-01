@@ -4,6 +4,7 @@ import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 import authPassport from '@mc/lib/middleware/authPassport';
+import User from '@mc/modules/auth/models/User';
 
 import { refreshAllFeeds, refreshForSingleFeed } from '../helpers/feedsHelper';
 import { serialize as serializeArticles } from '../serializer/articles';
@@ -60,7 +61,10 @@ class RefreshController extends AbstractController {
 
   private async refreshAllFeeds(req: Request, res: Response): Promise<void> {
     try {
-      const articles = await refreshAllFeeds();
+      const user = req.user as User;
+
+      const articles = await refreshAllFeeds(user.id);
+
       res.json({
         articles: articles.map(serializeArticles)
       });
@@ -113,8 +117,9 @@ class RefreshController extends AbstractController {
 
   private async refreshSingleFeed(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
       const feedId = parseInt(req.params.feedId);
-      const refreshed = await refreshForSingleFeed(feedId);
+      const refreshed = await refreshForSingleFeed(feedId, user.id);
 
       res.json({
         articles: refreshed.articles.map(serializeArticles)

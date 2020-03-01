@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '@mc/db';
+import User from '@mc/modules/auth/models/User';
 
 import Folder from './Folder';
 
@@ -11,6 +12,7 @@ export class Feed extends Model {
   link: string;
   icon: string;
   fkFolder: number;
+  fkUser: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
 }
@@ -35,6 +37,10 @@ Feed.init({
   fkFolder: {
     type: DataTypes.INTEGER,
     field: 'fk_folder'
+  },
+  fkUser: {
+    type: DataTypes.INTEGER,
+    field: 'fk_user'
   }
 }, {
   sequelize,
@@ -52,6 +58,18 @@ Feed.belongsTo(Folder, {
 Folder.hasMany(Feed, {
   as: 'feeds',
   foreignKey: 'fkFolder',
+  sourceKey: 'id'
+});
+
+Feed.belongsTo(User, {
+  as: 'user',
+  foreignKey: 'fkUser',
+  targetKey: 'id'
+});
+
+User.hasMany(Feed, {
+  as: 'feeds',
+  foreignKey: 'fkUser',
   sourceKey: 'id'
 });
 

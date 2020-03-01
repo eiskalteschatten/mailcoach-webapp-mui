@@ -4,6 +4,7 @@ import { returnError } from '@mc/lib/apiErrorHandling';
 import AbstractController from '@mc/modules/AbstractController';
 import { HttpError } from '@mc/lib/Error';
 import authPassport from '@mc/lib/middleware/authPassport';
+import User from '@mc/modules/auth/models/User';
 
 import Folder from '../models/Folder';
 import Feed from '../models/Feed';
@@ -49,10 +50,15 @@ class FoldersController extends AbstractController {
 
   private async getAllFolders(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const folders = await Folder.findAll({
         order: [
           ['name', 'DESC']
-        ]
+        ],
+        where: {
+          fkUser: user.id
+        }
       });
 
       res.json({
@@ -96,10 +102,15 @@ class FoldersController extends AbstractController {
 
   private async getAllFoldersWithFeeds(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
+
       const folders = await Folder.findAll({
         order: [
           ['name', 'DESC']
         ],
+        where: {
+          fkUser: user.id
+        },
         include: [{
           model: Feed,
           as: 'feeds',
@@ -148,8 +159,13 @@ class FoldersController extends AbstractController {
 
   private async createFolder(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
       const deserialized = deserializeModelCreateUpdate(req.body);
-      const folder = await Folder.create(deserialized);
+
+      const folder = await Folder.create({
+        ...deserialized,
+        fkUser: user.id
+      });
 
       res.json({
         folder: serialize(folder)
@@ -224,11 +240,13 @@ class FoldersController extends AbstractController {
 
   private async deleteFolder(req: Request, res: Response): Promise<void> {
     try {
+      const user = req.user as User;
       const id = req.params.id;
 
       await Feed.destroy({
         where: {
-          fkFolder: id
+          fkFolder: id,
+          fkUser: user.id
         }
       });
 

@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '@mc/db';
+import User from '@mc/modules/auth/models/User';
 
 import Feed from './Feed';
 
@@ -16,6 +17,7 @@ export class Article extends Model {
   read: boolean;
   markedAsReadAt: Date;
   fkFeed: number;
+  fkUser: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
 }
@@ -68,6 +70,10 @@ Article.init({
   fkFeed: {
     type: DataTypes.INTEGER,
     field: 'fk_feed'
+  },
+  fkUser: {
+    type: DataTypes.INTEGER,
+    field: 'fk_user'
   }
 }, {
   sequelize,
@@ -80,6 +86,18 @@ Article.belongsTo(Feed, {
   as: 'feed',
   foreignKey: 'fkFeed',
   targetKey: 'id'
+});
+
+Article.belongsTo(User, {
+  as: 'user',
+  foreignKey: 'fkUser',
+  targetKey: 'id'
+});
+
+User.hasMany(Article, {
+  as: 'articles',
+  foreignKey: 'fkUser',
+  sourceKey: 'id'
 });
 
 if (process.env.NODE_ENV === 'test') {
