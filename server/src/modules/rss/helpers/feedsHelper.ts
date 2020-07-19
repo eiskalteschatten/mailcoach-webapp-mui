@@ -14,11 +14,14 @@ export async function refreshAllFeeds(fkUser?: number): Promise<ArticleInterface
 
   const feeds = await Feed.findAll({
     attributes: ['id', 'feedUrl'],
-    where: {
-      fkUser
-    }
+    where: { fkUser }
   });
 
+  const allArticles = await Article.findAll({
+    where: { fkUser }
+  });
+
+  const allArticleGuids = allArticles.map(({ guid }: Article): string => guid);
   const newArticles = [];
   const guids = [];
 
@@ -26,14 +29,7 @@ export async function refreshAllFeeds(fkUser?: number): Promise<ArticleInterface
     const parsedFeed = await rssParser.parseURL(feed.feedUrl);
 
     for (const article of parsedFeed.items) {
-      const articleExists = await Article.findOne({
-        where: {
-          guid: article.guid,
-          fkUser
-        }
-      });
-
-      if (!articleExists) {
+      if (!allArticleGuids.includes(article.guid)) {
         guids.push(article.guid);
 
         newArticles.push({
