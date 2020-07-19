@@ -308,7 +308,6 @@ class FeedsController extends AbstractController {
 
   private async updateFeed(req: Request, res: Response): Promise<void> {
     try {
-      const user = req.user as User;
       const deserialized = deserializeModelCreateUpdate(req.body);
 
       if (deserialized.feedUrl) {

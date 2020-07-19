@@ -37,7 +37,15 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': ['off'],
     '@typescript-eslint/no-empty-function': ['off'],
     '@typescript-eslint/indent': ['error', 2],
-    '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'no-public' }]
+    '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'no-public' }],
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        'types': {
+          'Function': false
+        }
+      }
+    ]
   },
   'overrides': [{
     'files': ['*.json'],

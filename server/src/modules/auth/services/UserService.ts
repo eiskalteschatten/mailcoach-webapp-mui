@@ -42,52 +42,47 @@ export default class UserService {
   }
 
   async register(registerData: ModelCreateUpdate): Promise<User> {
-    try {
-      const {
-        username,
-        firstName,
-        lastName,
-        avatar
-      } = registerData;
+    const {
+      username,
+      firstName,
+      lastName,
+      avatar
+    } = registerData;
 
-      const password = registerData.password || this.generatePassword();
-      const status = registerData.status || 'pending';
+    const password = registerData.password || this.generatePassword();
+    const status = registerData.status || 'pending';
 
-      const existingUser: User = await User.findOne({ where: { username } });
+    const existingUser: User = await User.findOne({ where: { username } });
 
-      if (existingUser) {
-        throw new HttpError('Could not create user because a user with this username already exists!', 409);
-      }
-
-      if (!username || !firstName || !lastName) {
-        throw new HttpError('Could not create user because a field was missing!', 400);
-      }
-
-      const newAvatar = avatar || config.get<string>('users.defaultAvatar');
-
-      const hash: string = await bcrypt.hash(password, this.saltRounds);
-
-      const userModel: User = await User.create({
-        ...registerData,
-        avatar: newAvatar,
-        password: hash,
-        lastLogin: new Date(),
-        status
-      });
-
-      const defaultUserSettings = config.get<object>('users.defaultSettings');
-
-      await UserSetting.create({
-        ...defaultUserSettings,
-        fkUser: userModel.id
-      });
-
-      await this.getUserById(userModel.id);
-      return this.user;
+    if (existingUser) {
+      throw new HttpError('Could not create user because a user with this username already exists!', 409);
     }
-    catch(error) {
-      throw error;
+
+    if (!username || !firstName || !lastName) {
+      throw new HttpError('Could not create user because a field was missing!', 400);
     }
+
+    const newAvatar = avatar || config.get<string>('users.defaultAvatar');
+
+    const hash: string = await bcrypt.hash(password, this.saltRounds);
+
+    const userModel: User = await User.create({
+      ...registerData,
+      avatar: newAvatar,
+      password: hash,
+      lastLogin: new Date(),
+      status
+    });
+
+    const defaultUserSettings = config.get<any>('users.defaultSettings');
+
+    await UserSetting.create({
+      ...defaultUserSettings,
+      fkUser: userModel.id
+    });
+
+    await this.getUserById(userModel.id);
+    return this.user;
   }
 
   async localLogin(username: string, password: string): Promise<boolean> {
@@ -185,58 +180,43 @@ export default class UserService {
   }
 
   async updateUser(id: number, updatedUser: ModelCreateUpdate): Promise<void> {
-    try {
-      if (updatedUser.username) {
-        const existingUser: User = await User.findOne({ where: { username: updatedUser.username } });
+    if (updatedUser.username) {
+      const existingUser: User = await User.findOne({ where: { username: updatedUser.username } });
 
-        if (existingUser && existingUser.id !== id) {
-          throw new HttpError('Could not create user because a user with this username already exists!', 409);
-        }
+      if (existingUser && existingUser.id !== id) {
+        throw new HttpError('Could not create user because a user with this username already exists!', 409);
       }
+    }
 
-      await this.getUserById(id);
-      await this.user.update(updatedUser);
-    }
-    catch(error) {
-      throw error;
-    }
+    await this.getUserById(id);
+    await this.user.update(updatedUser);
   }
 
   async updatePassword(id: number, data: PasswordChange): Promise<void> {
-    try {
-      await this.getUserById(id);
-      const isValid: boolean = await this.validatePassword(data.currentPassword);
+    await this.getUserById(id);
+    const isValid: boolean = await this.validatePassword(data.currentPassword);
 
-      if (!isValid) {
-        throw new HttpError('Could not change the user\'s password because the old password is incorrect!', 406);
-      }
-
-      if (!this.isPasswordVaild(data.newPassword)) {
-        throw new HttpError('The password does not meet the password requirements!', 406);
-      }
-
-      this.user.password = await bcrypt.hash(data.newPassword, this.saltRounds);
-      await this.user.save();
+    if (!isValid) {
+      throw new HttpError('Could not change the user\'s password because the old password is incorrect!', 406);
     }
-    catch(error) {
-      throw error;
+
+    if (!this.isPasswordVaild(data.newPassword)) {
+      throw new HttpError('The password does not meet the password requirements!', 406);
     }
+
+    this.user.password = await bcrypt.hash(data.newPassword, this.saltRounds);
+    await this.user.save();
   }
 
   async updatePasswordWithoutOldPassword(id: number, data: PasswordChange): Promise<void> {
-    try {
-      if (!this.isPasswordVaild(data.newPassword)) {
-        throw new HttpError('The password does not meet the password requirements!', 406);
-      }
-
-      await this.getUserById(id);
-
-      this.user.password = await bcrypt.hash(data.newPassword, this.saltRounds);
-      await this.user.save();
+    if (!this.isPasswordVaild(data.newPassword)) {
+      throw new HttpError('The password does not meet the password requirements!', 406);
     }
-    catch(error) {
-      throw error;
-    }
+
+    await this.getUserById(id);
+
+    this.user.password = await bcrypt.hash(data.newPassword, this.saltRounds);
+    await this.user.save();
   }
 
   isPasswordVaild(password: string): boolean {
@@ -246,38 +226,23 @@ export default class UserService {
   }
 
   async checkCanUpdatePasswordWithoutOldPassword(id: number): Promise<boolean> {
-    try {
-      await this.getUserById(id);
-      return this.user.status === 'pending';
-    }
-    catch(error) {
-      throw error;
-    }
+    await this.getUserById(id);
+    return this.user.status === 'pending';
   }
 
   private async validatePassword(password: string): Promise<boolean> {
-    try {
-      if (!this.user) {
-        return false;
-      }
+    if (!this.user) {
+      return false;
+    }
 
-      const isValid: boolean = await bcrypt.compare(password, this.user.password);
-      return isValid;
-    }
-    catch(error) {
-      throw error;
-    }
+    const isValid: boolean = await bcrypt.compare(password, this.user.password);
+    return isValid;
   }
 
   async deleteUser(userId: number): Promise<void> {
-    try {
-      await UserSession.destroy({ where: { fkUser: userId } });
-      await UserSetting.destroy({ where: { fkUser: userId } });
-      await User.destroy({ where: { id: userId } });
-    }
-    catch(error) {
-      throw error;
-    }
+    await UserSession.destroy({ where: { fkUser: userId } });
+    await UserSetting.destroy({ where: { fkUser: userId } });
+    await User.destroy({ where: { id: userId } });
   }
 
   private async getUserByUsername(username: string): Promise<void> {

@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 
-import AbstractController from '@mc/modules/AbstractController';
-import { returnError } from '@mc/lib/apiErrorHandling';
+import AbstractController from '@mc/modules/AbstractController';import { returnError } from '@mc/lib/apiErrorHandling';
 import { HttpError } from '@mc/lib/Error';
 import authPassport from '@mc/lib/middleware/authPassport';
 
@@ -54,7 +53,7 @@ class SessionsController extends AbstractController {
       });
 
       res.json({
-        sessions: userSessions.map((session: UserSession): object => ({
+        sessions: userSessions.map((session: UserSession): any => ({
           loginDate: session['created_at'],
           instanceId: session.instanceId
         }))

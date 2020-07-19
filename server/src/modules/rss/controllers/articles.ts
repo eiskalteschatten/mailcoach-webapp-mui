@@ -10,7 +10,6 @@ import Article from '../models/Article';
 import Feed from '../models/Feed';
 
 import { serialize, deserializeModelCreateUpdate } from '../serializer/articles';
-import user from '@mc/modules/auth/controllers/user';
 
 class ArticlesController extends AbstractController {
   constructor() {
