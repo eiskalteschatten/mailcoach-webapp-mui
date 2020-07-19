@@ -14,8 +14,6 @@ import { IntlProviderWrapper } from './intl/IntlContext';
 import getThemeOptions from './theme';
 import bootstrap from './bootstrap';
 
-import './App.css';
-
 const App: React.FC = () => {
   const { theme } = useSelector((state: State) => state.user.settings);
   const userSettingsString = localStorage.getItem('userSettings');
