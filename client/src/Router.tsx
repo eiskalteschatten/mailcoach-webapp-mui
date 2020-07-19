@@ -37,11 +37,11 @@ const Router: React.FC<Props> = (props) => {
   }
 
   return (<Switch>
-    <Route path={'/login'} component={LoginLayout} />
+    <Route path='/login' component={LoginLayout} />
 
-    <RouteWithLayout exact path={'/'} layout={MainLayout} component={Dashboard} title={messages.dashboard} />
-    <RouteWithLayout path={'/account'} layout={MainLayout} component={ManageAccount} title={messages['account.manageAccount']} />
-    <RouteWithLayout path={'/rss'} layout={MainLayout} component={Rss} title={messages.rssFeeds} />
+    <RouteWithLayout exact path='/' layout={MainLayout} component={Dashboard} title={messages.dashboard} />
+    <RouteWithLayout path='/account' layout={MainLayout} component={ManageAccount} title={messages['account.manageAccount']} />
+    <RouteWithLayout path='/rss' layout={MainLayout} component={Rss} title={messages.rssFeeds} />
 
     <Route component={PageNotFound} />
   </Switch>);
