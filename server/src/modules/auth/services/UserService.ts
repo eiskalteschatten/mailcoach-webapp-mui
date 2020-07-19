@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import config from 'config';
 import jwt from 'jsonwebtoken';
-import uuidv1 from 'uuid/v1';
+import { uuidv1 } from 'uuid';
 
 import { HttpError } from '@mc/lib/Error';
 
