@@ -2,21 +2,21 @@ version: '3.7'
 
 services:
 
-    postgres:
-        image: postgres:11-alpine
-        container_name: mailcoach_postgres
-        volumes:
-            - "./.data/postgres:/var/lib/postgresql/data"
-        environment:
-            POSTGRES_DB: mailcoach
-            POSTGRES_USER: mailcoach
-            POSTGRES_PASSWORD: mailcoach
-        ports:
-            - "5432:5432"
-        cap_drop:
-            - ALL
-        cap_add:
-            - CHOWN
-            - FOWNER
-            - SETGID
-            - SETUID
+  postgres:
+    image: postgres:12-alpine
+    container_name: mailcoach_postgres
+    volumes:
+      - "./.data/postgres:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: mailcoach
+      POSTGRES_USER: mailcoach
+      POSTGRES_PASSWORD: mailcoach
+    ports:
+      - "5432:5432"
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - FOWNER
+      - SETGID
+      - SETUID
