@@ -87,7 +87,7 @@ export async function refreshForSingleFeed(feedId: number, fkUser: number): Prom
   const parsedFeed = await rssParser.parseURL(feed.feedUrl);
 
   for (const article of parsedFeed.items) {
-    if (!!allArticleGuids.includes(article.guid)) {
+    if (!allArticleGuids.includes(article.guid)) {
       guids.push(article.guid);
 
       newArticles.push({
