@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { Parser as HtmlToReactParser } from 'html-to-react';
 
 import {
   createStyles,
@@ -70,6 +71,7 @@ const ArticleView: React.FC<Props> = (props) => {
   const articles = useSelector((state: State) => state.rss.article.articles) as Article[];
   const [manuallyMarked, setManuallyMarked] = useState<boolean>(false);
   const [article, setArticle] = useState<Article>();
+  const [articleContent, setArticleContent] = useState();
 
   const dateOptions = {
     year: 'numeric',
@@ -94,6 +96,12 @@ const ArticleView: React.FC<Props> = (props) => {
   useEffect(() => {
     const selectedArticle = articles.find((article: Article): boolean => article.id === articleId);
     setArticle(selectedArticle);
+
+    if (selectedArticle) {
+      const htmlToReactParser = new HtmlToReactParser();
+      const contentElement = htmlToReactParser.parse(selectedArticle.content);
+      setArticleContent(contentElement)
+    }
   }, [articles, articleId]);
 
   useEffect(() => {
@@ -134,7 +142,7 @@ const ArticleView: React.FC<Props> = (props) => {
       </div>
 
       <div className={classes.articleContent}>
-        {article.content}
+        {articleContent}
       </div>
     </DialogContent>
 
