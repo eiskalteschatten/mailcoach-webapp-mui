@@ -76,19 +76,18 @@ export async function refreshForSingleFeed(feedId: number, fkUser: number): Prom
     throw new HttpError('Feed not found!', 404);
   }
 
+  const allArticles = await Article.findAll({
+    where: { fkUser }
+  });
+
+  const allArticleGuids = allArticles.map(({ guid }: Article): string => guid);
+
   const newArticles = [];
   const guids = [];
   const parsedFeed = await rssParser.parseURL(feed.feedUrl);
 
   for (const article of parsedFeed.items) {
-    const articleExists = await Article.findOne({
-      where: {
-        guid: article.guid,
-        fkUser
-      }
-    });
-
-    if (!articleExists) {
+    if (!!allArticleGuids.includes(article.guid)) {
       guids.push(article.guid);
 
       newArticles.push({
