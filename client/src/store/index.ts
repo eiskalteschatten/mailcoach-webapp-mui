@@ -1,9 +1,9 @@
 import { AnyAction, applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 
-import app, { AppState } from './reducers/appReducer';
-import user, { UserState } from './reducers/userReducer';
-import rss, { RssState } from './reducers/rss';
+import app from './reducers/appReducer';
+import user from './reducers/userReducer';
+import rss from './reducers/rss';
 
 const devExtension = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
@@ -22,11 +22,7 @@ const store = createStore(
   )
 );
 
-export interface State {
-  app: AppState;
-  user: UserState;
-  rss: RssState;
-}
+export type State = ReturnType<typeof reducer>;
 
 // Shortcuts
 export const dispatch: ThunkDispatch<any, any, AnyAction> = store.dispatch.bind(store);
